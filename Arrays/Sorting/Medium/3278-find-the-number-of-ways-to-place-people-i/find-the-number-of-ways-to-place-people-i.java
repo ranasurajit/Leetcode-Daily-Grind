@@ -2,7 +2,20 @@ class Solution {
     /**
      * Approach : Using Sorting + Math (Geometry) Approach
      *
-     * TC: O(N x log(N)) + O(N x N) ~ O(N x N)
+     * Intuition:
+     * - First, sort points by x ascending (and by y descending for tie-breaking).
+     *   This ensures we only need to scan "to the right" when checking rectangles.
+     * - For each fixed point i, we move rightward to find candidate j.
+     * - A valid pair (i, j) requires: xi < xj and yi >= yj.
+     * - But we must also ensure no point lies inside the rectangle (xi, yi) to (xj, yj).
+     *
+     * Optimization Trick:
+     * - While scanning j to the right, maintain `maxY` = lowest y seen so far.
+     * - If yj <= yi and yj > maxY → (i, j) is valid → update maxY = yj.
+     * - If yj <= maxY → it means a lower point already exists that blocks the rectangle.
+     * - This avoids scanning all intermediate points (O(N)) for each (i, j).
+     *
+     * TC: O(N x log(N)) for sorting + O(N ^ 2) for double loop ~ O(N ^ 2)
      * SC: O(1)
      */
     public int numberOfPairs(int[][] points) {
