@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach : Using Bit-Manipulation + Math Approach
      *
-     * TC: O(60) ~ O(1)
+     * TC: O(60 x 64) ~ O(1)
      * SC: O(1)
      */
     public int makeTheIntegerZero(int num1, int num2) {
