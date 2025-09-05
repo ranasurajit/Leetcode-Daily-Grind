@@ -17,7 +17,7 @@ class Solution {
         for (int k = 0; k <= 60; k++) { // TC: O(60)
             long diff = (long) num1 - ((long) k * (long) num2);
             if (diff < 0) {
-                continue;
+                return -1;
             }
             int bitCounts = countSetBits(diff); // TC: O(64)
             if (bitCounts <= k && k <= diff) {
