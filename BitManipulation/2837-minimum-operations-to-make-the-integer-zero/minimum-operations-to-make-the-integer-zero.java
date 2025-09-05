@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach : Using Bit-Manipulation + Math Approach
      *
-     * TC: O(60 x 64) ~ O(1)
+     * TC: O(60) ~ O(1)
      * SC: O(1)
      */
     public int makeTheIntegerZero(int num1, int num2) {
@@ -19,7 +19,7 @@ class Solution {
             if (diff < 0) {
                 return -1;
             }
-            int bitCounts = countSetBits(diff); // TC: O(64)
+            int bitCounts = Long.bitCount(diff); // TC: O(1)
             if (bitCounts <= k && k <= diff) {
                 /**
                  * bitCounts <= k, If we want to use k operations, then at 
@@ -30,21 +30,5 @@ class Solution {
             }
         }
         return -1;
-    }
-
-    /**
-     * Using Bit-Manipulation Approach
-     *
-     * TC: O(64)
-     * SC: O(1)
-     */
-    private int countSetBits(long diff) {
-        int count = 0;
-        for (int i = 63; i >= 0; i--) { // TC: O(64)
-            if (((diff >> i) & 1) == 1) {
-                count++;
-            }
-        }
-        return count;
     }
 }
