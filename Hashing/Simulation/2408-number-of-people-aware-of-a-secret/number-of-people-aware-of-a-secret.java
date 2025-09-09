@@ -15,13 +15,14 @@ class Solution {
                 if (d - key >= delay && d - key < forget) {
                     map.put(d, (map.getOrDefault(d, 0) + (map.get(key)) % MOD) % MOD);
                 }
+                if (d - key >= forget) {
+                    map.put(key, 0);
+                }
             }
         }
         int count = 0;
-        for (int d = 1; d <= n; d++) { // TC: O(N)
-            if (d > n - forget) { // ignore the counts for those who forgot the secret already
-                count = (count + map.getOrDefault(d, 0)) % MOD;
-            }
+        for (Integer key : map.keySet()) { // TC: O(N)
+            count = (count + map.get(key)) % MOD;
         }
         return count;
     }
