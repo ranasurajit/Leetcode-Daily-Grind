@@ -64,23 +64,27 @@ class Spreadsheet {
         }
         String segmentLeft = formula.substring(1, posPlus);   // TC: O(5), SC: O(5)
         String segmentRight = formula.substring(posPlus + 1); // TC: O(5), SC: O(5)
-        int valueLeft = 0;
-        int valueRight = 0;
-        if (Character.isDigit(segmentLeft.charAt(0))) {
-            valueLeft = getNumericValue(segmentLeft, 0, posPlus - 2);
-        } else {
-            int rowIdx = Integer.parseInt(segmentLeft.substring(1)) - 1;
-            int colIdx = segmentLeft.charAt(0) - 'A';
-            valueLeft = sheet[rowIdx][colIdx];
-        }
-        if (Character.isDigit(segmentRight.charAt(0))) {
-            valueRight = getNumericValue(segmentRight, 0, segmentRight.length() - 1);
-        } else {
-            int rowIdx = Integer.parseInt(segmentRight.substring(1)) - 1;
-            int colIdx = segmentRight.charAt(0) - 'A';
-            valueRight = sheet[rowIdx][colIdx];
-        }
+        int valueLeft = evaluateSegment(segmentLeft, 0, posPlus - 2);
+        int valueRight = evaluateSegment(segmentRight, 0, segmentRight.length() - 1);
         return valueLeft + valueRight;
+    }
+
+    /**
+     * Using Simulation Approach
+     *
+     * TC: O(5) ~ O(1)
+     * SC: O(1) 
+     */
+    private int evaluateSegment(String segment, int start, int end) {
+        int value = 0;
+        if (Character.isDigit(segment.charAt(0))) {
+            value = getNumericValue(segment, start, end);
+        } else {
+            int rowIdx = Integer.parseInt(segment.substring(1)) - 1;
+            int colIdx = segment.charAt(0) - 'A';
+            value = sheet[rowIdx][colIdx];
+        }
+        return value;
     }
 
     /**
