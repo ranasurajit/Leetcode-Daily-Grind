@@ -28,7 +28,7 @@ class Spreadsheet {
      * SC: O(1) 
      */
     public void setCell(String cell, int value) {
-        int rowIdx = Integer.valueOf(cell.substring(1)) - 1;
+        int rowIdx = Integer.parseInt(cell.substring(1)) - 1;
         int colIdx = cell.charAt(0) - 'A';
         sheet[rowIdx][colIdx] = value;
     }
@@ -40,7 +40,7 @@ class Spreadsheet {
      * SC: O(1) 
      */
     public void resetCell(String cell) {
-        int rowIdx = Integer.valueOf(cell.substring(1)) - 1;
+        int rowIdx = Integer.parseInt(cell.substring(1)) - 1;
         int colIdx = cell.charAt(0) - 'A';
         sheet[rowIdx][colIdx] = 0;
     }
@@ -69,14 +69,14 @@ class Spreadsheet {
         if (Character.isDigit(segmentLeft.charAt(0))) {
             valueLeft = getNumericValue(segmentLeft, 0, posPlus - 2);
         } else {
-            int rowIdx = Integer.valueOf(segmentLeft.substring(1)) - 1;
+            int rowIdx = Integer.parseInt(segmentLeft.substring(1)) - 1;
             int colIdx = segmentLeft.charAt(0) - 'A';
             valueLeft = sheet[rowIdx][colIdx];
         }
         if (Character.isDigit(segmentRight.charAt(0))) {
             valueRight = getNumericValue(segmentRight, 0, segmentRight.length() - 1);
         } else {
-            int rowIdx = Integer.valueOf(segmentRight.substring(1)) - 1;
+            int rowIdx = Integer.parseInt(segmentRight.substring(1)) - 1;
             int colIdx = segmentRight.charAt(0) - 'A';
             valueRight = sheet[rowIdx][colIdx];
         }
