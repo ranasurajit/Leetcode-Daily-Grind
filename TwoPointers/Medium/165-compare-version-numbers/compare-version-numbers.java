@@ -1,11 +1,44 @@
 class Solution {
     /**
-     * Approach : Using Two Pointers Approach
+     * Approach II : Using Two Pointers Approach
+     *
+     * TC: O(Max(N, M))
+     * SC: O(1)
+     */
+    public int compareVersion(String version1, String version2) {
+        int n = version1.length();
+        int m = version2.length();
+        int p = 0; // start pointer at String 'version1'
+        int q = 0; // start pointer at String 'version2'
+        while (p < n || q < m) { // TC: O(Max(N, M))
+            int versionNum1 = 0;
+            int versionNum2 = 0;
+            while (p < n && version1.charAt(p) != '.') {
+                versionNum1 = versionNum1 * 10 + (version1.charAt(p) - '0');
+                p++;
+            }
+            while (q < m && version2.charAt(q) != '.') {
+                versionNum2 = versionNum2 * 10 + (version2.charAt(q) - '0');
+                q++;
+            }
+            if (versionNum1 < versionNum2) {
+                return -1;
+            } else if (versionNum1 > versionNum2) {
+                return 1;
+            }
+            p++;
+            q++;
+        }
+        return 0;
+    }
+
+    /**
+     * Approach I : Using Two Pointers Approach
      *
      * TC: O(Max(N, M)) + O(Max(N, M)) ~ O(Max(N, M))
      * SC: O(N + M)
      */
-    public int compareVersion(String version1, String version2) {
+    public int compareVersionTwoPointers(String version1, String version2) {
         int n = version1.length();
         int m = version2.length();
         int p = 0; // start pointer at String 'version1'
