@@ -1,14 +1,43 @@
 class Solution {
     /**
+     * Approach IV : Using Space Optimization (Optimized DP) Approach
+     *
+     * TC: O(M) + O(N x M) ~ O(N x M)
+     * SC: O(M) + O(M) ~ O(M), where M = size(triagle's last row)
+     *      O(M) - next and current array memory
+     *
+     * Accepted (46 / 46 testcases passed)
+     */
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n = triangle.size();
+        int m = triangle.get(n - 1).size();
+        // Initialization
+        int[] next = new int[m];      // SC: O(M)
+        for (int j = 0; j < m; j++) { // TC: O(M)
+            next[j] = triangle.get(n - 1).get(j);
+        }
+        int[] current = new int[m];   // SC: O(M)
+        // Iterative Calls
+        for (int i = n - 2; i >= 0; i--) { // TC: O(N)
+            for (int j = 0; j < triangle.get(i).size(); j++) { // TC: O(M)
+                int currentSum = triangle.get(i).get(j);
+                current[j] = currentSum + Math.min(next[j], next[j + 1]);
+            }
+            next = current.clone();
+        }
+        return next[0];
+    }
+
+    /**
      * Approach III : Using Tabulation (Bottom-Up) Approach
      *
-     * TC: O(N x M) + O(N x M) ~ O(N x M)
+     * TC: O(M) + O(N x M) ~ O(N x M)
      * SC: O(N x M), where M = size(triagle's last row)
      *      O(N x M) - dp array memory
      *
      * Accepted (46 / 46 testcases passed)
      */
-    public int minimumTotal(List<List<Integer>> triangle) {
+    public int minimumTotalTabulation(List<List<Integer>> triangle) {
         int n = triangle.size();
         int m = triangle.get(n - 1).size();
         // Initialization
