@@ -14,10 +14,8 @@ class Solution {
         int j = n - 1; // end pointer
         while (i < j) { // TC: O(N)
             int width = j - i;
-            int minH = Math.min(height[i], height[j]);
-            int currentArea = minH * width;
-            maxValue = Math.max(maxValue, currentArea);
-            if (height[i] <= height[j]) {
+            maxValue = Math.max(maxValue, Math.min(height[i], height[j]) * (j - i));
+            if (height[i] < height[j]) {
                 i++;
             } else {
                 j--;
