@@ -2,22 +2,50 @@ class Solution {
     private static Map<Long, Long> freqMap;
 
     /**
-     * Approach II : Using Memoization Approach
+     * Approach III : Using Tabulation Approach
      *
      * TC: O(N x log(N))
-     * SC: O(N) + O(N) ~ O(N)
+     * SC: O(N) + O(N) + O(N) ~ O(N)
      *
      * Accepted (554 / 554 testcases passed)
      */
     public long maximumTotalDamage(int[] power) {
-        this.freqMap = new HashMap<Long, Long>();
-        for (int x : power) {
+        this.freqMap = new HashMap<Long, Long>(); // SC: O(N)
+        for (int x : power) {    // TC: O(N)
             freqMap.put((long) x, freqMap.getOrDefault((long) x, 0L) + 1);
         }
-        List<Long> keys = new ArrayList<Long>(freqMap.keySet());
-        Collections.sort(keys);
+        List<Long> keys = new ArrayList<Long>(freqMap.keySet()); // SC: O(N)
+        Collections.sort(keys);  // TC: O(N x log(N))
         int n = keys.size();
-        long[] memo = new long[n];
+        long[] dp = new long[n]; // SC: O(N)
+        long result = Long.MIN_VALUE;
+        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+            long skip = i + 1 < n ? dp[i + 1] : 0;
+            int j = lowerBound(keys, n, i + 1, keys.get(i) + 3); // TC: O(log(N))
+            long pick = (long) freqMap.get(keys.get(i)) * (long) keys.get(i) + ((j < n) ? dp[j] : 0);
+            dp[i] = Math.max(pick, skip);
+            result = Math.max(result, dp[i]);
+        }
+        return result;
+    }
+
+    /**
+     * Approach II : Using Memoization Approach
+     *
+     * TC: O(N x log(N))
+     * SC: O(N) + O(N) + O(N) ~ O(N)
+     *
+     * Accepted (554 / 554 testcases passed)
+     */
+    public long maximumTotalDamageMemoization(int[] power) {
+        this.freqMap = new HashMap<Long, Long>(); // SC: O(N)
+        for (int x : power) { // TC: O(N)
+            freqMap.put((long) x, freqMap.getOrDefault((long) x, 0L) + 1);
+        }
+        List<Long> keys = new ArrayList<Long>(freqMap.keySet()); // SC: O(N)
+        Collections.sort(keys); // TC: O(N x log(N))
+        int n = keys.size();
+        long[] memo = new long[n]; // SC: O(N)
         Arrays.fill(memo, -1L);
         return solveMemoization(0, n, keys, memo);
     }
