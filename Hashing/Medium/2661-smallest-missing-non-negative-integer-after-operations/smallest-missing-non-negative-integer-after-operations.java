@@ -9,10 +9,7 @@ class Solution {
         int n = nums.length;
         Map<Integer, Integer> freqMap = new HashMap<Integer, Integer>(); // SC: O(N)
         for (int i = 0; i < n; i++) { // TC: O(N)
-            int rem = nums[i] % value;
-            if (rem < 0) {
-                rem = value + rem;
-            }
+            int rem = (value + nums[i] % value) % value;
             freqMap.put(rem, freqMap.getOrDefault(rem, 0) + 1);
         }
         int x = 0;
