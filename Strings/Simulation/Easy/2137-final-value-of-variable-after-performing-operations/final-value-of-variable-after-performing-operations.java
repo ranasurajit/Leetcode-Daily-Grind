@@ -8,13 +8,9 @@ class Solution {
     public int finalValueAfterOperations(String[] operations) {
         int value = 0;
         for (String operation : operations) { // TC: O(N)
-            if (operation.equals("--X")) {
-                --value;
-            } else if (operation.equals("X--")) {
+            if (operation.equals("--X") || operation.equals("X--")) {
                 value--;
-            } else if (operation.equals("++X")) {
-                ++value;
-            } else if (operation.equals("X++")) {
+            } else {
                 value++;
             }
         }
