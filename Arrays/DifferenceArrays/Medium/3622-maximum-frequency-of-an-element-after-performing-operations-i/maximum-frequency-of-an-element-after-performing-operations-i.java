@@ -6,7 +6,6 @@ class Solution {
      * SC: O(N) + O(Max(nums)) ~ O(Max(nums))
      */
     public int maxFrequency(int[] nums, int k, int numOperations) {
-        int n = nums.length;
         int maxVal = Integer.MIN_VALUE;
         Map<Integer, Integer> freq = new HashMap<Integer, Integer>(); // SC: O(N)
         for (int num : nums) { // TC: O(N)
