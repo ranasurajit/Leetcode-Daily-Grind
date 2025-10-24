@@ -2,12 +2,13 @@ class Solution {
     /**
      * Approach : Using Hashing Approach
      *
-     * TC: O(N x N)
+     * TC: O(N x log(M))
      * SC: O(1)
      */
     public int nextBeautifulNumber(int n) {
-        for (int i = n + 1; i < Integer.MAX_VALUE; i++) { // TC: O(N)
-            if (isBalanced(i)) { // TC: O(N)
+        int maxValue = 1224444; // as this is the balanced number for max n = 10 ^ 6 (from constraints)
+        for (int i = n + 1; i <= maxValue; i++) { // TC: O(N)
+            if (isBalanced(i)) { // TC: O(log(M) Base 10)
                 return i;
             }
         }
@@ -17,19 +18,18 @@ class Solution {
     /**
      * Using Hashing Approach
      *
-     * TC: O(N)
+     * TC: O(log(M) Base 10)
      * SC: O(1)
      */
     private boolean isBalanced(int num) {
-        String numericStr = String.valueOf(num);
-        int n = numericStr.length();
-        Map<Integer, Integer> freq = new HashMap<Integer, Integer>(); // SC: O(1)
-        for (int i = 0; i < n; i++) { // TC: O(N)
-            int x = numericStr.charAt(i) - '0';
-            freq.put(x, freq.getOrDefault(x, 0) + 1);
+        int[] freq = new int[10];
+        while (num > 0) { // TC: O(log(M) Base 10)
+            int digit = num % 10;
+            num = num / 10;
+            freq[digit]++;
         }
-        for (Integer key : freq.keySet()) { // TC: O(9)
-            if (freq.get(key) != key) {
+        for (int digit = 0; digit <= 9; digit++) { // TC: O(9)
+            if (freq[digit] != 0 && freq[digit] != digit) {
                 return false;
             }
         }
