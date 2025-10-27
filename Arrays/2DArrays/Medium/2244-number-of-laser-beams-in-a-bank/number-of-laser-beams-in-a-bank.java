@@ -2,15 +2,12 @@ class Solution {
     /**
      * Approach : Using Matrix + Prefix Sum Approach
      *
-     * TC: O(N) + O(M x N) ~ O(M x N)
+     * TC: O(M x N)
      * SC: O(1)
      */
     public int numberOfBeams(String[] bank) {
         int n = bank.length;
         int prevDeviceCount = 0;
-        // for (int i = 0; i < bank[0].length(); i++) { // TC: O(N)
-        //     prevDeviceCount += bank[0].charAt(i) == '1' ? 1 : 0;
-        // }
         int beams = 0;
         for (int i = 0; i < n; i++) { // TC: O(M)
             int currentDeviceCount = 0;
