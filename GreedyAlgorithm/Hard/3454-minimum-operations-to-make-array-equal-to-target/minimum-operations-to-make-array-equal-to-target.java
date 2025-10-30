@@ -22,8 +22,9 @@ class Solution {
                  */
                 operations += Math.abs(current);
             } else {
-                operations += Math.abs(current) - Math.abs(prev) > 0 ? 
-                    Math.abs(current) - Math.abs(prev) : 0;
+                if (Math.abs(current) - Math.abs(prev) > 0) {
+                    operations += Math.abs(current) - Math.abs(prev);
+                }
             }
             prev = current;
         }
