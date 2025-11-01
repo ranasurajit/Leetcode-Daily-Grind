@@ -23,17 +23,14 @@ class Solution {
             hs.add(num);
         }
         ListNode dummy = new ListNode(-1);
-        ListNode temp = dummy;
-        ListNode current = head;
-        while (current != null) { // TC: O(M)
-            while (current != null && hs.contains(current.val)) {
+        dummy.next = head;
+        ListNode current = dummy;
+        while (current.next != null) { // TC: O(M)
+            if (hs.contains(current.next.val)) {
+                current.next = current.next.next;
+            } else {
                 current = current.next;
             }
-            temp.next = current;
-            if (current != null) {
-                current = current.next;
-            }
-            temp = temp.next;
         }
         return dummy.next;
     }
