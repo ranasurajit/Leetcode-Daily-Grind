@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach : Binary Search on Answers Approach
      *
-     * TC: O(N) + O(N x log(K)), where K = Max(stations)
+     * TC: O(N) + O(N) + O(N x log(K)) ~ O(N x log(K)), where K = Max(stations)
      * SC: O(N) + O(N) ~ O(N)
      */
     public long maxPower(int[] stations, int r, int k) {
