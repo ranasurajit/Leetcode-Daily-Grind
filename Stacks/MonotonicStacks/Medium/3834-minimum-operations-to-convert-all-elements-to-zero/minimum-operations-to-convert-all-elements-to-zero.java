@@ -12,19 +12,18 @@ class Solution {
     public int minOperations(int[] nums) {
         int n = nums.length;
         Stack<Integer> st = new Stack<Integer>(); // SC: O(K)
-        int i = 0;
         int operations = 0;
-        while (i < n) { // TC: O(N)
+        for (int i = 0; i < n; i++) { // TC: O(N)
             while (!st.isEmpty() && nums[i] < st.peek()) {
                 st.pop();
             }
-            if (st.isEmpty() || nums[i] > st.peek()) {
-                if (nums[i] > 0) {
-                    st.push(nums[i]);
-                    operations++;
-                }
+            if (nums[i] == 0) {
+                continue;
             }
-            i++;
+            if (st.isEmpty() || nums[i] > st.peek()) {
+                st.push(nums[i]);
+                operations++;
+            }
         }
         return operations;
     }
