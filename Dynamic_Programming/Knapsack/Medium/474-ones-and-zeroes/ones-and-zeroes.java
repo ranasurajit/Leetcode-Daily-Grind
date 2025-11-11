@@ -5,6 +5,9 @@ class Solution {
      * TC: O(K x P x M x N)
      * SC: O(P x M x N) + O(P x M x N)
      *
+     * - O(P x M x N) - memoization memory
+     * - O(P x M x N) - recursion stack
+     *
      * Accepted (77 / 77 testcases passed)
      */
     public int findMaxForm(String[] strs, int m, int n) {
