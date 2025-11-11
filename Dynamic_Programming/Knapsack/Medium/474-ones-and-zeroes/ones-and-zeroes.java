@@ -1,5 +1,36 @@
 class Solution {
     /**
+     * Approach IV : Using Space Optimization Approach
+     *
+     * TC: O(K x P x M x N)
+     * SC: O(2 x M x N) ~ O(M x N)
+     *
+     * - O(M x N) - prev and current memory
+     *
+     * Accepted (77 / 77 testcases passed)
+     */
+    public int findMaxForm(String[] strs, int m, int n) {
+        int P = strs.length;
+        int[][] prev = new int[m + 1][n + 1]; // SC: O(M x N)
+        for (int i = 0; i < P; i++) { // TC: O(P)
+            int[] zerosOnes = getZerosAndOnes(strs[i]); // TC: O(K)
+            int[][] current = new int[m + 1][n + 1]; // SC: O(M x N)
+            for (int j = 0; j <= m; j++) { // TC: O(M)
+                for (int k = 0; k <= n; k++) { // TC: O(N)
+                    int pick = 0;
+                    if (j >= zerosOnes[0] && k >= zerosOnes[1]) {
+                        pick = 1 + (i > 0 ? prev[j - zerosOnes[0]][k - zerosOnes[1]] : 0);
+                    }
+                    int skip = i > 0 ? prev[j][k] : 0;
+                    current[j][k] = Math.max(pick, skip);
+                }
+            }
+            prev = current.clone();
+        }
+        return prev[m][n];
+    }
+
+    /**
      * Approach III : Using Tabulation Approach
      *
      * TC: O(K x P x M x N)
@@ -9,7 +40,7 @@ class Solution {
      *
      * Accepted (77 / 77 testcases passed)
      */
-    public int findMaxForm(String[] strs, int m, int n) {
+    public int findMaxFormTabulation(String[] strs, int m, int n) {
         int P = strs.length;
         int[][][] dp = new int[P][m + 1][n + 1]; // SC: O(P x M x N)
         for (int i = 0; i < P; i++) { // TC: O(P)
