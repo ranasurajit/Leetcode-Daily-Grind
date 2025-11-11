@@ -1,5 +1,34 @@
 class Solution {
     /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(K x P x M x N)
+     * SC: O(P x M x N)
+     *
+     * - O(P x M x N) - dp memory
+     *
+     * Accepted (77 / 77 testcases passed)
+     */
+    public int findMaxForm(String[] strs, int m, int n) {
+        int P = strs.length;
+        int[][][] dp = new int[P][m + 1][n + 1]; // SC: O(P x M x N)
+        for (int i = 0; i < P; i++) { // TC: O(P)
+            int[] zerosOnes = getZerosAndOnes(strs[i]); // TC: O(K)
+            for (int j = 0; j <= m; j++) { // TC: O(M)
+                for (int k = 0; k <= n; k++) { // TC: O(N)
+                    int pick = 0;
+                    if (j >= zerosOnes[0] && k - zerosOnes[1] >= 0) {
+                        pick = 1 + (i > 0 ? dp[i - 1][j - zerosOnes[0]][k - zerosOnes[1]] : 0);
+                    }
+                    int skip = i > 0 ? dp[i - 1][j][k] : 0;
+                    dp[i][j][k] = Math.max(pick, skip);
+                }
+            }
+        }
+        return dp[P - 1][m][n];
+    }
+
+    /**
      * Approach II : Using Memoization Approach
      *
      * TC: O(K x P x M x N)
@@ -10,7 +39,7 @@ class Solution {
      *
      * Accepted (77 / 77 testcases passed)
      */
-    public int findMaxForm(String[] strs, int m, int n) {
+    public int findMaxFormMemoization(String[] strs, int m, int n) {
         int P = strs.length;
         int[][][] memo = new int[P][m + 1][n + 1]; // SC: O(P x M x N)
         for (int[][] mem : memo) {
