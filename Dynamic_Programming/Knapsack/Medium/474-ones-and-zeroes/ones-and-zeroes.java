@@ -17,7 +17,7 @@ class Solution {
             for (int j = 0; j <= m; j++) { // TC: O(M)
                 for (int k = 0; k <= n; k++) { // TC: O(N)
                     int pick = 0;
-                    if (j >= zerosOnes[0] && k - zerosOnes[1] >= 0) {
+                    if (j >= zerosOnes[0] && k >= zerosOnes[1]) {
                         pick = 1 + (i > 0 ? dp[i - 1][j - zerosOnes[0]][k - zerosOnes[1]] : 0);
                     }
                     int skip = i > 0 ? dp[i - 1][j][k] : 0;
