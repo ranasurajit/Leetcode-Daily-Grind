@@ -19,17 +19,15 @@ class Solution {
         int operations = 0;
         int leftOnes = 0;
         for (int i = 0; i < n; i++) { // TC: O(N)
-            leftOnes += s.charAt(i) == '1' ? 1 : 0;
-            boolean isEntered = false;
-            while (i < n && s.charAt(i) == '0') {
-                isEntered = true;
-                i++;
-            }
-            if (isEntered) {
-                i--;
-            }
-            if (i > 0 && s.charAt(i) == '0') {
+            if (s.charAt(i) == '1') {
+                leftOnes++;
+            } else {
                 operations += leftOnes;
+                while (i < n && s.charAt(i) == '0') {
+                    i++;
+                }
+                // decreasing the last increment
+                i--;
             }
         }
         return operations;
