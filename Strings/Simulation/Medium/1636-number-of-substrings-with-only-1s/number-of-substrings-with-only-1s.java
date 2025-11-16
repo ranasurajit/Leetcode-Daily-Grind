@@ -15,7 +15,7 @@ class Solution {
         long k = 0L; // length of continuous 1s
         for (int i = 0; i < n; i++) {     // TC: O(N)
             if (s.charAt(i) == '0') {
-                count = (count + ((k * (k + 1)) / 2) % MOD) % MOD;
+                count = (count + ((k * (k + 1)) / 2)) % MOD;
                 // reset k here
                 k = 0L;
             } else {
@@ -24,7 +24,7 @@ class Solution {
         }
         // add count for remaining k continuous 1s after loop ended
         if (k > 0) {
-            count = (count + ((k * (k + 1)) / 2) % MOD) % MOD;
+            count = (count + ((k * (k + 1)) / 2)) % MOD;
         }
         return (int) count;
     }
