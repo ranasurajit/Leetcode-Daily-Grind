@@ -12,19 +12,20 @@ class Solution {
      */
     public int lengthOfLIS(int[] nums) {
         this.n = nums.length;
-        // Intialization
         int[] dp = new int[n]; // SC: O(N)
-        Arrays.fill(dp, 1); // all indices can be starting of its own LIS so default length is set to 1
+        // each element can have length 1 as LIS starting from itself
+        Arrays.fill(dp, 1);
         int maxLength = 1;
-        for (int i = 1; i < n; i++) { // TC: O(N)
-            // i - currentIdx and j - prevIdx
-            for (int j = 0; j < i; j++) { // TC: O(N)
-                if (nums[i] > nums[j]) {
-                    // then only involvement of nums[i] is allowed in LIS
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
+        for (int idx = 1; idx < n; idx++) { // TC: O(N)
+            // prevIdx should always be before idx
+            for (int prevIdx = 0; prevIdx < idx; prevIdx++) { // TC: O(N)
+                if (nums[prevIdx] < nums[idx]) {
+                    // we can include nums[idx] in the LIS so increase 1 to dp[prevIdx] 
+                    dp[idx] = Math.max(dp[idx], 1 + dp[prevIdx]);
                 }
-                maxLength = Math.max(maxLength, dp[i]);
             }
+            // compare and store the maximum length here
+            maxLength = Math.max(maxLength, dp[idx]);
         }
         return maxLength;
     }
