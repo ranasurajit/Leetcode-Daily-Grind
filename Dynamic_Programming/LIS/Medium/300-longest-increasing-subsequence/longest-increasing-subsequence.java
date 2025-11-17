@@ -2,15 +2,43 @@ class Solution {
     private int n;
 
     /**
-     * Approach IV : Using Space Optimization Approach
+     * Approach IV : Using Optimized Tabulation Approach
      *
      * TC: O(N x N)
-     * SC: O(N x N)
-     * - O(N x N) - dp array memory
+     * SC: O(N)
+     * - O(N) - dp array memory
      *
      * Accepted (56 / 56 testcases passed)
      */
     public int lengthOfLIS(int[] nums) {
+        this.n = nums.length;
+        // Intialization
+        int[] dp = new int[n]; // SC: O(N)
+        Arrays.fill(dp, 1); // all indices can be starting of its own LIS so default length is set to 1
+        int maxLength = 1;
+        for (int i = 1; i < n; i++) { // TC: O(N)
+            // i - currentIdx and j - prevIdx
+            for (int j = 0; j < i; j++) { // TC: O(N)
+                if (nums[i] > nums[j]) {
+                    // then only involvement of nums[i] is allowed in LIS
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+                maxLength = Math.max(maxLength, dp[i]);
+            }
+        }
+        return maxLength;
+    }
+
+    /**
+     * Approach IV : Using Space Optimization Approach
+     *
+     * TC: O(N x N)
+     * SC: O(N) + O(N) ~ O(N)
+     * - O(N) - current and next array memory
+     *
+     * Accepted (56 / 56 testcases passed)
+     */
+    public int lengthOfLISSpaceOptimization(int[] nums) {
         this.n = nums.length;
         // Intialization
         int[] next = new int[n + 1]; // SC: O(N)
