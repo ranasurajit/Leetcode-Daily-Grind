@@ -1,5 +1,37 @@
 class Solution {
     private int n;
+
+    /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(N x N)
+     * SC: O(N x N)
+     * - O(N x N) - dp array memory
+     *
+     * Accepted (56 / 56 testcases passed)
+     */
+    public int lengthOfLIS(int[] nums) {
+        this.n = nums.length;
+        // Intialization
+        int[][] dp = new int[n + 1][n + 1]; // SC: O(N x N)
+        /**
+         * Base Case Conversion -> (idx >= n) return 0 which 
+         * is not needed to handle as dp is initialized with 0s
+         */
+        // Iterative Calls - converting Recursion Calls - (reversing indices of start)
+        for (int idx = n - 1; idx >= 0; idx--) { // TC: O(N)
+            // prevIdx cannot start ahead of index 'idx' (with shifts of 1)
+            for (int prevIdx = idx - 1; prevIdx >= -1; prevIdx--) { // TC: O(N)
+                int length = dp[idx + 1][prevIdx + 1];
+                if (prevIdx == -1 || nums[idx] > nums[prevIdx]) {
+                    length = Math.max(length, 1 + dp[idx + 1][idx + 1]);
+                }
+                dp[idx][prevIdx + 1] = length;
+            }
+        }
+        return dp[0][-1 + 1];
+    }
+
     /**
      * Approach II : Using Memoization Approach
      *
@@ -10,7 +42,7 @@ class Solution {
      *
      * Accepted (56 / 56 testcases passed)
      */
-    public int lengthOfLIS(int[] nums) {
+    public int lengthOfLISMemoization(int[] nums) {
         this.n = nums.length;
         int[][] memo = new int[n][n + 1]; // SC: O(N x N)
         for (int[] mem : memo) {
