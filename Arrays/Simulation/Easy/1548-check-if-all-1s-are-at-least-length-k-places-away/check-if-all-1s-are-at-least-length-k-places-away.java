@@ -10,8 +10,10 @@ class Solution {
         int lastIdx = -1;
         for (int i = 0; i < n; i++) { // TC: O(N)
             if (nums[i] == 1) {
-                if (lastIdx != -1 && i - lastIdx - 1 < k) {
-                    return false;
+                if (lastIdx != -1) {
+                    if (i - lastIdx - 1 < k) {
+                        return false;
+                    }
                 }
                 lastIdx = i;
             }
