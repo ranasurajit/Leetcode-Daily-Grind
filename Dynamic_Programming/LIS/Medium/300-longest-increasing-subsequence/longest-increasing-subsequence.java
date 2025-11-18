@@ -2,6 +2,53 @@ class Solution {
     private int n;
 
     /**
+     * Approach V : Using Binary Search Approach
+     *
+     * TC: O(N x log(N))
+     * SC: O(N)
+     * - O(N) - dp array memory
+     *
+     * Accepted (56 / 56 testcases passed)
+     */
+    public int lengthOfLIS(int[] nums) {
+        this.n = nums.length;
+        List<Integer> sorted = new ArrayList<Integer>(); // SC: O(N)
+        sorted.add(nums[0]);
+        for (int i = 1; i < n; i++) { // TC: O(N)
+            if (nums[i] > sorted.get(sorted.size() - 1)) {
+                sorted.add(nums[i]);
+            } else {
+                // search for the position to swap using Lower-bound (Binary Search) 
+                int lbIndex = lowerBound(sorted, nums[i]); // TC: O(log(N))
+                // setting the nums[i] in place
+                sorted.set(lbIndex, nums[i]);
+            }
+        }
+        return sorted.size();
+    }
+
+    /**
+     * Using Binary Search (We need to return index such that sorted.get(index) >= num) Approach
+     *
+     * TC: O(log(N))
+     * SC: O(1)
+     */
+    private int lowerBound(List<Integer> sorted, int num) {
+        int low = 0;
+        int high = sorted.size() - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (sorted.get(mid) >= num) {
+                // we need to shrink it to find the lowest index
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return low;
+    }
+
+    /**
      * Approach IV : Using Optimized Tabulation Approach
      *
      * TC: O(N x N)
@@ -10,7 +57,7 @@ class Solution {
      *
      * Accepted (56 / 56 testcases passed)
      */
-    public int lengthOfLIS(int[] nums) {
+    public int lengthOfLISOptimizedTabulation(int[] nums) {
         this.n = nums.length;
         int[] dp = new int[n]; // SC: O(N)
         // each element can have length 1 as LIS starting from itself
