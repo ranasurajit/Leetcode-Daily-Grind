@@ -1,5 +1,55 @@
 class Solution {
     private int n;
+    /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(N²) + O(N x log(N)) + O(N) + O(K) ~ O(N²)
+     * SC: O(N) + O(N) + O(K), where K = size(Largest Divisible Subset)
+     * 
+     * Accepted (49 / 49 testcases passed)
+     */
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        this.n = nums.length;
+        /**
+         * since we need every pair so order does not matter so it 
+         * is better to sort 'nums' so that we can only check
+         * condition such that nums[idx] >= nums[prevIdx] such that
+         * nums[idx] % nums[prevIdx] == 0
+         */
+        Arrays.sort(nums); // TC: O(N x log(N))
+        int[] dp = new int[n]; // SC: O(N)
+        Arrays.fill(dp, 1);
+        int[] track = new int[n]; // SC: O(N)
+        int maxLength = 1;
+        int maxIndex = 0;
+        for (int idx = 1; idx < n; idx++) { // TC: O(N)
+            track[idx] = idx; // set element to its own index (parent)
+            for (int prevIdx = 0; prevIdx < idx; prevIdx++) { // TC: O(N)
+                if (nums[idx] % nums[prevIdx] == 0 && dp[idx] < dp[prevIdx] + 1) {
+                    dp[idx] = dp[prevIdx] + 1;
+                    track[idx] = prevIdx;
+                }
+            }
+            if (maxLength < dp[idx]) {
+                maxLength = dp[idx];
+                maxIndex = idx;
+            }
+        }
+        // now we need to backtrack the LIS i.e. Largest Divisible Subset
+        int[] lds = new int[maxLength]; // SC: O(K)
+        int index = 0;
+        while (track[maxIndex] != maxIndex) { // TC: O(N)
+            lds[index] = nums[maxIndex];
+            maxIndex = track[maxIndex];
+            index++;
+        }
+        lds[index] = nums[maxIndex];
+        List<Integer> result = new ArrayList<Integer>();
+        for (int i = maxLength - 1; i >= 0; i--) { // TC: O(K)
+            result.add(lds[i]);
+        }
+        return result;
+    }
 
     /**
      * Approach II : Using Memoization Approach
@@ -11,7 +61,7 @@ class Solution {
      * 
      * Accepted (49 / 49 testcases passed)
      */
-    public List<Integer> largestDivisibleSubset(int[] nums) {
+    public List<Integer> largestDivisibleSubsetMemoization(int[] nums) {
         this.n = nums.length;
         /**
          * since we need every pair so order does not matter so it 
