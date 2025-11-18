@@ -6,7 +6,7 @@ class Solution {
      *
      * TC: O(N x log(N))
      * SC: O(N)
-     * - O(N) - dp array memory
+     * - O(N) - sorted ArrayList memory
      *
      * Accepted (56 / 56 testcases passed)
      */
