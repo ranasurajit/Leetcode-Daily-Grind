@@ -10,7 +10,7 @@ class Solution {
         for (int num : nums) { // TC: O(N)
             freq[num]++;
         }
-        while (original < 1001 && freq[original] != 0) { // TC: O(1000) ~ O(1)
+        while (original < freq.length && freq[original] != 0) { // TC: O(1000) ~ O(1)
             original *= 2;
         }
         return original;
