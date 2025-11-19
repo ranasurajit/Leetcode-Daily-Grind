@@ -1,5 +1,42 @@
 class Solution {
     /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(L x N x N) + O(N x log(N)) ~ O(L x N x N)
+     * SC: O(N x N)
+     * - O(N x N) - memoization memory
+     *
+     * Accepted (86 / 86 testcases passed)
+     */
+    public int longestStrChain(String[] words) {
+        int n = words.length;
+        /**
+         * Order does not matter here and we should sort the String[] words
+         * so that for any current word we can check if previous word is a
+         * predecessor or not
+         */
+        Arrays.sort(words, (a, b) -> {
+            if (a.length() != b.length()) {
+                return a.length() - b.length();
+            }
+            return a.compareTo(b);
+        }); // TC: O(N x log(N))
+        int[][] dp = new int[n + 1][n + 1]; // SC: O(N x N)
+        for (int idx = n - 1; idx >= 0; idx--) { // TC: O(N)
+            for (int prevIdx = idx - 1; prevIdx >= -1; prevIdx--) { // TC: O(N)
+                int skip = dp[idx + 1][prevIdx + 1];
+                int pick = 0;
+                if (prevIdx == -1 || isPredecessor(words[prevIdx], words[idx])) { // TC: O(L)
+                    // pick
+                    pick = 1 + dp[idx + 1][idx + 1];
+                }
+                dp[idx][prevIdx + 1] = Math.max(skip, pick);
+            }
+        }
+        return dp[0][-1 + 1];
+    }
+
+    /**
      * Approach II : Using Memoization Approach
      *
      * TC: O(L x N x N) + O(N x log(N)) ~ O(L x N x N)
@@ -9,7 +46,7 @@ class Solution {
      *
      * Accepted (86 / 86 testcases passed)
      */
-    public int longestStrChain(String[] words) {
+    public int longestStrChainMemoization(String[] words) {
         int n = words.length;
         /**
          * Order does not matter here and we should sort the String[] words
@@ -30,7 +67,7 @@ class Solution {
     }
 
     /**
-     * Using Recursion Approach
+     * Using Memoization Approach
      *
      * TC: O(L x N x N)
      * SC: O(N)
