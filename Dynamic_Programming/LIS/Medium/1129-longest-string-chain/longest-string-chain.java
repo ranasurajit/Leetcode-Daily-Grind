@@ -1,5 +1,45 @@
 class Solution {
     /**
+     * Approach IV : Using Space Optimization Approach
+     *
+     * TC: O(L x N x N) + O(N x log(N)) ~ O(L x N x N)
+     * SC: O(N) + O(N) ~ O(N)
+     * - O(N) - 'next' array memory
+     * - O(N) - 'current' array memory
+     *
+     * Accepted (86 / 86 testcases passed)
+     */
+    public int longestStrChain(String[] words) {
+        int n = words.length;
+        /**
+         * Order does not matter here and we should sort the String[] words
+         * so that for any current word we can check if previous word is a
+         * predecessor or not
+         */
+        Arrays.sort(words, (a, b) -> {
+            if (a.length() != b.length()) {
+                return a.length() - b.length();
+            }
+            return a.compareTo(b);
+        }); // TC: O(N x log(N))
+        int[] next = new int[n + 1]; // SC: O(N)
+        for (int idx = n - 1; idx >= 0; idx--) { // TC: O(N)
+            int[] current = new int[n + 1]; // SC: O(N)
+            for (int prevIdx = idx - 1; prevIdx >= -1; prevIdx--) { // TC: O(N)
+                int skip = next[prevIdx + 1];
+                int pick = 0;
+                if (prevIdx == -1 || isPredecessor(words[prevIdx], words[idx])) { // TC: O(L)
+                    // pick
+                    pick = 1 + next[idx + 1];
+                }
+                current[prevIdx + 1] = Math.max(skip, pick);
+            }
+            next = current;
+        }
+        return next[-1 + 1];
+    }
+
+    /**
      * Approach III : Using Tabulation Approach
      *
      * TC: O(L x N x N) + O(N x log(N)) ~ O(L x N x N)
@@ -8,7 +48,7 @@ class Solution {
      *
      * Accepted (86 / 86 testcases passed)
      */
-    public int longestStrChain(String[] words) {
+    public int longestStrChainTabulation(String[] words) {
         int n = words.length;
         /**
          * Order does not matter here and we should sort the String[] words
