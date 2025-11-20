@@ -15,9 +15,7 @@ class Solution {
         int minBuy = prices[0];
         int maximumProfit = 0;
         for (int i = 1; i < n; i++) { // TC: O(N)
-            if (prices[i] > minBuy) {
-                maximumProfit = Math.max(maximumProfit, prices[i] - minBuy);
-            }
+            maximumProfit = Math.max(maximumProfit, prices[i] - minBuy);
             minBuy = Math.min(minBuy, prices[i]);
         }
         return maximumProfit;
