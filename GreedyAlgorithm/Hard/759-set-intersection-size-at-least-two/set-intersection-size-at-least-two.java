@@ -27,17 +27,22 @@ class Solution {
             int start = time[0];
             int end = time[1];
             int hits = 0;
-            if (last >= start && last <= end) {
+            boolean hasLast = last >= start && last <= end;
+            boolean hasSecondLast = secondLast >= start && secondLast <= end;
+            if (hasLast) {
                 hits++;
             }
-            if (secondLast >= start && secondLast <= end) {
+            if (hasSecondLast) {
                 hits++;
             }
             if (hits == 2) {
                 continue;
             } else if (hits == 1) {
                 // we need to add only end to HashSet to maximize overlap
-                secondLast = last;
+                if (hasLast) {
+                    // we need to shift last to secondLast
+                    secondLast = last;
+                }
                 last = end;
                 count++;
             } else {
