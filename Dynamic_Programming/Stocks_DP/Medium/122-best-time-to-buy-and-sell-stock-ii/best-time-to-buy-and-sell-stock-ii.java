@@ -1,5 +1,41 @@
 class Solution {
     /**
+     * Approach IV : Using Space Optimization Approach
+     *
+     * TC: O(2 x N) ~ O(N)
+     * SC: O(2) + O(2) ~ O(1)
+     *
+     * Accepted (202 / 202 testcases passed)
+     */
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int[] next = new int[2]; // SC: O(2)
+        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+            int[] current = new int[2]; // SC: O(2)
+            for (int j = 0; j < 2; j++) {  // TC: O(2)
+                int pick = 0;
+                int skip = 0;
+                if (j == 1) {
+                    // we can decide to pick or skip
+                    // pick - so canBuy = 0 and substract prices[i]
+                    pick = (-1 * prices[i]) + ((i + 1) < n ? next[0] : 0); // bought here
+                    // skip - if we skip then we can still buy so canBuy = 1
+                    skip = ((i + 1) < n ? next[1] : 0);
+                } else {
+                    // we can decide to pick or skip
+                    // pick - if we pick then we can buy so canBuy = 1 and add prices[idx]
+                    pick = prices[i] + ((i + 1) < n ? next[1] : 0); // sold here
+                    // skip - if we skip then we cannot still buy so canBuy = 0
+                    skip = ((i + 1) < n ? next[0] : 0);
+                }
+                next = current;
+                current[j] = Math.max(pick, skip);
+            }
+        }
+        return next[1]; // return next[buy = 1 as it is sold here to gain profits]
+    }
+
+    /**
      * Approach III : Using Tabulation Approach
      *
      * TC: O(2 x N) ~ O(N)
@@ -8,7 +44,7 @@ class Solution {
      *
      * Accepted (202 / 202 testcases passed)
      */
-    public int maxProfit(int[] prices) {
+    public int maxProfitTabulation(int[] prices) {
         int n = prices.length;
         int[][] dp = new int[n][2]; // SC: O(2 x N) ~ O(N)
         for (int i = n - 1; i >= 0; i--) { // TC: O(N)
