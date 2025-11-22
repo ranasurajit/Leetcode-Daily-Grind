@@ -2,10 +2,10 @@ class Solution {
     /**
      * Approach III : Using Tabulation Approach
      *
-     * TC: O(N x N x N) + O(N x log(N)) ~ O(N³)
-     * SC: O(N²) + O(N)
-     * - O(N²) - memoization memory
-     * - O(N) - recursion stack
+     * TC: O(N x N) + O(N x log(N)) + O(K) + O(K) ~ O(N x N)
+     * SC: O(N) + O(N) + O(K) ~ O(N)
+     * - O(N) - dp and track memory
+     * - O(K) - lis memory
      * 
      * Accepted (49 / 49 testcases passed)
      */
@@ -30,16 +30,16 @@ class Solution {
                 maxIndex = i;
             }
         }
-        int[] lis = new int[maxLength];
+        int[] lis = new int[maxLength]; // SC: O(K)
         int index = maxLength - 1;
-        while (track[maxIndex] != maxIndex) {
+        while (track[maxIndex] != maxIndex) { // TC: O(K)
             lis[index] = nums[maxIndex];
             maxIndex = track[maxIndex];
             index--;
         }
         lis[index] = nums[maxIndex];
         ArrayList<Integer> lisList = new ArrayList<Integer>();
-        for (int i = 0; i < maxLength; i++) {
+        for (int i = 0; i < maxLength; i++) { // TC: O(K)
             lisList.add(lis[i]);
         }
         return lisList;
