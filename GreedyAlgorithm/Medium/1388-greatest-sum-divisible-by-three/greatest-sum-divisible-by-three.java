@@ -1,5 +1,31 @@
 class Solution {
     private static int INF = (int) 1e4;
+    /**
+     * Approach VI : Using Tabulation Approach
+     *
+     * TC: O(3 x N) + O(2 x N) ~ O(N)
+     * SC: O(3 x N) ~ O(N)
+     * - O(N) - dp array
+     *
+     * Accepted (43 / 43 testcases passed)
+     */
+    public int maxSumDivThree(int[] nums) {
+        int n = nums.length;
+        int[][] dp = new int[n + 1][3]; // SC: O(N x 3)
+        for (int j = 1; j < 3; j++) {      // TC: O(2)
+            for (int i = 0; i <= n; i++) { // TC: O(N)
+                dp[i][j] = Integer.MIN_VALUE;
+            }
+        }
+        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+            for (int j = 2; j >= 0; j--) { // TC: O(3)
+                int skip = dp[i + 1][j];
+                int pick = nums[i] + dp[i + 1][(j + nums[i]) % 3];
+                dp[i][j] = Math.max(pick, skip);
+            }
+        }
+        return dp[0][0];
+    }
 
     /**
      * Approach V : Using Memoization Approach
@@ -11,7 +37,7 @@ class Solution {
      *
      * Accepted (43 / 43 testcases passed)
      */
-    public int maxSumDivThree(int[] nums) {
+    public int maxSumDivThreeMemoization(int[] nums) {
         int n = nums.length;
         int[][] memo = new int[n][3]; // SC: O(N x 3)
         for (int[] mem : memo) {
