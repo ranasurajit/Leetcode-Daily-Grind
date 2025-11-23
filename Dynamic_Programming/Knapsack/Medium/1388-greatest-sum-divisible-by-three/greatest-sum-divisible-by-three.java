@@ -1,0 +1,287 @@
+class Solution {
+    private static int INF = (int) 1e4;
+    /**
+     * Approach VII : Using Space Optimization Approach
+     *
+     * TC: O(3 x N) + O(2 x N) ~ O(N)
+     * SC: O(3) + O(3) ~ O(1)
+     * - O(3) - next and current array memory
+     *
+     * Accepted (43 / 43 testcases passed)
+     */
+    public int maxSumDivThree(int[] nums) {
+        int n = nums.length;
+        // Initialization
+        int[] next = new int[3]; // SC: O(3)
+        next[1] = Integer.MIN_VALUE;
+        next[2] = Integer.MIN_VALUE;
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+            int[] current = new int[3]; // SC: O(3)
+            current[1] = Integer.MIN_VALUE;
+            current[2] = Integer.MIN_VALUE;
+            for (int j = 2; j >= 0; j--) { // TC: O(3)
+                int skip = next[j];
+                int pick = nums[i] + next[(j + nums[i]) % 3];
+                current[j] = Math.max(pick, skip);
+            }
+            next = current;
+        }
+        return next[0];
+    }
+
+    /**
+     * Approach VI : Using Tabulation Approach
+     *
+     * TC: O(3 x N) + O(2 x N) ~ O(N)
+     * SC: O(3 x N) ~ O(N)
+     * - O(N) - dp array memory
+     *
+     * Accepted (43 / 43 testcases passed)
+     */
+    public int maxSumDivThreeTabulation(int[] nums) {
+        int n = nums.length;
+        // Initialization
+        int[][] dp = new int[n + 1][3]; // SC: O(N x 3)
+        for (int j = 1; j < 3; j++) {      // TC: O(2)
+            for (int i = 0; i <= n; i++) { // TC: O(N)
+                dp[i][j] = Integer.MIN_VALUE;
+            }
+        }
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+            for (int j = 2; j >= 0; j--) { // TC: O(3)
+                int skip = dp[i + 1][j];
+                int pick = nums[i] + dp[i + 1][(j + nums[i]) % 3];
+                dp[i][j] = Math.max(pick, skip);
+            }
+        }
+        return dp[0][0];
+    }
+
+    /**
+     * Approach V : Using Memoization Approach
+     *
+     * TC: O(3 x N) ~ O(N)
+     * SC: O(3 x N) + O(N) ~ O(N) + O(N)
+     * - O(N) - memoization array memory
+     * - O(N) - recursion stack
+     *
+     * Accepted (43 / 43 testcases passed)
+     */
+    public int maxSumDivThreeMemoization(int[] nums) {
+        int n = nums.length;
+        int[][] memo = new int[n][3]; // SC: O(N x 3)
+        for (int[] mem : memo) {
+            Arrays.fill(mem, -1);
+        }
+        return solveMemoization(0, n, 0, nums, memo); // TC: O(N x 3), SC: O(N)
+    }
+
+    /**
+     * Using Memoization Approach
+     *
+     * TC: O(N x 3)
+     * SC: O(N)
+     */
+    private int solveMemoization(int idx, int n, int rem, int[] nums, int[][] memo) {
+        // Base Case
+        if (idx == n) {
+            return rem == 0 ? 0 : Integer.MIN_VALUE;
+        }
+        // Memoization Check
+        if (memo[idx][rem] != -1) {
+            return memo[idx][rem];
+        }
+        // Recursion Calls
+        // skip
+        int skip = solveMemoization(idx + 1, n, rem, nums, memo);
+        // pick
+        int pick = nums[idx] + solveMemoization(idx + 1, n, (rem + nums[idx]) % 3, nums, memo);
+        return memo[idx][rem] = Math.max(pick, skip);
+    }
+
+    /**
+     * Approach IV : Using Better Recursion Approach
+     *
+     * TC: O(2 ^ N)
+     * SC: O(N)
+     * - O(N) - recursion stack
+     *
+     * Time Limit Exceeded (19 / 43 testcases passed)
+     */
+    public int maxSumDivThreeBetterRecursion(int[] nums) {
+        int n = nums.length;
+        return solveBetterRecursion(0, n, 0, nums);
+    }
+
+    /**
+     * Using Better Recursion Approach
+     *
+     * TC: O(2 ^ N)
+     * SC: O(N)
+     */
+    private int solveBetterRecursion(int idx, int n, int rem, int[] nums) {
+        // Base Case
+        if (idx == n) {
+            return rem == 0 ? 0 : Integer.MIN_VALUE;
+        }
+        // Recursion Calls
+        // skip
+        int skip = solveBetterRecursion(idx + 1, n, rem, nums);
+        // pick
+        int pick = nums[idx] + solveBetterRecursion(idx + 1, n, (rem + nums[idx]) % 3, nums);
+        return Math.max(pick, skip);
+    }
+
+    /**
+     * Approach III : Using Greedy Clean Approach
+     *
+     * TC: O(N) + O(N1 x log(N1)) + O(N2 x log(N2)) ~ O(N x log(N))
+     * SC: O(N1 + N2) ~ O(N)
+     *
+     * Accepted (43 / 43 testcases passed)
+     */
+    public int maxSumDivThreeGreedyCleanApproach(int[] nums) {
+        int n = nums.length;
+        /**
+         * When we do modulo 3 then remainders can be 0, 1 or 2
+         * so now we can check the overall modulo because of 
+         * which it is not allowing the overall sum divisible by 3 
+         */
+        int total = 0;
+        List<Integer> ones = new ArrayList<Integer>(); // SC: O(N1)
+        List<Integer> twos = new ArrayList<Integer>(); // SC: O(N1)
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            total += nums[i];
+            int rem = nums[i] % 3;
+            if (rem == 1) {
+                ones.add(nums[i]);
+            } else if (rem == 2) {
+                twos.add(nums[i]);
+            }
+        }
+        if (total % 3 == 0) {
+            return total;
+        }
+        int overallMod = total % 3;
+        /**
+         * There will be two cases when overallMod = 1 or 2
+         * to maximize sum, we need to pick minimum number 
+         * that contributes leftover 'overallMod'
+         * 
+         * if overallMod = 2, we need to find one number which contributes 
+         * remainder 2 or 2 mimimum numbers that contribute a remainder 1
+         *
+         * if overallMod = 1, we need to find one number which contributes 
+         * remainder 1 or 2 mimimum numbers that contribute a remainder 2
+         */
+        Collections.sort(ones); // TC: O(N1 x log(N1))
+        Collections.sort(twos); // TC: O(N2 x log(N2))
+        int remove = INF;
+        int minNumOne = 0;
+        int minNumTwo = 0;
+        if (overallMod == 2) {
+            minNumOne = twos.size() > 0 ? twos.get(0) : INF;
+            minNumTwo = ones.size() > 1 ? ones.get(0) + ones.get(1) : INF;
+        } else {
+            minNumOne = ones.size() > 0 ? ones.get(0) : INF;
+            minNumTwo = twos.size() > 1 ? twos.get(0) + twos.get(1) : INF;
+        }
+        remove = Math.min(minNumOne, minNumTwo);
+        return total - remove;
+    }
+
+    /**
+     * Approach II : Using Greedy Approach
+     *
+     * TC: O(N) + O(N1 x log(N1)) + O(N2 x log(N2)) ~ O(N x log(N))
+     * SC: O(N)
+     *
+     * Accepted (43 / 43 testcases passed)
+     */
+    public int maxSumDivThreeGreedyApproach(int[] nums) {
+        int n = nums.length;
+        if (n == 1) {
+            return nums[0] % 3 == 0 ? nums[0] : 0; 
+        }
+        /**
+         * When we do modulo 3 then remainders can be 0, 1 or 2
+         * so now we can check the overall modulo because of 
+         * which it is not allowing the overall sum divisible by 3 
+         */
+        int overallMod = 0;
+        int total = 0;
+        Map<Integer, ArrayList<Integer>> map = 
+            new HashMap<Integer, ArrayList<Integer>>(); // SC: O(N)
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            int rem = nums[i] % 3;
+            overallMod += rem;
+            total += nums[i];
+            map.computeIfAbsent(rem, k -> new ArrayList<Integer>()).add(nums[i]);
+        }
+        if (total % 3 == 0) {
+            return total;
+        }
+        overallMod = overallMod % 3;
+        /**
+         * There will be two cases when overallMod = 1 or 2
+         * to maximize sum, we need to pick minimum number 
+         * that contributes leftover 'overallMod'
+         * 
+         * if overallMod = 2, we need to find one number which contributes 
+         * remainder 2 or 2 mimimum numbers that contribute a remainder 1
+         *
+         * if overallMod = 1, we need to find one number which contributes 
+         * remainder 1 or 2 mimimum numbers that contribute a remainder 2
+         */
+        int minNumOne = 0;
+        int minNumPairOne = 0;
+        int minNumPairTwo = 0;
+        List<Integer> ones = map.getOrDefault(1, new ArrayList<Integer>());
+        List<Integer> twos = map.getOrDefault(2, new ArrayList<Integer>());
+        Collections.sort(ones); // TC: O(N1 x log(N1))
+        Collections.sort(twos); // TC: O(N2 x log(N2))
+        if (overallMod == 2) {
+            minNumOne = twos.size() > 0 ? twos.get(0) : INF;
+            minNumPairOne = ones.size() > 0 ? ones.get(0) : INF;
+            minNumPairTwo = ones.size() > 1 ? ones.get(1) : INF;
+        } else {
+            minNumOne = ones.size() > 0 ? ones.get(0) : INF;
+            minNumPairOne = twos.size() > 0 ? twos.get(0) : INF;
+            minNumPairTwo = twos.size() > 1 ? twos.get(1) : INF;
+        }
+        return Math.max(total - minNumOne, total - minNumPairOne - minNumPairTwo);
+    }
+
+    /**
+     * Approach I : Using Recursion Approach
+     *
+     * TC: O(2 ^ N)
+     * SC: O(N)
+     * - O(N) - recursion stack
+     *
+     * Time Limit Exceeded (19 / 43 testcases passed)
+     */
+    public int maxSumDivThreeRecursion(int[] nums) {
+        int n = nums.length;
+        return solveRecursion(0, 0, n, nums);
+    }
+
+    /**
+     * Using Recursion Approach
+     *
+     * TC: O(2 ^ N)
+     * SC: O(N)
+     */
+    private int solveRecursion(int idx, int sum, int n, int[] nums) {
+        // Base Case
+        if (idx == n) {
+            return sum % 3 == 0 ? sum : 0;
+        }
+        // Recursion Calls
+        int skip = solveRecursion(idx + 1, sum, n, nums); // skip
+        int pick = solveRecursion(idx + 1, sum + nums[idx], n, nums); // pick
+        return Math.max(pick, skip);
+    }
+}
