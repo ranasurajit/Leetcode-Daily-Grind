@@ -18,6 +18,8 @@ class Solution {
         // Iterative Calls
         for (int i = n - 1; i >= 0; i--) { // TC: O(N)
             int[] current = new int[3]; // SC: O(3)
+            current[1] = Integer.MIN_VALUE;
+            current[2] = Integer.MIN_VALUE;
             for (int j = 2; j >= 0; j--) { // TC: O(3)
                 int skip = next[j];
                 int pick = nums[i] + next[(j + nums[i]) % 3];
