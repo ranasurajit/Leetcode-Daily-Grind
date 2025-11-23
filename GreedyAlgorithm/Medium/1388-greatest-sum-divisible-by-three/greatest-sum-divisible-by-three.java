@@ -3,8 +3,8 @@ class Solution {
     /**
      * Approach II : Using Greedy Approach
      *
-     * TC: O(N) + O(N)
-     * SC: O(1)
+     * TC: O(N) + O(K x log(K))
+     * SC: O(N)
      *
      * Accepted (43 / 43 testcases passed)
      */
@@ -20,15 +20,13 @@ class Solution {
          */
         int overallMod = 0;
         int total = 0;
-        Map<Integer, ArrayList<Integer>> map = new HashMap<Integer, ArrayList<Integer>>();
+        Map<Integer, ArrayList<Integer>> map = 
+            new HashMap<Integer, ArrayList<Integer>>(); // SC: O(N)
         for (int i = 0; i < n; i++) { // TC: O(N)
             int rem = nums[i] % 3;
             overallMod += rem;
             total += nums[i];
             map.computeIfAbsent(rem, k -> new ArrayList<Integer>()).add(nums[i]);
-        }
-        for (Integer key : map.keySet()) {
-            Collections.sort(map.get(key));
         }
         if (total % 3 == 0) {
             return total;
@@ -50,6 +48,8 @@ class Solution {
         int minNumPairTwo = 0;
         List<Integer> ones = map.getOrDefault(1, new ArrayList<Integer>());
         List<Integer> twos = map.getOrDefault(2, new ArrayList<Integer>());
+        Collections.sort(ones); // TC: O(K x log(K))
+        Collections.sort(twos); // TC: O(K x log(K))
         if (overallMod == 2) {
             minNumOne = twos.size() > 0 ? twos.get(0) : INF;
             minNumPairOne = ones.size() > 0 ? ones.get(0) : INF;
