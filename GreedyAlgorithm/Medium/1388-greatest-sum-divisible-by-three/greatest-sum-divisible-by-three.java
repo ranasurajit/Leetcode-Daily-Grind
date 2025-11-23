@@ -1,5 +1,81 @@
 class Solution {
     private static int INF = (int) 1e4;
+
+    /**
+     * Approach V : Using Memoization Approach
+     *
+     * TC: O(3 x N) ~ O(N)
+     * SC: O(3 x N) + O(N) ~ O(N) + O(N)
+     * - O(N) - memoization array
+     * - O(N) - recursion stack
+     *
+     * Accepted (43 / 43 testcases passed)
+     */
+    public int maxSumDivThree(int[] nums) {
+        int n = nums.length;
+        int[][] memo = new int[n][3]; // SC: O(N x 3)
+        for (int[] mem : memo) {
+            Arrays.fill(mem, -1);
+        }
+        return solveMemoization(0, n, 0, nums, memo); // TC: O(N x 3), SC: O(N)
+    }
+
+    /**
+     * Using Memoization Approach
+     *
+     * TC: O(N x 3)
+     * SC: O(N)
+     */
+    private int solveMemoization(int idx, int n, int rem, int[] nums, int[][] memo) {
+        // Base Case
+        if (idx == n) {
+            return rem == 0 ? 0 : Integer.MIN_VALUE;
+        }
+        // Memoization Check
+        if (memo[idx][rem] != -1) {
+            return memo[idx][rem];
+        }
+        // Recursion Calls
+        // skip
+        int skip = solveMemoization(idx + 1, n, rem, nums, memo);
+        // pick
+        int pick = nums[idx] + solveMemoization(idx + 1, n, (rem + nums[idx]) % 3, nums, memo);
+        return memo[idx][rem] = Math.max(pick, skip);
+    }
+
+    /**
+     * Approach IV : Using Better Recursion Approach
+     *
+     * TC: O(2 ^ N)
+     * SC: O(N)
+     * - O(N) - recursion stack
+     *
+     * Time Limit Exceeded (19 / 43 testcases passed)
+     */
+    public int maxSumDivThreeBetterRecursion(int[] nums) {
+        int n = nums.length;
+        return solveBetterRecursion(0, n, 0, nums);
+    }
+
+    /**
+     * Using Better Recursion Approach
+     *
+     * TC: O(2 ^ N)
+     * SC: O(N)
+     */
+    private int solveBetterRecursion(int idx, int n, int rem, int[] nums) {
+        // Base Case
+        if (idx == n) {
+            return rem == 0 ? 0 : Integer.MIN_VALUE;
+        }
+        // Recursion Calls
+        // skip
+        int skip = solveBetterRecursion(idx + 1, n, rem, nums);
+        // pick
+        int pick = nums[idx] + solveBetterRecursion(idx + 1, n, (rem + nums[idx]) % 3, nums);
+        return Math.max(pick, skip);
+    }
+
     /**
      * Approach III : Using Greedy Clean Approach
      *
@@ -8,7 +84,7 @@ class Solution {
      *
      * Accepted (43 / 43 testcases passed)
      */
-    public int maxSumDivThree(int[] nums) {
+    public int maxSumDivThreeGreedyCleanApproach(int[] nums) {
         int n = nums.length;
         /**
          * When we do modulo 3 then remainders can be 0, 1 or 2
