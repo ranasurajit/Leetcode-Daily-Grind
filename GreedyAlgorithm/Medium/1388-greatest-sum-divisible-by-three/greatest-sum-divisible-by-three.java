@@ -1,22 +1,52 @@
 class Solution {
     private static int INF = (int) 1e4;
     /**
-     * Approach VI : Using Tabulation Approach
+     * Approach VII : Using Space Optimization Approach
      *
      * TC: O(3 x N) + O(2 x N) ~ O(N)
-     * SC: O(3 x N) ~ O(N)
-     * - O(N) - dp array
+     * SC: O(3) + O(3) ~ O(1)
+     * - O(3) - next and current array memory
      *
      * Accepted (43 / 43 testcases passed)
      */
     public int maxSumDivThree(int[] nums) {
         int n = nums.length;
+        // Initialization
+        int[] next = new int[3]; // SC: O(3)
+        next[1] = Integer.MIN_VALUE;
+        next[2] = Integer.MIN_VALUE;
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+            int[] current = new int[3]; // SC: O(3)
+            for (int j = 2; j >= 0; j--) { // TC: O(3)
+                int skip = next[j];
+                int pick = nums[i] + next[(j + nums[i]) % 3];
+                current[j] = Math.max(pick, skip);
+            }
+            next = current;
+        }
+        return next[0];
+    }
+
+    /**
+     * Approach VI : Using Tabulation Approach
+     *
+     * TC: O(3 x N) + O(2 x N) ~ O(N)
+     * SC: O(3 x N) ~ O(N)
+     * - O(N) - dp array memory
+     *
+     * Accepted (43 / 43 testcases passed)
+     */
+    public int maxSumDivThreeTabulation(int[] nums) {
+        int n = nums.length;
+        // Initialization
         int[][] dp = new int[n + 1][3]; // SC: O(N x 3)
         for (int j = 1; j < 3; j++) {      // TC: O(2)
             for (int i = 0; i <= n; i++) { // TC: O(N)
                 dp[i][j] = Integer.MIN_VALUE;
             }
         }
+        // Iterative Calls
         for (int i = n - 1; i >= 0; i--) { // TC: O(N)
             for (int j = 2; j >= 0; j--) { // TC: O(3)
                 int skip = dp[i + 1][j];
@@ -32,7 +62,7 @@ class Solution {
      *
      * TC: O(3 x N) ~ O(N)
      * SC: O(3 x N) + O(N) ~ O(N) + O(N)
-     * - O(N) - memoization array
+     * - O(N) - memoization array memory
      * - O(N) - recursion stack
      *
      * Accepted (43 / 43 testcases passed)
