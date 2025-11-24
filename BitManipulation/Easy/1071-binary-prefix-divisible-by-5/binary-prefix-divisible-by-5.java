@@ -11,8 +11,10 @@ class Solution {
         int n = nums.length;
         List<Boolean> result = new ArrayList<Boolean>();
         /**
-         * We will build the number from Binary to Decimal
-         * keeping track of only remainder i.e. mod
+         * For any new addition of bit at last what we do 
+         * is newValue = prevValue * 2 + bit so we need
+         * to check if newValue % 5 == 0, so we can do
+         * similar approach to mod
          */
         int prefix = 0;
         for (int i = 0; i < n; i++) { // TC: O(N)
@@ -23,7 +25,7 @@ class Solution {
     }
 
     /**
-     * Approach II : Using Optimal (Bit-Manipulation) Approach
+     * Approach II : Using Better (Bit-Manipulation) Approach
      *
      * TC: O(N)
      * SC: O(1)
