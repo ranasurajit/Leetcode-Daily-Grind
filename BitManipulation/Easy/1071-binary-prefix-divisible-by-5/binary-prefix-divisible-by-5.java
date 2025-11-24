@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach II : Using Optimal (Bit-Manipulation) Approach
+     * Approach III : Using Optimal (Bit-Manipulation) Approach
      *
      * TC: O(N)
      * SC: O(1)
@@ -8,6 +8,29 @@ class Solution {
      * Accepted (24 / 24 testcases passed)
      */
     public List<Boolean> prefixesDivBy5(int[] nums) {
+        int n = nums.length;
+        List<Boolean> result = new ArrayList<Boolean>();
+        /**
+         * We will build the number from Binary to Decimal
+         * keeping track of only remainder i.e. mod
+         */
+        int prefix = 0;
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            prefix = ((prefix << 1) + nums[i]) % 5;
+            result.add(prefix == 0);
+        }
+        return result;
+    }
+
+    /**
+     * Approach II : Using Optimal (Bit-Manipulation) Approach
+     *
+     * TC: O(N)
+     * SC: O(1)
+     *
+     * Accepted (24 / 24 testcases passed)
+     */
+    public List<Boolean> prefixesDivBy5BitManipulation(int[] nums) {
         int n = nums.length;
         List<Boolean> result = new ArrayList<Boolean>();
         /**
