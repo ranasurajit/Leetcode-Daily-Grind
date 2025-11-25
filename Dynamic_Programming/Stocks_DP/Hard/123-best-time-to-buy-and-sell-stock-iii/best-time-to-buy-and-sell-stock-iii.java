@@ -1,5 +1,44 @@
 class Solution {
     /**
+     * Approach IV : Using Space Optimization Approach
+     *
+     * TC: O(N)
+     * SC: O(1)
+     *
+     * Accepted (214 / 214 testcases passed)
+     */
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        // states are index, canBuy and allowed
+        // Initialization
+        int[][] next = new int[2][3]; // SC: O(6) ~ O(1)
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) {    // TC: O(N) - index
+            int[][] current = new int[2][3]; // SC: O(6) ~ O(1)
+            for (int j = 0; j < 2; j++) {     // TC: O(2) - canBuy
+                for (int k = 0; k < 3; k++) { // TC: O(3) - allowed
+                    if (k == 0) {
+                        current[j][k] = 0;
+                        continue;
+                    }
+                    int pick = 0;
+                    int skip = 0;
+                    if (j == 1) {
+                        skip = next[1][k];
+                        pick = -1 * prices[i] + next[0][k];
+                    } else {
+                        skip = next[0][k];
+                        pick = prices[i] + next[1][k - 1];
+                    }
+                    current[j][k] = Math.max(pick, skip);
+                }
+            }
+            next = current;
+        }
+        return next[1][2];
+    }
+
+    /**
      * Approach III : Using Tabulation Approach
      *
      * TC: O(N)
@@ -8,7 +47,7 @@ class Solution {
      *
      * Accepted (214 / 214 testcases passed)
      */
-    public int maxProfit(int[] prices) {
+    public int maxProfitTabulation(int[] prices) {
         int n = prices.length;
         // states are index, canBuy and allowed
         // Initialization
