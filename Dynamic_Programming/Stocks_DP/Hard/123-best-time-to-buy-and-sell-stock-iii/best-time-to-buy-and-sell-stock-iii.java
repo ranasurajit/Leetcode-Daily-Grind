@@ -1,5 +1,43 @@
 class Solution {
     /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(N)
+     * SC: O(N)
+     * - O(N) - dp memory
+     *
+     * Accepted (214 / 214 testcases passed)
+     */
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        // states are index, canBuy and allowed
+        // Initialization
+        int[][][] dp = new int[n + 1][2][3]; // SC: O(6 x N) ~ O(N)
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) {    // TC: O(N) - index
+            for (int j = 0; j < 2; j++) {     // TC: O(2) - canBuy
+                for (int k = 0; k < 3; k++) { // TC: O(3) - allowed
+                    if (k == 0) {
+                        dp[i][j][k] = 0;
+                        continue;
+                    }
+                    int pick = 0;
+                    int skip = 0;
+                    if (j == 1) {
+                        skip = dp[i + 1][1][k];
+                        pick = -1 * prices[i] + dp[i + 1][0][k];
+                    } else {
+                        skip = dp[i + 1][0][k];
+                        pick = prices[i] + dp[i + 1][1][k - 1];
+                    }
+                    dp[i][j][k] = Math.max(pick, skip);
+                }
+            }
+        }
+        return dp[0][1][2];
+    }
+
+    /**
      * Approach II : Using Memoization Approach
      *
      * TC: O(N)
@@ -9,7 +47,7 @@ class Solution {
      *
      * Accepted (214 / 214 testcases passed)
      */
-    public int maxProfit(int[] prices) {
+    public int maxProfitMemoization(int[] prices) {
         int n = prices.length;
         // states are index, canBuy and allowed
         int[][][] memo = new int[n][2][3]; // SC: O(6 x N) ~ O(N)
