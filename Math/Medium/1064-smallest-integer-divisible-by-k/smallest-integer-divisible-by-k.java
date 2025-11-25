@@ -6,10 +6,6 @@ class Solution {
      * SC: O(1)
      */
     public int smallestRepunitDivByK(int k) {
-        if (k == 2 || k == 5) {
-            // number ending with 1 can never be divisible by 2 or 5
-            return -1;
-        }
         int remainder = 0;
         for (int len = 1; len <= k; len++) { // TC: O(K)
             /**
