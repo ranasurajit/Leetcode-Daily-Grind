@@ -5,7 +5,7 @@ class Solution {
      * TC: O(M x M x M) + O(M x log(M)) ~ O(M x M x M)
      * SC: O(M) + O(M x M)
      *
-     * Time Limit Exceeded (12 / 101 testcases passed)
+     * Accepted (101 / 101 testcases passed)
      */
     public int minCost(int n, int[] cuts) {
         int m = cuts.length;
