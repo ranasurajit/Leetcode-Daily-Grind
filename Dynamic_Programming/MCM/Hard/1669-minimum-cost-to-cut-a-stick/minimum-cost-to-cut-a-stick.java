@@ -1,5 +1,41 @@
 class Solution {
     /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(M x M x M) + O(M x log(M)) ~ O(M x M x M)
+     * SC: O(M x M)
+     *
+     * Accepted (101 / 101 testcases passed)
+     */
+    public int minCost(int n, int[] cuts) {
+        int m = cuts.length;
+        /**
+         * To reduce the depemdency of cuts and since order does 
+         * not matter so let's sort the cuts in ascending order
+         */
+        Arrays.sort(cuts); // TC: O(M x log(M))
+        List<Integer> cutIndices = new ArrayList<Integer>();
+        // we will insert 0 and n at the beginning and end
+        cutIndices.add(0);
+        for (int i = 0; i < m; i++) { // TC: O(M)
+            cutIndices.add(cuts[i]);
+        }
+        cutIndices.add(n);
+        int c = cutIndices.size() - 2;
+        int[][] dp = new int[c + 2][c + 2]; // SC: O(M x M)
+        for (int i = c; i >= 1; i--) { // TC: O(M)
+            for (int j = i; j <= c; j++) { // TC: O(M)
+                dp[i][j] = Integer.MAX_VALUE;
+                for (int k = i; k <= j; k++) { // TC: O(M)
+                    int currentCost = cutIndices.get(j + 1) - cutIndices.get(i - 1);
+                    dp[i][j] = Math.min(dp[i][j], currentCost + dp[i][k - 1] + dp[k + 1][j]);
+                }
+            }
+        }
+        return dp[1][c];
+    }
+
+    /**
      * Approach II : Using Memoization Approach
      *
      * TC: O(M x M x M) + O(M x log(M)) ~ O(M x M x M)
@@ -7,7 +43,7 @@ class Solution {
      *
      * Accepted (101 / 101 testcases passed)
      */
-    public int minCost(int n, int[] cuts) {
+    public int minCostMemoization(int n, int[] cuts) {
         int m = cuts.length;
         /**
          * To reduce the depemdency of cuts and since order does 
