@@ -6,6 +6,48 @@ class Solution {
     private int[][] grid;
 
     /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(M x N x K)
+     * SC: O(M x N x K)
+     * - O(M x N x K) - memoization memory
+     *
+     * Accepted (88 / 88 testcases passed)
+     */
+    public int numberOfPaths(int[][] grid, int k) {
+        this.m = grid.length;
+        this.n = grid[0].length;
+        this.k = k;
+        this.grid = grid;
+        // Initialization
+        int[][][] dp = new int[m][n][k + 1];
+        dp[0][0][grid[0][0] % k] = 1; // 1 way
+        // Iterative Calls
+        for (int i = 0; i < m; i++) { // TC: O(M)
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                // remainder after dividing with k will range from [0 to (k - 1)]
+                if (i == 0 && j == 0) {
+                    continue;
+                }
+                for (int rem = 0; rem < k; rem++) { // TC: O(K)
+                    int rightWays = 0;
+                    int bottomWays = 0;
+                    int prevRem = rem - (grid[i][j] % k);
+                    if (prevRem < 0) {
+                        prevRem += k;
+                    }
+                    // right movement
+                    rightWays = j > 0 ? dp[i][j - 1][prevRem] % MOD : 0;
+                    // bottom movement
+                    bottomWays = i > 0 ? dp[i - 1][j][prevRem] % MOD : 0;
+                    dp[i][j][rem] = (rightWays + bottomWays) % MOD;
+                }
+            }
+        }
+        return dp[m - 1][n - 1][0];
+    }
+
+    /**
      * Approach II : Using Memoization Approach
      *
      * TC: O(M x N x K)
@@ -15,7 +57,7 @@ class Solution {
      *
      * Accepted (88 / 88 testcases passed)
      */
-    public int numberOfPaths(int[][] grid, int k) {
+    public int numberOfPathsMemoization(int[][] grid, int k) {
         this.m = grid.length;
         this.n = grid[0].length;
         this.k = k;
