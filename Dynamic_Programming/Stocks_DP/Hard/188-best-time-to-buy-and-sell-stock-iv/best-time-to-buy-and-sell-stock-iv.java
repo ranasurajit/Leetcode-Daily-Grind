@@ -1,5 +1,46 @@
 class Solution {
     /**
+     * Approach IV : Using Space Optimization Approach
+     *
+     * TC: O(N x K)
+     * SC: O(K) + O(K) ~ O(K)
+     * - O(K) - current and next array memory
+     *
+     * Accepted (211 / 211 testcases passed)
+     */
+    public int maxProfit(int k, int[] prices) {
+        int n = prices.length;
+        // Initialization
+        int[][] next = new int[2][k + 1]; // SC: O(K x 2) ~ O(K)
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) {
+            int[][] current = new int[2][k + 1]; // SC: O(K x 2) ~ O(K)
+            for (int j = 0; j < 2; j++) {
+                for (int p = 0; p <= k; p++) {
+                    if (p == 0) {
+                        current[j][p] = 0;
+                        continue;
+                    }
+                    int pick = 0;
+                    int skip = 0;
+                    if (j == 1) {
+                        // buy (pick) at index 'idx' or skip
+                        pick = -1 * prices[i] + next[0][p];
+                        skip = next[1][p];
+                    } else {
+                        // sell (pick) at index 'idx' or skip
+                        pick = prices[i] + next[1][p - 1];
+                        skip = next[0][p];
+                    }
+                    current[j][p] = Math.max(pick, skip);
+                }
+            }
+            next = current;
+        }
+        return next[1][k];
+    }
+
+    /**
      * Approach III : Using Tabulation Approach
      *
      * TC: O(N x K)
@@ -8,7 +49,7 @@ class Solution {
      *
      * Accepted (211 / 211 testcases passed)
      */
-    public int maxProfit(int k, int[] prices) {
+    public int maxProfitTabulation(int k, int[] prices) {
         int n = prices.length;
         // Initialization
         int[][][] dp = new int[n + 1][2][k + 1]; // SC: O(N x K x 2) ~ O(N x K)
