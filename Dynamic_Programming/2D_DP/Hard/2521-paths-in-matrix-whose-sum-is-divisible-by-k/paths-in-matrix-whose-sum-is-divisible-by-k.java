@@ -6,11 +6,11 @@ class Solution {
     private int[][] grid;
 
     /**
-     * Approach III : Using Tabulation Approach
+     * Approach IV : Using Space Optimization Approach
      *
      * TC: O(M x N x K)
-     * SC: O(M x N x K)
-     * - O(M x N x K) - memoization memory
+     * SC: O(N x K) + O(N x K) ~ O(N x K)
+     * - O(N x K) - prev and current memory
      *
      * Accepted (88 / 88 testcases passed)
      */
@@ -20,7 +20,52 @@ class Solution {
         this.k = k;
         this.grid = grid;
         // Initialization
-        int[][][] dp = new int[m][n][k + 1];
+        int[][] prev = new int[n][k + 1]; // SC: O(N x K)
+        prev[0][grid[0][0] % k] = 1; // 1 way
+        // Iterative Calls
+        for (int i = 0; i < m; i++) { // TC: O(M)
+            int[][] current = new int[n][k + 1]; // SC: O(N x K)
+            current[0][grid[0][0] % k] = 1; // 1 way
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                // remainder after dividing with k will range from [0 to (k - 1)]
+                if (i == 0 && j == 0) {
+                    continue;
+                }
+                for (int rem = 0; rem < k; rem++) { // TC: O(K)
+                    int rightWays = 0;
+                    int bottomWays = 0;
+                    int prevRem = rem - (grid[i][j] % k);
+                    if (prevRem < 0) {
+                        prevRem += k;
+                    }
+                    // right movement
+                    rightWays = j > 0 ? current[j - 1][prevRem] % MOD : 0;
+                    // bottom movement
+                    bottomWays = i > 0 ? prev[j][prevRem] % MOD : 0;
+                    current[j][rem] = (rightWays + bottomWays) % MOD;
+                }
+            }
+            prev = current;
+        }
+        return prev[n - 1][0];
+    }
+
+    /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(M x N x K)
+     * SC: O(M x N x K)
+     * - O(M x N x K) - memoization memory
+     *
+     * Accepted (88 / 88 testcases passed)
+     */
+    public int numberOfPathsTabulation(int[][] grid, int k) {
+        this.m = grid.length;
+        this.n = grid[0].length;
+        this.k = k;
+        this.grid = grid;
+        // Initialization
+        int[][][] dp = new int[m][n][k + 1]; // SC: O(M x N x K)
         dp[0][0][grid[0][0] % k] = 1; // 1 way
         // Iterative Calls
         for (int i = 0; i < m; i++) { // TC: O(M)
@@ -62,7 +107,7 @@ class Solution {
         this.n = grid[0].length;
         this.k = k;
         this.grid = grid;
-        int[][][] memo = new int[m][n][k];
+        int[][][] memo = new int[m][n][k]; // SC: O(M x N x K)
         for (int[][] mem : memo) {
             for (int[] m : mem) {
                 Arrays.fill(m , -1);
