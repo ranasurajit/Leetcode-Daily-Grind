@@ -12,7 +12,7 @@ class Solution {
         int n = prices.length;
         int[][] dp = new int[n + 2][2]; // SC: O(N x 2) ~ O(N)
         for (int i = n - 1; i >= 0; i--) { // TC: O(N)
-            for (int j = 0; j < 2; j++) {
+            for (int j = 0; j < 2; j++) { // TC: O(2)
                 int pick = 0;
                 int skip = 0;
                 if (j == 1) {
