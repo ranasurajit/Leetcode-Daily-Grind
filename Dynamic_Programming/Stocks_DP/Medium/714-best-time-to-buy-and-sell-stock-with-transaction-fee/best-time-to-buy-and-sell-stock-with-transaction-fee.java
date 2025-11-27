@@ -1,5 +1,37 @@
 class Solution {
     /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(N) + O(N) ~ O(N)
+     * SC: O(N)
+     * - O(N) - dp array memory
+     *
+     * Accepted (44 / 44 testcases passed)
+     */
+    public int maxProfit(int[] prices, int fee) {
+        int n = prices.length;
+        // Initialization
+        int[][] dp = new int[n + 1][2]; // SC: O(N)
+        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+            for (int j = 0; j < 2; j++) {
+                int pick = 0;
+                int skip = 0;
+                if (j == 1) {
+                    // we may skip buying the stock or pick (buy) it
+                    skip = dp[i + 1][1];
+                    pick = -1 * prices[i] + dp[i + 1][0];
+                } else {
+                    // we may skip selling the stock or pick (sell) it
+                    skip = dp[i + 1][0];
+                    pick = prices[i] - fee + dp[i + 1][1];
+                }
+                dp[i][j] = Math.max(pick, skip);
+            }
+        }
+        return dp[0][1];
+    }
+
+    /**
      * Approach II : Using Memoization Approach
      *
      * TC: O(N) + O(N) ~ O(N)
@@ -9,7 +41,7 @@ class Solution {
      *
      * Accepted (44 / 44 testcases passed)
      */
-    public int maxProfit(int[] prices, int fee) {
+    public int maxProfitMemoization(int[] prices, int fee) {
         int n = prices.length;
         int[][] memo = new int[n][2];
         for (int[] mem : memo) { // TC: O(N)
