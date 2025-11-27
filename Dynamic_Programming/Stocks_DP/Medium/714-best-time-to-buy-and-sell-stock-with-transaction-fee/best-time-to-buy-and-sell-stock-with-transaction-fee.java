@@ -1,5 +1,38 @@
 class Solution {
     /**
+     * Approach IV : Using Space Optimization Approach
+     *
+     * TC: O(N)
+     * SC: O(1)
+     *
+     * Accepted (44 / 44 testcases passed)
+     */
+    public int maxProfit(int[] prices, int fee) {
+        int n = prices.length;
+        // Initialization
+        int[] next = new int[2]; // SC: O(2) ~ O(1)
+        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+            int[] current = new int[2]; // SC: O(2) ~ O(1)
+            for (int j = 0; j < 2; j++) { // TC: O(2)
+                int pick = 0;
+                int skip = 0;
+                if (j == 1) {
+                    // we may skip buying the stock or pick (buy) it
+                    skip = next[1];
+                    pick = -1 * prices[i] + next[0];
+                } else {
+                    // we may skip selling the stock or pick (sell) it
+                    skip = next[0];
+                    pick = prices[i] - fee + next[1];
+                }
+                current[j] = Math.max(pick, skip);
+            }
+            next = current;
+        }
+        return next[1];
+    }
+
+    /**
      * Approach III : Using Tabulation Approach
      *
      * TC: O(N) + O(N) ~ O(N)
@@ -8,12 +41,12 @@ class Solution {
      *
      * Accepted (44 / 44 testcases passed)
      */
-    public int maxProfit(int[] prices, int fee) {
+    public int maxProfitTabulation(int[] prices, int fee) {
         int n = prices.length;
         // Initialization
         int[][] dp = new int[n + 1][2]; // SC: O(N)
         for (int i = n - 1; i >= 0; i--) { // TC: O(N)
-            for (int j = 0; j < 2; j++) {
+            for (int j = 0; j < 2; j++) { // TC: O(2)
                 int pick = 0;
                 int skip = 0;
                 if (j == 1) {
