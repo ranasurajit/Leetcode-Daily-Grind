@@ -1,5 +1,43 @@
 class Solution {
     /**
+     * Approach IV : Using Space Optimization Approach
+     *
+     * TC: O(N x T) + O(N) ~ O(N x T)
+     * SC: O(T) + O(T) ~ O(T)
+     * - O(T) - next and current memory
+     *
+     * Accepted (147 / 147 testcases passed)
+     */
+    public boolean canPartition(int[] nums) {
+        int n = nums.length;
+        int sum = 0;
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            sum += nums[i];
+        }
+        if ((sum & 1) != 0) {
+            // odd sum cannot be divided into two equal sum subsets
+            return false;
+        }
+        sum = sum / 2;
+        boolean[] next = new boolean[sum + 1]; // SC: O(T)
+        next[0] = true;
+        for (int i = n - 1; i >= 0; i--) {   // TC: O(N)
+            boolean[] current = new boolean[sum + 1]; // SC: O(T)
+            current[0] = true;
+            for (int j = 0; j <= sum; j++) { // TC: O(T)
+                boolean skip = next[j];
+                boolean pick = false;
+                if (nums[i] <= j) {
+                    pick = next[j - nums[i]];
+                }
+                current[j] = pick || skip;
+            }
+            next = current;
+        }
+        return next[sum];
+    }
+
+    /**
      * Approach III : Using Tabulation Approach
      *
      * TC: O(N x T) + O(N) ~ O(N x T)
@@ -8,7 +46,7 @@ class Solution {
      *
      * Accepted (147 / 147 testcases passed)
      */
-    public boolean canPartition(int[] nums) {
+    public boolean canPartitionTabulation(int[] nums) {
         int n = nums.length;
         int sum = 0;
         for (int i = 0; i < n; i++) { // TC: O(N)
