@@ -1,5 +1,40 @@
 class Solution {
     /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(N x T) + O(N) ~ O(N x T)
+     * SC: O(N x T)
+     * - O(N x T) - dp memory
+     *
+     * Accepted (147 / 147 testcases passed)
+     */
+    public boolean canPartition(int[] nums) {
+        int n = nums.length;
+        int sum = 0;
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            sum += nums[i];
+        }
+        if ((sum & 1) != 0) {
+            // odd sum cannot be divided into two equal sum subsets
+            return false;
+        }
+        sum = sum / 2;
+        boolean[][] dp = new boolean[n + 1][sum + 1]; // SC: O(N x T)
+        dp[n][0] = true;
+        for (int i = n - 1; i >= 0; i--) {   // TC: O(N)
+            for (int j = 0; j <= sum; j++) { // TC: O(T)
+                boolean skip = dp[i + 1][j];
+                boolean pick = false;
+                if (nums[i] <= j) {
+                    pick = dp[i + 1][j - nums[i]];
+                }
+                dp[i][j] = pick || skip;
+            }
+        }
+        return dp[0][sum];
+    }
+
+    /**
      * Approach II : Using Memoization Approach
      *
      * TC: O(N x T) + O(N) ~ O(N x T)
@@ -9,7 +44,7 @@ class Solution {
      *
      * Accepted (147 / 147 testcases passed)
      */
-    public boolean canPartition(int[] nums) {
+    public boolean canPartitionMemoization(int[] nums) {
         int n = nums.length;
         int sum = 0;
         for (int i = 0; i < n; i++) { // TC: O(N)
