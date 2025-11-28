@@ -1,4 +1,7 @@
 class Solution {
+    private int components = 0;
+    private int sum = 0;
+
     /**
      * Approach : Using DFS Graph Traversal Approach
      *
@@ -12,10 +15,8 @@ class Solution {
     public int maxKDivisibleComponents(int n, int[][] edges, int[] values, int k) {
         Map<Integer, ArrayList<Integer>> adj = createGraph(edges); // TC: O(2 x E), SC: O(V + E)
         boolean[] visited = new boolean[n]; // SC: O(V)
-        int[] components = { 0 };
-        int[] sum = { 0 };
-        dfsGraphSum(0, adj, visited, k, values, components); // TC: O(V + E), SC: O(V)
-        return components[0];
+        dfsGraphSum(0, adj, visited, k, values); // TC: O(V + E), SC: O(V)
+        return components;
     }
 
     /**
@@ -25,16 +26,16 @@ class Solution {
      * SC: O(V)
      */
     private int dfsGraphSum(int u, Map<Integer, ArrayList<Integer>> adj, 
-        boolean[] visited, int k, int[] values, int[] components) {
+        boolean[] visited, int k, int[] values) {
         visited[u] = true;
         int subTotal = values[u];
         for (Integer v : adj.getOrDefault(u, new ArrayList<Integer>())) { // TC: O(E)
             if (!visited[v]) {
-                subTotal += dfsGraphSum(v, adj, visited, k, values, components);
+                subTotal += dfsGraphSum(v, adj, visited, k, values);
             }
         }
         if (subTotal % k == 0) {
-            components[0]++;
+            components++;
             return 0;
         }
         return subTotal % k;
