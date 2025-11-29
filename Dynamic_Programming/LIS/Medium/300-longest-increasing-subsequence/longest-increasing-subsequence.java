@@ -1,5 +1,30 @@
 class Solution {
     /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(N x N)
+     * SC: O(N)
+     * - O(N) - dp array memory
+     *
+     * Accepted (56 / 56 testcases passed)
+     */
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n]; // SC: O(N)
+        Arrays.fill(dp, 1);
+        int maxLength = 1;
+        for (int idx = 1; idx < n; idx++) { // TC: O(N)
+            for (int prevIdx = 0; prevIdx < idx; prevIdx++) { // TC: O(N)
+                if (nums[prevIdx] < nums[idx] && dp[idx] < dp[prevIdx] + 1) {
+                    dp[idx] = dp[prevIdx] + 1;
+                }
+            }
+            maxLength = Math.max(maxLength, dp[idx]);
+        }
+        return maxLength;
+    }
+
+    /**
      * Approach II : Using Memoization Approach
      *
      * TC: O(N x N)
@@ -7,9 +32,9 @@ class Solution {
      * - O(N x N) - memoization memory
      * - O(N) - recursion stack
      *
-     * Time Limit Exceeded (23 / 56 testcases passed)
+     * Accepted (56 / 56 testcases passed)
      */
-    public int lengthOfLIS(int[] nums) {
+    public int lengthOfLISMemoization(int[] nums) {
         int n = nums.length;
         int[][] memo = new int[n][n + 1]; // SC: O(N x N)
         for (int[] mem : memo) {
