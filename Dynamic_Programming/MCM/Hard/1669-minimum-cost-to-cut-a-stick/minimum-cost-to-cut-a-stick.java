@@ -1,5 +1,46 @@
 class Solution {
     /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: TC: O(M x M x M) + O(M) + O(M x log(M)) ~ O(M³)
+     * SC: O(M x M) + O(M)
+     * - O(M x M) - dp array memory
+     * - O(M) - arraylist cutList memory
+     *
+     * Accepted (101 / 101 testcases passed)
+     */
+    public int minCost(int n, int[] cuts) {
+        /**
+         * As the cutting order does not matter we should sort it
+         * so that while dividing it one portion is not dependent
+         * on other as in MCM / Partition DP
+         */
+        int m = cuts.length;
+        List<Integer> cutList = new ArrayList<Integer>(); // SC: O(M)
+        for (int i = 0; i < m; i++) { // TC: O(M)
+            cutList.add(cuts[i]);
+        }
+        cutList.add(0);
+        cutList.add(n);
+        // Sorting the cutList
+        Collections.sort(cutList); // TC: O(M x log(M))
+        // Initialization
+        int[][] dp = new int[m + 2][m + 2]; // SC: O(M x M)
+        // Iterative Calls
+        for (int i = m; i >= 1; i--) {         // TC: O(M)
+            for (int j = i; j <= m; j++) {     // TC: O(M)
+                dp[i][j] = Integer.MAX_VALUE;
+                for (int k = i; k <= j; k++) { // TC: O(M)
+                    // current cost is length of stick portion before cutting at index k
+                    int currentCost = cutList.get(j + 1) - cutList.get(i - 1);
+                    dp[i][j] = Math.min(dp[i][j], dp[i][k - 1] + currentCost + dp[k + 1][j]);
+                }
+            }
+        }
+        return dp[1][m];
+    }
+
+    /**
      * Approach II : Using Memoization Approach
      *
      * TC: TC: O(M x M x M) + O(M) + O(M x log(M)) ~ O(M³)
@@ -10,7 +51,7 @@ class Solution {
      *
      * Accepted (101 / 101 testcases passed)
      */
-    public int minCost(int n, int[] cuts) {
+    public int minCostMemoization(int n, int[] cuts) {
         /**
          * As the cutting order does not matter we should sort it
          * so that while dividing it one portion is not dependent
