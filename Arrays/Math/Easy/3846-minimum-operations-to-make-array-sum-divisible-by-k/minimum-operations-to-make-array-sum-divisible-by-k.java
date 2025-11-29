@@ -7,8 +7,8 @@ class Solution {
      */
     public int minOperations(int[] nums, int k) {
         int sum = 0;
-        for (int num : nums) {
-            sum += num;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
         }
         // remainder of entire sum will be the minimum operations
         return sum % k;
