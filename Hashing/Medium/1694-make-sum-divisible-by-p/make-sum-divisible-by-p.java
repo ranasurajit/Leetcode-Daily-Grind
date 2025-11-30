@@ -7,11 +7,11 @@ class Solution {
      */
     public int minSubarray(int[] nums, int p) {
         int n = nums.length;
-        long sum = 0L;
+        long prefixSum = 0L;
         for (int num : nums) { // TC: O(N)
-            sum += (long) num;
+            prefixSum += (long) num;
         }
-        long target = sum % p;
+        long target = prefixSum % p;
         if (target == 0) {
             return 0;
         }
@@ -19,7 +19,7 @@ class Solution {
          * now we need to find the minimum sub-array length 
          * whose (prefix sum - target) % p is observed last
          */
-        long prefixSum = 0L;
+        prefixSum = 0L;
         int minLength = n;
         Map<Long, Integer> map = new HashMap<Long, Integer>(); // SC: O(N)
         map.put(0L, -1);
