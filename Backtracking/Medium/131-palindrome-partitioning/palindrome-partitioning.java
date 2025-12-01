@@ -30,7 +30,7 @@ class Solution {
         // Recursion Calls
         for (int j = idx; j < n; j++) { // TC: O(N)
             String temp = s.substring(idx, j + 1);
-            if (isPalindrome(temp)) {   // TC: O(N)
+            if (isPalindrome(temp)) {   // TC: O(N) - pruning happens here
                 current.add(temp); // modify
                 backtrack(j + 1, n, s, current, result); // backtrack
                 current.remove(current.size() - 1); // backtrack
