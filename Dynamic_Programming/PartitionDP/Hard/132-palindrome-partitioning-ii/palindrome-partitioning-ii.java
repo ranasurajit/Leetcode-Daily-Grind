@@ -1,5 +1,36 @@
 class Solution {
     /**
+     * Approach V : Using Tabulation (Partition Front DP) Approach
+     *
+     * TC: O(N²)
+     * SC: O(N)
+     * - O(N) - dp array memory
+     *
+     * Accepted (37 / 37 testcases passed)
+     */
+    public int minCut(String s) {
+        int n = s.length();
+        if (isPalindrome(s, 0, n - 1)) { // TC: O(N)
+            return 0;
+        }
+        // Initialization
+        int[] dp = new int[n + 1]; // SC: O(N)
+        dp[n] = -1; // no cuts possible
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+            int minLength = n - 1;
+            for (int j = i; j < n; j++) { // TC: O(N)
+                if (isPalindrome(s, i, j)) { // TC: O(N)
+                    // pruned
+                    minLength = Math.min(minLength, 1 + dp[j + 1]);
+                }
+            }
+            dp[i] = minLength;
+        }
+        return dp[0];
+    }
+
+    /**
      * Approach IV : Using Memoization (Partition Front DP) Approach
      *
      * TC: O(N²)
@@ -9,7 +40,7 @@ class Solution {
      *
      * Accepted (37 / 37 testcases passed)
      */
-    public int minCut(String s) {
+    public int minCutFrontMemoization(String s) {
         int n = s.length();
         if (isPalindrome(s, 0, n - 1)) { // TC: O(N)
             return 0;
