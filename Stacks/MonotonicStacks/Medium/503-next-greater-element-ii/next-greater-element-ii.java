@@ -2,13 +2,13 @@ class Solution {
     /**
      * Approach II : Using Monotonic Stack (Monotonic Decreasing) (Space Optimized) Approach
      *
-     * TC: O(N) + O(2 x N) + O(N) ~ O(N)
-     * SC: O(2 x N) + O(2 x N) + O(2 x N) ~ O(N)
+     * TC: O(2 x N) ~ O(N)
+     * SC: O(N)
      */
     public int[] nextGreaterElements(int[] nums) {
         int n = nums.length;
         Stack<Integer> st = new Stack<Integer>(); // SC: O(N)
-        int[] nge = new int[n]; // SC: O(2 x N)
+        int[] nge = new int[n];
         for (int i = 2 * n - 1; i >= 0; i--) { // TC: O(2 x N)
             while (!st.isEmpty() && st.peek() <= nums[i % n]) {
                 st.pop();
