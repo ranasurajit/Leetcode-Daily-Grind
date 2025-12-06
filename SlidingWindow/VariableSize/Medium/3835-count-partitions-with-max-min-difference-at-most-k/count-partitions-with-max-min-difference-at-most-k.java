@@ -38,7 +38,7 @@ class Solution {
                 i++;
             }
             dp[j + 1] = i > 0 ? (prefix[j] - prefix[i - 1] + MOD) % MOD : prefix[j] % MOD;
-            prefix[j + 1] = prefix[j] + dp[j + 1];
+            prefix[j + 1] = (prefix[j] + dp[j + 1]) % MOD;
             j++;
         }
         return (int) dp[n];
