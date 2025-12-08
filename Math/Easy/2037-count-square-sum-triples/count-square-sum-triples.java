@@ -1,11 +1,39 @@
 class Solution {
     /**
-     * Approach II : Using Enumeration + Math Approach
+     * Approach III : Using Two Pointers + Math Approach
      *
      * TC: O(N x N)
      * SC: O(1)
      */
     public int countTriples(int n) {
+        int count = 0;
+        for (int c = 1; c <= n; c++) { // TC: O(N)
+            int target = c * c;
+            int a = 1;
+            int b = c - 1;
+            while (a < b) { // TC: O(N)
+                int sqrSum = a * a + b * b;
+                if (sqrSum == target) {
+                    count += 2; // (a, b) and (b, a) are accounted
+                    a++;
+                    b--;
+                } else if (sqrSum < target) {
+                    a++;
+                } else {
+                    b--;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Approach II : Using Enumeration + Math Approach
+     *
+     * TC: O(N x N)
+     * SC: O(1)
+     */
+    public int countTriplesBetter(int n) {
         int count = 0;
         for (int a = 1; a <= n; a++) {     // TC: O(N)
             for (int b = a + 1; b <= n; b++) { // TC: O(N)
