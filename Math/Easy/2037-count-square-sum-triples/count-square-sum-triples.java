@@ -11,8 +11,12 @@ class Solution {
             for (int b = 1; b <= n; b++) { // TC: O(N)
                 int squares = a * a + b * b;
                 int c = (int) Math.sqrt(squares);
-                if (c * c == squares && c <= n) {
-                    count++;
+                if (c <= n) {
+                    if (c * c == squares) {
+                        count++;
+                    }
+                } else {
+                    break;
                 }
             }
         }
