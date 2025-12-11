@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach I : Using Hashing (Sorted Set) Approach
+     * Approach : Using Hashing (Sorted Set) Approach
      *
      * TC: O(M x log(M)) + O(M x log(M)) ~ O(M x log(M))
      * SC: O(M) + O(M) ~ O(M)
@@ -20,10 +20,17 @@ class Solution {
         for (int[] build : buildings) { // TC: O(M)
             int x = build[0];
             int y = build[1];
-            if (xMap.get(x).lower(y) != null &&  // has up building
-                xMap.get(x).higher(y) != null && // has down building
-                yMap.get(y).lower(x) != null && // has left building
-                yMap.get(y).higher(x) != null) { // has right building // TC: O(log(M))
+            TreeSet<Integer> xSet = xMap.get(x);
+            TreeSet<Integer> ySet = yMap.get(y);
+            if (xSet.size() < 3 || ySet.size() < 3) {
+                // covered building is not possible
+                continue;
+            }
+            boolean hasUp = xSet.lower(y) != null; // check up building
+            boolean hasDown = xSet.higher(y) != null; // check down building
+            boolean hasLeft = ySet.lower(x) != null; // check left building
+            boolean hasRight = ySet.higher(x) != null; // check right building
+            if (hasUp && hasDown && hasLeft && hasRight) { // TC: O(log(M))
                 countCovered++;
             }
         }
