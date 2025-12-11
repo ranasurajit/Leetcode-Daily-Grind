@@ -1,11 +1,43 @@
 class Solution {
     /**
-     * Approach : Using Hashing (Sorted Set) Approach
+     * Approach II : Using Extra Space (To Store Row and Column Min and Max) Approach
+     *
+     * TC: O(M) + O(M) ~ O(M)
+     * SC: O(N) + O(N) + O(N) + O(N) ~ O(N)
+     */
+    public int countCoveredBuildings(int n, int[][] buildings) {
+        int[] rmax = new int[n + 1]; // SC: O(N)
+        int[] rmin = new int[n + 1]; // SC: O(N)
+        int[] cmax = new int[n + 1]; // SC: O(N)
+        int[] cmin = new int[n + 1]; // SC: O(N)
+        Arrays.fill(rmin, n + 1);
+        Arrays.fill(cmin, n + 1);
+        for (int[] build : buildings) { // TC: O(M)
+            int x = build[0];
+            int y = build[1];
+            rmax[y] = Math.max(rmax[y], x);
+            rmin[y] = Math.min(rmin[y], x);
+            cmax[x] = Math.max(cmax[x], y);
+            cmin[x] = Math.min(cmin[x], y);
+        }
+        int countCovered = 0;
+        for (int[] build : buildings) { // TC: O(M)
+            int x = build[0];
+            int y = build[1];
+            if (x > rmin[y] && x < rmax[y] && y > cmin[x] && y < cmax[x]) {
+                countCovered++;
+            }
+        }
+        return countCovered;
+    }
+
+    /**
+     * Approach I : Using Hashing (Sorted Set) Approach
      *
      * TC: O(M x log(M)) + O(M x log(M)) ~ O(M x log(M))
      * SC: O(M) + O(M) ~ O(M)
      */
-    public int countCoveredBuildings(int n, int[][] buildings) {
+    public int countCoveredBuildingsUsingHashing(int n, int[][] buildings) {
         Map<Integer, TreeSet<Integer>> xMap = 
             new HashMap<Integer, TreeSet<Integer>>(); // SC: O(M)
         Map<Integer, TreeSet<Integer>> yMap = 
