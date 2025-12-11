@@ -8,8 +8,7 @@ class Solution {
     public boolean isValid(String s) {
         int n = s.length();
         Deque<Character> deque = new ArrayDeque<Character>(); // SC: O(N)
-        for (int i = 0; i < n; i++) { // TC: O(N)
-            char ch = s.charAt(i);
+        for (char ch : s.toCharArray()) { // TC: O(N)
             if (deque.isEmpty() && !isOpenBracket(ch)) {
                 return false;
             }
