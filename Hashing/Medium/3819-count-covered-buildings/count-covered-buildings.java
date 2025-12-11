@@ -24,11 +24,7 @@ class Solution {
         for (int[] build : buildings) { // TC: O(M)
             int x = build[0];
             int y = build[1];
-            boolean hasUp = y > minY[x]; // check up building
-            boolean hasDown = y < maxY[x]; // check down building
-            boolean hasLeft = x > minX[y]; // check left building
-            boolean hasRight = x < maxX[y]; // check right building
-            if (hasUp && hasDown && hasLeft && hasRight) { // TC: O(log(M))
+            if (x > minX[y] && x < maxX[y] && y > minY[x] && y < maxY[x]) { // TC: O(log(M))
                 countCovered++;
             }
         }
