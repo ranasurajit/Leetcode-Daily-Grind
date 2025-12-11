@@ -6,25 +6,29 @@ class Solution {
      * SC: O(N) + O(N) + O(N) + O(N) ~ O(N)
      */
     public int countCoveredBuildings(int n, int[][] buildings) {
-        int[] rmax = new int[n + 1]; // SC: O(N)
-        int[] rmin = new int[n + 1]; // SC: O(N)
-        int[] cmax = new int[n + 1]; // SC: O(N)
-        int[] cmin = new int[n + 1]; // SC: O(N)
-        Arrays.fill(rmin, n + 1);
-        Arrays.fill(cmin, n + 1);
+        int[] minX = new int[n + 1]; // SC: O(N)
+        int[] maxX = new int[n + 1]; // SC: O(N)
+        int[] minY = new int[n + 1]; // SC: O(N)
+        int[] maxY = new int[n + 1]; // SC: O(N)
+        Arrays.fill(minX, n + 1);
+        Arrays.fill(minY, n + 1);
         for (int[] build : buildings) { // TC: O(M)
             int x = build[0];
             int y = build[1];
-            rmax[y] = Math.max(rmax[y], x);
-            rmin[y] = Math.min(rmin[y], x);
-            cmax[x] = Math.max(cmax[x], y);
-            cmin[x] = Math.min(cmin[x], y);
+            minX[y] = Math.min(minX[y], x);
+            maxX[y] = Math.max(maxX[y], x);
+            minY[x] = Math.min(minY[x], y);
+            maxY[x] = Math.max(maxY[x], y);
         }
         int countCovered = 0;
         for (int[] build : buildings) { // TC: O(M)
             int x = build[0];
             int y = build[1];
-            if (x > rmin[y] && x < rmax[y] && y > cmin[x] && y < cmax[x]) {
+            boolean hasUp = y > minY[x]; // check up building
+            boolean hasDown = y < maxY[x]; // check down building
+            boolean hasLeft = x > minX[y]; // check left building
+            boolean hasRight = x < maxX[y]; // check right building
+            if (hasUp && hasDown && hasLeft && hasRight) { // TC: O(log(M))
                 countCovered++;
             }
         }
