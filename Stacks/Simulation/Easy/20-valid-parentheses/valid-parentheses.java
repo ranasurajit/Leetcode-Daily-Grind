@@ -1,11 +1,39 @@
 class Solution {
     /**
-     * Approach : Using Stack Approach
+     * Approach II : Using Deques Approach
      *
      * TC: O(N)
      * SC: O(N)
      */
     public boolean isValid(String s) {
+        int n = s.length();
+        Deque<Character> deque = new ArrayDeque<Character>(); // SC: O(N)
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            char ch = s.charAt(i);
+            if (deque.isEmpty() && !isOpenBracket(ch)) {
+                return false;
+            }
+            if (isOpenBracket(ch)) {
+                deque.push(ch);
+            } else {
+                char open = getOpenBracket(ch);
+                if (open == deque.peek()) {
+                    deque.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        return deque.isEmpty();
+    }
+
+    /**
+     * Approach I : Using Stacks Approach
+     *
+     * TC: O(N)
+     * SC: O(N)
+     */
+    public boolean isValidUsingStacks(String s) {
         int n = s.length();
         Stack<Character> st = new Stack<Character>(); // SC: O(N)
         for (int i = 0; i < n; i++) { // TC: O(N)
