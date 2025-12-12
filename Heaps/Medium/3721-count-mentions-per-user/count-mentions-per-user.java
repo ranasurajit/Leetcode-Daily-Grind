@@ -60,7 +60,8 @@ class Solution {
                         if (!s.startsWith("id")) {
                             continue;
                         }
-                        mentions[Integer.valueOf(s.substring(2))]++;
+                        int uid = Integer.parseInt(s.substring(2));
+                        mentions[uid]++;
                     }
                 }
             }
