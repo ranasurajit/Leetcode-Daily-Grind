@@ -51,21 +51,17 @@ class Solution {
                     inactiveUserId)); // TC: O(log(E))
             } else {
                 if (mentionsStr.equals("ALL")) {
-                    updateMentions(mentions, 
-                        new ArrayList<Integer>(allUsers)); // TC: O(N)
+                    updateMentions(mentions, allUsers); // TC: O(N)
                 } else if (mentionsStr.equals("HERE")) {
-                    updateMentions(mentions, 
-                        new ArrayList<Integer>(onlineUsers)); // TC: O(N)
+                    updateMentions(mentions, onlineUsers); // TC: O(N)
                 } else {
                     String[] mentionedUsersList = mentionsStr.split(" ");
-                    List<Integer> usersMentioned = new ArrayList<Integer>();
                     for (String s : mentionedUsersList) { // TC: O(N)
                         if (!s.startsWith("id")) {
                             continue;
                         }
-                        usersMentioned.add(Integer.valueOf(s.substring(2)));
+                        mentions[Integer.valueOf(s.substring(2))]++;
                     }
-                    updateMentions(mentions, usersMentioned);
                 }
             }
         }
@@ -78,7 +74,7 @@ class Solution {
      * TC: O(N)
      * SC: O(1)
      */
-    private void updateMentions(int[] mentions, List<Integer> users) {
+    private void updateMentions(int[] mentions, Set<Integer> users) {
         for (Integer userId : users) { // TC: O(N)
             mentions[userId]++;
         }
