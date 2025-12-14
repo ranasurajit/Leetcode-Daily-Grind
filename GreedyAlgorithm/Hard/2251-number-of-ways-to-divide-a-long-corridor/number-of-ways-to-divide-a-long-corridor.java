@@ -4,27 +4,14 @@ class Solution {
     /**
      * Approach : Using Greedy Approach
      *
-     * TC: O(N) + O(N) ~ O(N)
+     * TC: O(N)
      * SC: O(1)
      */
     public int numberOfWays(String corridor) {
         int n = corridor.length();
         int countPlants = 0;
         int countSeats = 0;
-        for (int i = 0; i < n; i++) { // TC: O(N)
-            if (corridor.charAt(i) == 'S') {
-                countSeats++;
-            }
-        }
-        if (countSeats == 0 || (countSeats & 1) != 0) {
-            /**
-             * if total seats is odd we cannot divide it into 
-             * partitions with each partition having exactly 2 
-             * seats, so immediately return 0
-             */
-            return 0;
-        }
-        countSeats = 0;
+        int totalSeats = 0;
         long ways = 1L;
         boolean isFirstSection = true;
         for (int i = 0; i < n; i++) { // TC: O(N)
@@ -33,6 +20,7 @@ class Solution {
                     countPlants++;
                 }
             } else {
+                totalSeats++;
                 if (!isFirstSection && countSeats == 2) {
                     /**
                      * we can start partition here based on number of 
@@ -47,6 +35,14 @@ class Solution {
                 isFirstSection = false;
                 countSeats++;
             }
+        }
+        if (totalSeats == 0 || (totalSeats & 1) != 0) {
+            /**
+             * if total seats is odd we cannot divide it into 
+             * partitions with each partition having exactly 2 
+             * seats, so immediately return 0
+             */
+            return 0;
         }
         return (int) ways;
     }
