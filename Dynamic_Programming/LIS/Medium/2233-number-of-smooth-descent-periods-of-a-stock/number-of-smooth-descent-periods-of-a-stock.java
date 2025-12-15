@@ -1,5 +1,30 @@
 class Solution {
     /**
+     * Approach III : Using Dynamic Programming (Tabulation) Approach
+     *
+     * TC: O(N)
+     * SC: O(N)
+     * - O(N) - dp array memory
+     *
+     * Accepted (168 / 168 testcases passed)
+     */
+    public long getDescentPeriods(int[] prices) {
+        int n = prices.length;
+        long[] dp = new long[n]; // SC: O(N)
+        // dp[i] - represents number of smooth descent periods ending at index 'i'
+        dp[0] = 1;
+        long count = dp[0];
+        for (int i = 1; i < n; i++) { // TC: O(N)
+            dp[i] = 1;
+            if (prices[i] == prices[i - 1] - 1) {
+                dp[i] = 1 + dp[i - 1];
+            }
+            count += dp[i];
+        }
+        return count;
+    }
+
+    /**
      * Approach II : Using Dynamic Programming (Memoization) Approach
      *
      * TC: O(N)
@@ -9,7 +34,7 @@ class Solution {
      *
      * Accepted (168 / 168 testcases passed)
      */
-    public long getDescentPeriods(int[] prices) {
+    public long getDescentPeriodsMemoization(int[] prices) {
         int n = prices.length;
         long count = 0;
         long[] memo = new long[n]; // SC: O(N)
