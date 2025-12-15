@@ -1,5 +1,28 @@
 class Solution {
     /**
+     * Approach IV : Using Dynamic Programming (Space Optimization) Approach
+     *
+     * TC: O(N)
+     * SC: O(1)
+     *
+     * Accepted (168 / 168 testcases passed)
+     */
+    public long getDescentPeriods(int[] prices) {
+        int n = prices.length;
+        int prev = 1;
+        long count = prev;
+        for (int i = 1; i < n; i++) { // TC: O(N)
+            int current = 1;
+            if (prices[i] == prices[i - 1] - 1) {
+                current = 1 + prev;
+            }
+            count += current;
+            prev = current;
+        }
+        return count;
+    }
+
+    /**
      * Approach III : Using Dynamic Programming (Tabulation) Approach
      *
      * TC: O(N)
@@ -8,7 +31,7 @@ class Solution {
      *
      * Accepted (168 / 168 testcases passed)
      */
-    public long getDescentPeriods(int[] prices) {
+    public long getDescentPeriodsTabulation(int[] prices) {
         int n = prices.length;
         long[] dp = new long[n]; // SC: O(N)
         // dp[i] - represents number of smooth descent periods ending at index 'i'
