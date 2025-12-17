@@ -4,15 +4,71 @@ class Solution {
     private int[] prices;
 
     /**
-     * Approach III : Using Tabulation Approach
+     * Approach IV : Using Space Optimization Approach
      *
      * TC: O(N x 3 x K) + O(3 x K) ~ O(N x K)
-     * SC: O(N x 3 x K) ~ O(N x K)
-     * - O(N x K) - dp array
+     * SC: O(3 x K) + O(3 x K) ~ O(K)
+     * - O(K) - current and next array memory
      *
      * Accepted (776 / 776 testcases passed)
      */
     public long maximumProfit(int[] prices, int k) {
+        this.n = prices.length;
+        this.k = k;
+        this.prices = prices;
+        // holdingState -> 0: no positions, 1: bought, 2: short-sold
+        // Initialization
+        long[][] next = new long[3][k + 1]; // SC: O(K)
+        for (int j = 1; j <= 2; j++) { // TC: O(3)
+            for (int p = 0; p <= k; p++) { // TC: O(K)
+                next[j][p] = Long.MIN_VALUE / 2;
+            }
+        }
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) {     // TC: O(N)
+            long[][] current = new long[3][k + 1]; // SC: O(K)
+            for (int j = 2; j >= 0; j--) {     // TC: O(3)
+                for (int p = k; p >= 0; p--) { // TC: O(K)
+                    long skip = next[j][p];
+                    long maxProfit = skip;
+                    if (j == 0) {
+                        if (p < k) {
+                            // pick buy
+                            long pickBuy = -1 * prices[i] + next[1][p];
+                            // pick short sell
+                            long pickShortSell = prices[i] + next[2][p];
+                            maxProfit = Math.max(skip, Math.max(pickBuy, pickShortSell));
+                        }
+                    } else if (j == 1) {
+                        // pick sell
+                        if (p + 1 <= k) {
+                            long pickSell = prices[i] + next[0][p + 1];
+                            maxProfit = Math.max(skip, pickSell);
+                        }
+                    } else {
+                        if (p + 1 <= k) {
+                            long pickShortBuy = -1 * prices[i] + next[0][p + 1];
+                            maxProfit = Math.max(skip, pickShortBuy);
+                        }
+                    }
+                    current[j][p] = maxProfit;
+                }
+            }
+            next = current;
+        }
+        return next[0][0];
+    }
+
+    /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O(N x 3 x K) + O(3 x K) ~ O(N x K)
+     * SC: O(N x 3 x K) ~ O(N x K)
+     * - O(N x K) - dp array memory
+     *
+     * Accepted (776 / 776 testcases passed)
+     */
+    public long maximumProfitTabulation(int[] prices, int k) {
         this.n = prices.length;
         this.k = k;
         this.prices = prices;
@@ -62,7 +118,7 @@ class Solution {
      *
      * TC: O(N x 3 x K) ~ O(N x K)
      * SC: O(N x 3 x K) + O(N) ~ O(N x K) + O(N)
-     * - O(N x K) - memoization array
+     * - O(N x K) - memoization array memory
      * - O(N) - recursion stack
      *
      * Accepted (776 / 776 testcases passed)
