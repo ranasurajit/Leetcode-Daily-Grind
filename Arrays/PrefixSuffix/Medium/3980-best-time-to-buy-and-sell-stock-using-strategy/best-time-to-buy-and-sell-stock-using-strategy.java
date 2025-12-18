@@ -25,9 +25,7 @@ class Solution {
             long leftOrigProfitSum = profitSum[mid] - profitSum[i];
             long rightOrigProfitSum = profitSum[end] - profitSum[mid];
             long currentDelta = currentPriceSum - (leftOrigProfitSum + rightOrigProfitSum);
-            if (maxDelta < currentDelta) {
-                maxDelta = currentDelta;
-            }
+            maxDelta = Math.max(maxDelta, currentDelta);
         }
         return baseProfit + maxDelta;
     }
