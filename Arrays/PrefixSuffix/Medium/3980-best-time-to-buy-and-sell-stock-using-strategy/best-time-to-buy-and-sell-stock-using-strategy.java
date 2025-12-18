@@ -27,18 +27,16 @@ class Solution {
          * orig profitSum right = profitSum[r2] - profitSum[l2 - 1]
          */
         long maxDelta = 0L;
-        for (int i = 0; i < n; i++) { // TC: O(N)
+        for (int i = 0; i < n - k + 1; i++) { // TC: O(N)
             int l1 = i;
             int r1 = i + (k / 2) - 1;
             int l2 = r1 + 1;
             int r2 = i + k - 1;
-            if (r2 < n) {
-                long currentPriceSum =  priceSum[r2] - (l2 > 0 ? priceSum[l2 - 1] : 0);
-                long leftOrigProfitSum = profitSum[r1] - (l1 > 0 ? profitSum[l1 - 1] : 0);
-                long rightOrigProfitSum = profitSum[r2] - (l2 > 0 ? profitSum[l2 - 1] : 0);
-                long currentDelta = currentPriceSum - (leftOrigProfitSum + rightOrigProfitSum);
-                maxDelta = Math.max(maxDelta, currentDelta);
-            }
+            long currentPriceSum =  priceSum[r2] - (l2 > 0 ? priceSum[l2 - 1] : 0);
+            long leftOrigProfitSum = profitSum[r1] - (l1 > 0 ? profitSum[l1 - 1] : 0);
+            long rightOrigProfitSum = profitSum[r2] - (l2 > 0 ? profitSum[l2 - 1] : 0);
+            long currentDelta = currentPriceSum - (leftOrigProfitSum + rightOrigProfitSum);
+            maxDelta = Math.max(maxDelta, currentDelta);
         }
         return baseProfit + maxDelta;
     }
