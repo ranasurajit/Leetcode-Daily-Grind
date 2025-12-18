@@ -1,11 +1,44 @@
 class Solution {
     /**
-     * Approach : Using Array Pre-processing (Prefix Sum) Approach
+     * Approach II : Using Array Pre-processing (Prefix Sum) Cleaner Approach
      *
      * TC: O(N) + O(N - K + 1) ~ O(N)
      * SC: O(N) + O(N) ~ O(N)
      */
     public long maxProfit(int[] prices, int[] strategy, int k) {
+        int n = prices.length;
+        int half = k >> 1;
+        long[] profitSum = new long[n + 1]; // SC: O(N)
+        long[] priceSum = new long[n + 1];  // SC: O(N)
+        long baseProfit = 0L;
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            long currentProfit = (long) prices[i] * (long) strategy[i];
+            profitSum[i + 1] = profitSum[i] + currentProfit;
+            priceSum[i + 1] = priceSum[i] + prices[i];
+            baseProfit += currentProfit;
+        }
+        long maxDelta = 0L;
+        for (int i = 0; i < n - k + 1; i++) { // TC: O(N - K + 1)
+            int mid = i + half;
+            int end = i + k;
+            long currentPriceSum =  priceSum[end] - priceSum[mid];
+            long leftOrigProfitSum = profitSum[mid] - profitSum[i];
+            long rightOrigProfitSum = profitSum[end] - profitSum[mid];
+            long currentDelta = currentPriceSum - (leftOrigProfitSum + rightOrigProfitSum);
+            if (maxDelta < currentDelta) {
+                maxDelta = currentDelta;
+            }
+        }
+        return baseProfit + maxDelta;
+    }
+
+    /**
+     * Approach I : Using Array Pre-processing (Prefix Sum) Approach
+     *
+     * TC: O(N) + O(N - K + 1) ~ O(N)
+     * SC: O(N) + O(N) ~ O(N)
+     */
+    public long maxProfitApproachI(int[] prices, int[] strategy, int k) {
         int n = prices.length;
         long[] profitSum = new long[n]; // SC: O(N)
         long[] priceSum = new long[n];  // SC: O(N)
