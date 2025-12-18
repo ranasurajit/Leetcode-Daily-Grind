@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach : Using Array Pre-processing (Prefix Sum) Approach
      *
-     * TC: O(N) + O(N) ~ O(N)
+     * TC: O(N) + O(N - K + 1) ~ O(N)
      * SC: O(N) + O(N) ~ O(N)
      */
     public long maxProfit(int[] prices, int[] strategy, int k) {
@@ -27,7 +27,7 @@ class Solution {
          * orig profitSum right = profitSum[r2] - profitSum[l2 - 1]
          */
         long maxDelta = 0L;
-        for (int i = 0; i < n - k + 1; i++) { // TC: O(N)
+        for (int i = 0; i < n - k + 1; i++) { // TC: O(N - K + 1)
             int l1 = i;
             int r1 = i + (k / 2) - 1;
             int l2 = r1 + 1;
