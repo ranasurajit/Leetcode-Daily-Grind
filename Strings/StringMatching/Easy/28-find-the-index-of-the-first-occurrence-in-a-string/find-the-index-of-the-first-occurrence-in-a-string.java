@@ -1,11 +1,21 @@
 class Solution {
     /**
+     * Approach III : Using BuiltIn Function Approach
+     *
+     * TC: O(N)
+     * SC: O(1)
+     */
+    public int strStr(String haystack, String needle) {
+        return haystack.indexOf(needle);
+    }
+
+    /**
      * Approach II : Using KMP Algorithm + Two Pointers Approach
      *
      * TC: O(M + N)
      * SC: O(M)
      */
-    public int strStr(String haystack, String needle) {
+    public int strStrUsingKMP(String haystack, String needle) {
         int n = haystack.length();
         int m = needle.length();
         // construct lps array from pattern i.e. needle
