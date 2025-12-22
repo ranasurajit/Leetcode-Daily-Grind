@@ -3,6 +3,49 @@ class Solution {
     private int n;
 
     /**
+     * Approach III : Using Tabulation (Optimal) Approach
+     *
+     * TC: O(N x N x N)
+     * SC: O(N x N)
+     * - O(N x N) - tabulation dp memory
+     *
+     * Accepted (131 / 131 testcases passed)
+     */
+    public int minDeletionSize(String[] strs) {
+        this.m = strs.length;
+        this.n = strs[0].length();
+        int maxLIS = 0;
+        for (int j = 0; j < n; j++) { // TC: O(N)
+            maxLIS = Math.max(maxLIS, lisOptimalTabulation(strs, n)); // TC: O(N x N), SC: O(N)
+        }
+        return n - maxLIS;
+    }
+
+    /**
+     * Using Tabulation (Optimal) Approach
+     *
+     * TC: O(N x N)
+     * SC: O(N)
+     */
+    private int lisOptimalTabulation(String[] strs, int n) {
+        int[] dp = new int[n]; // SC: O(N)
+        Arrays.fill(dp, 1); // all elements are LIS of length 1 by-default
+        int maxLength = 1;
+        for (int idx = 1; idx < n; idx++) { // TC: O(N)
+            // prevIdx cannot exceed idx
+            for (int prevIdx = 0; prevIdx < idx; prevIdx++) { // TC: O(N)
+                if (canBeIncluded(idx, prevIdx, strs)) {
+                    if (dp[idx] < dp[prevIdx] + 1) {
+                        dp[idx] = dp[prevIdx] + 1;
+                    }
+                }
+            }
+            maxLength = Math.max(maxLength, dp[idx]);
+        }
+        return maxLength;
+    }
+
+    /**
      * Approach II : Using Memoization Approach
      *
      * TC: O(N x N x N)
@@ -12,7 +55,7 @@ class Solution {
      *
      * Accepted (131 / 131 testcases passed)
      */
-    public int minDeletionSize(String[] strs) {
+    public int minDeletionSizeMemoization(String[] strs) {
         this.m = strs.length;
         this.n = strs[0].length();
         int maxLIS = 0;
