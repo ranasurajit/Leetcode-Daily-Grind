@@ -1,15 +1,52 @@
 class Solution {
     private int n;
     /**
-     * Approach III : Using Prefix Max + Binary Search Approach
+     * Approach IV : Using Greedy + Sorting + Min-Heap Approach
+     *
+     * TC: O(N x log(N)) + O(N x log(N)) ~ O(N x log(N))
+     * SC: O(N)
+     * - O(N) - min-heap memory
+     *
+     * Accepted (64 / 64 testcases passed)
+     */
+    public int maxTwoEvents(int[][] events) {
+        this.n = events.length;
+        Arrays.sort(events, (a, b) -> {
+            if (a[0] != b[0]) {
+                return a[0] - b[0]; // sort by start time
+            }
+            if (a[1] != b[1]) {
+                return a[1] - b[1]; // sort by end time
+            }
+            return a[2] - b[2]; // sort by value
+        }); // TC: O(N x log(N))
+        // we will store { endTime, value } in Min-Heap order by endTime
+        PriorityQueue<int[]> pq = new PriorityQueue<int[]>((p, q) -> p[0] - q[0]); // SC: O(N)
+        int maxValue = 0;
+        int result = 0;
+        for (int[] currentEvent : events) { // TC: O(N)
+            int start = currentEvent[0];
+            int end = currentEvent[1];
+            int value = currentEvent[2];
+            while (!pq.isEmpty() && start > pq.peek()[0]) {
+                maxValue = Math.max(maxValue, pq.poll()[1]);
+            }
+            result = Math.max(result, maxValue + value);
+            pq.offer(new int[] { end, value }); // TC: O(log(N))
+        }
+        return result;
+    }
+
+    /**
+     * Approach III : Using Sorting + Prefix Max + Binary Search Approach
      *
      * TC: O(N x log(N)) + O(N) + O(N x log(N)) ~ O(N x log(N))
      * SC: O(N)
      * - O(N) - prefix max array memory
      *
-     * Accepted (35 / 64 testcases passed)
+     * Accepted (64 / 64 testcases passed)
      */
-    public int maxTwoEvents(int[][] events) {
+    public int maxTwoEventsBinarySearch(int[][] events) {
         this.n = events.length;
         Arrays.sort(events, (a, b) -> a[1] - b[1]); // TC: O(N x log(N))
         /**
