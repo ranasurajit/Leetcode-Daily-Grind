@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach : Using Greedy + Sorting Approach
      *
-     * TC: O(N) + O(M x log(M)) + O(Min(M, Sum(apples))) ~ O(M x log(M))
+     * TC: O(N) + O(M x log(M)) + O(M) ~ O(N + M x log(M))
      * SC: O(1)
      */
     public int minimumBoxes(int[] apple, int[] capacity) {
@@ -24,7 +24,7 @@ class Solution {
          */
         Arrays.sort(capacity); // TC: O(M x log(M))
         int boxIndex = m - 1;
-        while (totalApples >= 0 && boxIndex >= 0) { // TC: O(Min(M, Sum(apples)))
+        while (boxIndex >= 0) { // TC: O(M)
             totalApples -= capacity[boxIndex];
             if (totalApples <= 0) {
                 return m - boxIndex;
