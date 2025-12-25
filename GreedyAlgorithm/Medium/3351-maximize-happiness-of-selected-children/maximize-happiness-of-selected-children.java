@@ -21,11 +21,12 @@ class Solution {
              * every incremental selection we decrease all unselected
              * children happiness value by 1
              */
-            happinessSum += Math.max(0, happiness[i] - selected);
-            selected++;
-            if (selected == k) {
+            if (happiness[i] - selected <= 0 || selected == k) {
+                // we cannot accumulate more happiness
                 break;
             }
+            happinessSum += happiness[i] - selected;
+            selected++;
         }
         return happinessSum;
     }
