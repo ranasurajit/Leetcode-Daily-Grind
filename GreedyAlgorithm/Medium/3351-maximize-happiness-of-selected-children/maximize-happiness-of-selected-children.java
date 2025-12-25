@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach : Using Greedy + Sorting Approach
      *
-     * TC: O(N x log(N)) + O(N) ~ O(N x log(N))
+     * TC: O(N x log(N)) + O(K) ~ O(K + N x log(N))
      * SC: O(1)
      */
     public long maximumHappinessSum(int[] happiness, int k) {
@@ -15,18 +15,20 @@ class Solution {
         Arrays.sort(happiness); // TC: O(N x log(N))
         int selected = 0;
         long happinessSum = 0L;
-        for (int i = n - 1; i >= 0 && selected < k; i--) { // TC: O(N)
+        int index = n - 1;
+        while (selected < k) { // TC: O(K)
             /**
              * we will subtract 'selected' from happiness[i] as for 
              * every incremental selection we decrease all unselected
              * children happiness value by 1
              */
-            if (happiness[i] - selected <= 0) {
+            if (happiness[index] - selected <= 0) {
                 // we cannot accumulate more happiness
                 break;
             }
-            happinessSum += happiness[i] - selected;
+            happinessSum += happiness[index] - selected;
             selected++;
+            index--;
         }
         return happinessSum;
     }
