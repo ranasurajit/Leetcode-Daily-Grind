@@ -15,13 +15,13 @@ class Solution {
         Arrays.sort(happiness); // TC: O(N x log(N))
         int selected = 0;
         long happinessSum = 0L;
-        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+        for (int i = n - 1; i >= 0 && selected < k; i--) { // TC: O(N)
             /**
              * we will subtract 'selected' from happiness[i] as for 
              * every incremental selection we decrease all unselected
              * children happiness value by 1
              */
-            if (happiness[i] - selected <= 0 || selected == k) {
+            if (happiness[i] - selected <= 0) {
                 // we cannot accumulate more happiness
                 break;
             }
