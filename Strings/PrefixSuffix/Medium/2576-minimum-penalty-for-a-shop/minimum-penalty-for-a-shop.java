@@ -1,13 +1,50 @@
 class Solution {
     /**
-     * Approach II : Using Optimal (Prefix-Sum) Approach
+     * Approach III : Using Optimal (Prefix-Sum) Approach
+     *
+     * TC: O(N) + O(N) ~ O(N)
+     * SC: O(1)
+     *
+     * Accepted (42 / 42 testcases passed)
+     */
+    public int bestClosingTime(String customers) {
+        int n = customers.length();
+        /**
+         * We need to compute prefix sum of count of N's from 
+         * right to left and pre-fill in an extra array
+         */
+        int totalYs = 0;
+        for (int i = 0; i <= n; i++) { // TC: O(N)
+            totalYs += (i < n && customers.charAt(i) == 'Y' ? 1 : 0);
+        }
+        int minPenalty = n;
+        int minHour = n;
+        int ySeen = 0;
+        int nSeen = 0;
+        for (int i = 0; i <= n; i++) { // TC: O(N) - i is the closing time index
+            // penalty at any index i = countYs[i...(n - 1)] + countNs[0 to (i - 1)]
+            int countYi = totalYs - ySeen;
+            int countNi = nSeen;
+            ySeen += (i < n && customers.charAt(i) == 'Y' ? 1 : 0);
+            nSeen += (i < n && customers.charAt(i) == 'N' ? 1 : 0);
+            int currentPenalty = countYi + countNi;
+            if (minPenalty > currentPenalty) {
+                minPenalty = currentPenalty;
+                minHour = i;
+            }
+        }
+        return minHour;
+    }
+
+    /**
+     * Approach II : Using Better (Prefix-Sum) Approach
      *
      * TC: O(N) + O(N) ~ O(N)
      * SC: O(N) + O(N) ~ O(N)
      *
      * Accepted (42 / 42 testcases passed)
      */
-    public int bestClosingTime(String customers) {
+    public int bestClosingTimeBetter(String customers) {
         int n = customers.length();
         /**
          * We need to compute prefix sum of count of N's from 
