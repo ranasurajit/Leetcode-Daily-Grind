@@ -13,8 +13,8 @@ class Solution {
         int count = 1;
         StringBuilder sb = new StringBuilder(); // SC: O(M x K)
         int tries = 0;
-        int maxTries = (a.length() + b.length() - 1) / a.length();
-        while (tries < maxTries + 1) {
+        int maxTries = 1 + ((a.length() + b.length()) / a.length());
+        while (tries < maxTries) {
             sb.append(a);
             int m = sb.length();
             int i = 0; // pointer at the start of String b i.e. pattern
