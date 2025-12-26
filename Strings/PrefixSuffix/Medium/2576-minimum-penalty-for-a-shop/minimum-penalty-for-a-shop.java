@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach III : Using Optimal (Prefix-Sum) Approach
+     * Approach IV : Using Optimal-Clean (Prefix-Sum) Approach
      *
      * TC: O(N) + O(N) ~ O(N)
      * SC: O(1)
@@ -19,7 +19,49 @@ class Solution {
                 totalYs++;
             }
         }
-        int minPenalty = n;
+        if (totalYs == 0) {
+            // customers never visit
+            return 0; // keep the shop closed at time = 0
+        }
+        int minPenalty = totalYs;
+        int minHour = 0;
+        int penalty = minPenalty;
+        for (int i = 0; i < n; i++) { // TC: O(N) - i is the closing time index
+            // penalty at any index i = countYs[i...(n - 1)] + countNs[0 to (i - 1)]
+            if (customers.charAt(i) == 'Y') {
+                penalty--;
+            } else {
+                penalty++;
+            }
+            if (minPenalty > penalty) {
+                minPenalty = penalty;
+                minHour = i + 1;
+            }
+        }
+        return minHour;
+    }
+
+    /**
+     * Approach III : Using Optimal (Prefix-Sum) Approach
+     *
+     * TC: O(N) + O(N) ~ O(N)
+     * SC: O(1)
+     *
+     * Accepted (42 / 42 testcases passed)
+     */
+    public int bestClosingTimeOptimal(String customers) {
+        int n = customers.length();
+        /**
+         * We need to compute prefix sum of count of N's from 
+         * right to left and pre-fill in an extra array
+         */
+        int totalYs = 0;
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            if (customers.charAt(i) == 'Y') {
+                totalYs++;
+            }
+        }
+        int minPenalty = totalYs;
         int minHour = n;
         int ySeen = 0;
         for (int i = 0; i <= n; i++) { // TC: O(N) - i is the closing time index
