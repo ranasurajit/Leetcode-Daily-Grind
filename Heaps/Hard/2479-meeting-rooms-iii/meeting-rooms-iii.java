@@ -36,13 +36,12 @@ class Solution {
                 freq[roomIndex]++;
                 usedQueue.offer(new int[] { roomIndex, end }); // TC: O(log(N))
             } else {
-                if (!usedQueue.isEmpty()) {
-                    int[] room = usedQueue.poll();
-                    int roomIndex = room[0];
-                    int endTime = room[1];
-                    freq[roomIndex]++;
-                    usedQueue.offer(new int[] { roomIndex, endTime + (end - start) }); // TC: O(log(N))
-                }
+                // if unused queue is empty we need to poll the earliest available room from used queue
+                int[] room = usedQueue.poll();
+                int roomIndex = room[0];
+                int endTime = room[1];
+                freq[roomIndex]++;
+                usedQueue.offer(new int[] { roomIndex, endTime + (end - start) }); // TC: O(log(N))
             }
         }
         int maxFreq = 0;
