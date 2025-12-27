@@ -7,6 +7,10 @@ class Solution {
      */
     public int mostBooked(int n, int[][] meetings) {
         int[] freq = new int[n]; // SC: O(N)
+        /**
+         * Since we need to assign meeting rooms and meetings is not 
+         * guaranteed to be sorted, so lets sort it by start time 
+         */
         Arrays.sort(meetings, (a, b) -> a[0] - b[0]); // TC: O(M x log(M))
         // we will store meeting room index in 'unusedQueue'
         PriorityQueue<Integer> unusedQueue = new PriorityQueue<Integer>(); // SC: O(N)
@@ -16,7 +20,7 @@ class Solution {
         // we will store { meeting room index, end time } in 'usedQueue'
         PriorityQueue<int[]> usedQueue = new PriorityQueue<int[]>((a, b) -> {
             if (a[1] != b[1]) {
-                return a[1] - b[1]; // return the meeting room with least index
+                return a[1] - b[1]; // return the meeting room with least endtime
             }
             return a[0] - b[0]; // return least meeting room index if end time are same
         }); // SC: O(N)
