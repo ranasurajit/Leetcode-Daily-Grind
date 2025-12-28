@@ -1,11 +1,35 @@
 class Solution {
     /**
+     * Approach III : Using Staircase Counting Approach
+     *
+     * TC: O(M + N)
+     * SC: O(1)
+     */
+    public int countNegatives(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int count = 0;
+        int row = 0;
+        int col = n - 1;
+        while (row < m && col >= 0) { // TC: O(M + N)
+            if (grid[row][col] < 0) {
+                // all elements below this cell are also negative
+                count += (m - row);
+                col--;
+            } else {
+                row++;
+            }
+        }
+        return count;
+    }
+
+    /**
      * Approach II : Using Binary Search Approach
      *
      * TC: O(M x log(N))
      * SC: O(1)
      */
-    public int countNegatives(int[][] grid) {
+    public int countNegativesBinarySearch(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
         int count = 0;
