@@ -26,6 +26,11 @@ class Solution {
      * SC: O(9) ~ O(1)
      */
     private boolean isMagicSquare(int[][] grid, int r, int c) {
+        if (grid[r - 1][c - 1] != 5) {
+            // early return
+            // the center cell should always be 5
+            return false;
+        }
         int dlsum = grid[r][c - 2] + grid[r - 1][c - 1] + grid[r - 2][c];
         int drsum = grid[r - 2][c - 2] + grid[r - 1][c - 1] + grid[r][c];
         Set<Integer> hs = new HashSet<Integer>(); // SC: O(9)
