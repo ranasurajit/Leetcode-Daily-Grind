@@ -9,6 +9,7 @@ class Solution {
      *
      * TC: O((M x N) x α(M x N))
      * SC: O(M x N) - reused for α(M x N) times
+     * where α = Inverse Ackermann function which is almost constant
      */
     public int latestDayToCross(int row, int col, int[][] cells) {
         this.n = cells.length;
