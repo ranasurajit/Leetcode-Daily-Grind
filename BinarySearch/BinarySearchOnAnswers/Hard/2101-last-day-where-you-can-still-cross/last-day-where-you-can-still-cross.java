@@ -5,12 +5,119 @@ class Solution {
     private static final int[][] directions = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
 
     /**
-     * Approach : Using Binary Search on Answers + Multi-Source BFS Approach
+     * Approach II : Using Disjoint Set Union Find Approach
+     *
+     * TC: O((M x N) x α(M x N))
+     * SC: O(M x N) - reused for α(M x N) times
+     */
+    public int latestDayToCross(int row, int col, int[][] cells) {
+        this.n = cells.length;
+        this.row = row;
+        this.col = col;
+        int total = row * col;
+        int TOP = total;
+        int BOTTOM = total + 1;
+        UnionFind uf = new UnionFind(total + 2); // include TOP and BOTTOM
+        boolean[][] land = new boolean[row][col]; // SC: O(M x N)
+        /**
+         * To minimize operations we can think land is all covered with water and 
+         * we can iterate on cells array backwards by removing water from cells[i] 
+         */
+        for (int i = n - 1; i >= 0; i--) { // TC: O(M x N)
+            int r = cells[i][0] - 1;
+            int c = cells[i][1] - 1;
+            land[r][c] = true;
+            int id = r * col + c;
+            for (int[] dir : directions) { // TC: O(4)
+                int effRow = r + dir[0];
+                int effCol = c + dir[1];
+                if (effRow >= 0 && effRow < row && 
+                    effCol >= 0 && effCol < col && 
+                    land[effRow][effCol]) {
+                    uf.unionByRank(id, effRow * col + effCol); // TC: O(α(M x N))
+                }
+            }
+            /**
+             * union top row and bottom row with TOP and BOTTOM virtual nodes as all top and 
+             * bottom rows should act like a bridge where if land, one can walk through
+             */
+            if (r == 0) {
+                uf.unionByRank(id, TOP); // TC: O(α(M x N))
+            }
+            if (r == row - 1) {
+                uf.unionByRank(id, BOTTOM); // TC: O(α(M x N))
+            }
+            // check connectivity of the bridge
+            if (uf.find(TOP) == uf.find(BOTTOM)) { // TC: O(α(M x N))
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Using Disjoint Set Union Find Approach
+     *
+     * SC: O(M x N)
+     */
+    private class UnionFind {
+        private int[] parent;
+        private int[] rank;
+
+        public UnionFind(int n) {
+            this.parent = new int[n];
+            for (int i = 0; i < n; i++) {
+                this.parent[i] = i;
+            }
+            this.rank = new int[n];
+        }
+
+        /**
+         * Using Disjoint Set Union (Union By Rank) Approach
+         *
+         * TC: O(α(V))
+         * SC: O(V)
+         */
+        public int find(int x) {
+            if (x == parent[x]) {
+                return x;
+            }
+            return parent[x] = find(parent[x]);
+        }
+
+        /**
+         * Using Disjoint Set Union (Union By Rank) Approach
+         *
+         * TC: O(α(V)) 
+         * SC: O(1)
+         */
+        private void unionByRank(int x, int y) {
+            int xParent = find(x); // TC: O(α(V))
+            int yParent = find(y); // TC: O(α(V)) 
+            if (xParent == yParent) {
+                return;
+            }
+            if (rank[xParent] > rank[yParent]) {
+                // make xParent as parent of yParent
+                parent[yParent] = xParent;
+            } else if (rank[xParent] < rank[yParent]) {
+                // make yParent as parent of xParent
+                parent[xParent] = yParent;
+            } else {
+                // make anyone as parent increasing its rank
+                parent[yParent] = xParent;
+                rank[xParent]++;
+            }
+        }
+    }
+
+    /**
+     * Approach I : Using Binary Search on Answers + Multi-Source BFS Approach
      *
      * TC: O((M x N) x log(M x N))
      * SC: O(M x N) - reused for log(M x N) times
      */
-    public int latestDayToCross(int row, int col, int[][] cells) {
+    public int latestDayToCrossBinarySearchWithMultiSourceBFS(int row, int col, int[][] cells) {
         this.n = cells.length;
         this.row = row;
         this.col = col;
