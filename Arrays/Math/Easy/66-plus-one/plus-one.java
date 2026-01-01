@@ -3,7 +3,7 @@ class Solution {
      * Approach II : Using Inplace Substitution Approach
      *
      * TC: O(N)
-     * SC: O(1)
+     * SC: O(1) - No Extra Auxiliary Space 
      */
     public int[] plusOne(int[] digits) {
         int n = digits.length;
