@@ -83,6 +83,7 @@ class NumArray {
         if (low == high) {
             // we got to update segTree[idx] here with val
             segTree[idx] = val;
+            nums[index] = val;
             return;
         }
         // Recursion Calls
