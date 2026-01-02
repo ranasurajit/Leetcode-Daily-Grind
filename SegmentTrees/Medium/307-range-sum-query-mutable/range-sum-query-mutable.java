@@ -1,8 +1,8 @@
 /**
  * Approach : Using Segment Tree Approach
  *
- * TC: O(log(N)) + O(Q x log(N))
- * - O(log(N)) - to build segment tree
+ * TC: O(N + O(Q x log(N))
+ * - O(N) - to build segment tree
  * - O(Q x log(N)) - to execute Q queries
  * 
  * SC: O(4 x N) + O(log(N)) ~ O(N + log(N))
@@ -17,7 +17,7 @@ class NumArray {
     /**
      * Using Segment Tree Approach
      *
-     * TC: O(log(N))
+     * TC: O(N)
      * SC: O(4 x N) + O(log(N)) ~ O(N + log(N)) - where log(N) is recursion stack space
      */
     public NumArray(int[] nums) {
@@ -101,7 +101,7 @@ class NumArray {
     /**
      * Using Segment Tree Approach
      *
-     * TC: O(log(N))
+     * TC: O(N)
      * SC: O(log(N)) - recursion stack space
      */
     private void buildSegmentTree(int idx, int low, int high) {
