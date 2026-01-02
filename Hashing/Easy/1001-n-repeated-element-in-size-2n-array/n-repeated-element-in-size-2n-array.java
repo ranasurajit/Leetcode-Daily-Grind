@@ -1,11 +1,33 @@
 class Solution {
     /**
-     * Approach I : Using Hashing Approach
+     * Approach I : Using Better (Hashing) Approach
      *
      * TC: O(M) ~ O(2 x N) ~ O(N)
      * SC: O(N)
      */
     public int repeatedNTimes(int[] nums) {
+        int m = nums.length;
+        Set<Integer> set = new HashSet<Integer>(); // SC: O(N)
+        for (int num : nums) { // TC: O(M)
+            if (!set.add(num)) {
+                /**
+                 * as constraint guarantees that nums contains
+                 * n + 1 unique elements and one of them is 
+                 * repeated exactly n times
+                 */
+                return num;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Approach I : Using Brute-Force (Hashing) Approach
+     *
+     * TC: O(M) ~ O(2 x N) ~ O(N)
+     * SC: O(N)
+     */
+    public int repeatedNTimesBruteForce(int[] nums) {
         int m = nums.length;
         Set<Integer> set = new HashSet<Integer>(); // SC: O(N)
         int countAddFailures = 0;
