@@ -1,7 +1,7 @@
 /**
  * Approach II : Using Segment Tree Approach
  *
- * TC: O(log(N)) to form segment tree array and O(Q x log(N)) to run all queries
+ * TC: O(N) to form segment tree array and O(Q x log(N)) to run all queries
  * SC: O(N + log(N)) - to form prefixSums array + recursion stack space
  */
 class NumArray {
@@ -12,7 +12,7 @@ class NumArray {
     /**
      * Using Segment Tree Approach
      *
-     * TC: O(1)
+     * TC: O(N)
      * SC: O(4 x N) + O(log(N)) ~ O(N + log(N))
      */
     public NumArray(int[] nums) {
@@ -63,7 +63,7 @@ class NumArray {
     /**
      * Using Segment Tree Approach
      *
-     * TC: O(log(N))
+     * TC: O(N)
      * SC: O(log(N))
      */
     private void buildSegmentTree(int index, int low, int high) {
