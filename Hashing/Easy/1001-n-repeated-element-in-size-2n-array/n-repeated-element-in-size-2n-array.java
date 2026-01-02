@@ -1,11 +1,33 @@
 class Solution {
     /**
-     * Approach I : Using Better (Hashing) Approach
+     * Approach III : Using Optimal (Adjacency Check With Fixed Window) Approach
+     *
+     * TC: O(M) ~ O(2 x N) ~ O(N)
+     * SC: O(1)
+     */
+    public int repeatedNTimes(int[] nums) {
+        int m = nums.length;
+        /**
+         * the repeated number should be present within sub-array of 4 elements
+         */
+        for (int j = 1; j <= 3; j++) { // TC: O(3)
+            for (int i = 0; i < m - j; i++) { // TC: O(M)
+                if (nums[i] == nums[i + j]) {
+                    // early return
+                    return nums[i];
+                }
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Approach II : Using Better (Hashing) Approach
      *
      * TC: O(M) ~ O(2 x N) ~ O(N)
      * SC: O(N)
      */
-    public int repeatedNTimes(int[] nums) {
+    public int repeatedNTimesBetter(int[] nums) {
         int m = nums.length;
         Set<Integer> set = new HashSet<Integer>(); // SC: O(N)
         for (int num : nums) { // TC: O(M)
