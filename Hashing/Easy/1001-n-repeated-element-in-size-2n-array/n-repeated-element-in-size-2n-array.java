@@ -15,8 +15,11 @@ class Solution {
                 countAddFailures++;
                 repeated = num;
             }
+            if (countAddFailures == (m / 2) - 1) {
+                // as Set will already be having 1 occurence of repeated
+                return repeated;
+            }
         }
-        // as Set will already be having 1 occurence of repeated
-        return countAddFailures == (m / 2) - 1 ? repeated : -1;
+        return -1;
     }
 }
