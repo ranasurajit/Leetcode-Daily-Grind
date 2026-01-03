@@ -2,12 +2,43 @@ class Solution {
     private static final int MOD = (int) 1e9 + 7;
 
     /**
+     * Approach II : Using Optimized DP (Space Optimization) Approach
+     *
+     * TC: O(N)
+     * SC: O(1)
+     */
+    public int numOfWays(int n) {
+        /**
+         * we can arrange colors in two ways
+         * 1. A B C - all three colors different in row - dpThree
+         * 2. A B A - 1st and 3rd cell has same color - dpTwo
+         */
+        long prevThree = 6L; // filling ways = 3 x 2 x 1
+        long prevTwo = 6L;   // filling ways = 3 x 2 x 1 (fixed)
+        /**
+         * filling a row depends on filling pattern of previous row
+         * 1. if previous row is having 3 color pattern so we can have current
+         * row filled up with 2 or 3 color pattern
+         * Number of ways to fill current row if previous row is filled with:
+         * 3 --> 3 = 2 ways, 3 --> 2 = 2 ways
+         * 2 --> 3 = 2 ways, 2 --> 2 = 3 ways
+         */
+        for (int i = 2; i <= n; i++) { // TC: O(N)
+            long currentThree = ((prevThree * 2) % MOD + (prevTwo * 2) % MOD) % MOD;
+            long currentTwo = ((prevTwo * 3) % MOD + (prevThree * 2) % MOD) % MOD;
+            prevTwo = currentTwo;
+            prevThree = currentThree;
+        }
+        return (int) ((prevThree + prevTwo) % MOD);
+    }
+
+    /**
      * Approach I : Using DP Tabulation Approach
      *
      * TC: O(N)
      * SC: O(N) + O(N) ~ O(N)
      */
-    public int numOfWays(int n) {
+    public int numOfWaysTabulation(int n) {
         /**
          * we can arrange colors in two ways
          * 1. A B C - all three colors different in row - dpThree
