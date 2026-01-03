@@ -15,6 +15,9 @@ class Solution {
          */
         long prevThree = 6L; // filling ways = 3 x 2 x 1
         long prevTwo = 6L;   // filling ways = 3 x 2 x 1 (fixed)
+        if (n == 1) {
+            return 12;
+        }
         /**
          * filling a row depends on filling pattern of previous row
          * 1. if previous row is having 3 color pattern so we can have current
@@ -24,7 +27,7 @@ class Solution {
          * 2 --> 3 = 2 ways, 2 --> 2 = 3 ways
          */
         for (int i = 2; i <= n; i++) { // TC: O(N)
-            long currentThree = ((prevThree * 2) % MOD + (prevTwo * 2) % MOD) % MOD;
+            long currentThree = ((prevThree + prevTwo) * 2) % MOD;
             long currentTwo = ((prevTwo * 3) % MOD + (prevThree * 2) % MOD) % MOD;
             prevTwo = currentTwo;
             prevThree = currentThree;
