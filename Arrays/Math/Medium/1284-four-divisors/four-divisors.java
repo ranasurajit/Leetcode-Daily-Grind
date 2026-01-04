@@ -1,8 +1,8 @@
 class Solution {
     /**
-     * Approach II : Using Better (Simulation) Approach
+     * Approach II : Using Optimal (Simulation) Approach
      *
-     * TC: O(N x Sqrt(M)), where M = max(nums)
+     * TC: OO(N × √M), where M = max(nums)
      * SC: O(1)
      *
      * Accepted (18 / 18 testcases passed)
@@ -11,7 +11,7 @@ class Solution {
         int n = nums.length;
         int sum = 0;
         for (int i = 0; i < n; i++) { // TC: O(N)
-            sum += sumOfAllDivisorsBetter(nums[i]); // TC: O(Sqrt(M))
+            sum += sumOfAllDivisorsBetter(nums[i]); // TC: O(√M)
         }
         return sum;
     }
@@ -19,14 +19,18 @@ class Solution {
     /**
      * Using Simulation Approach
      *
-     * TC: O(Sqrt(M))
+     * TC: O(√M)
      * SC: O(1)
      */
     private int sumOfAllDivisorsBetter(int num) {
+        if (num < 6) {
+            // num < 6 cannot have 4 divisors
+            return 0;
+        }
         int sum = 1 + num;
         int count = 0;
         int max = (int) Math.sqrt(num);
-        for (int i = 2; i <= max; i++) { // TC: O(Sqrt(M))
+        for (int i = 2; i <= max; i++) { // TC: O(√M)
             if (num % i == 0) {
                 sum += i;
                 count++;
