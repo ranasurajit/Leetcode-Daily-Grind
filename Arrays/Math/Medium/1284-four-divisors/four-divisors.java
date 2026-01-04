@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach II : Using Optimal (Simulation) Approach
      *
-     * TC: OO(N × √M), where M = max(nums)
+     * TC: O(N × √M), where M = max(nums)
      * SC: O(1)
      *
      * Accepted (18 / 18 testcases passed)
