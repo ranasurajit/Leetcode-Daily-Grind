@@ -5,7 +5,7 @@ class Solution {
      * TC: O(N x M), where M = max(nums)
      * SC: O(1)
      *
-     * Time Limit Exceeded (15 / 18 testcases passed)
+     * Accepted (18 / 18 testcases passed)
      */
     public int sumFourDivisors(int[] nums) {
         int n = nums.length;
