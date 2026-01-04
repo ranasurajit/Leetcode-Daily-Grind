@@ -23,6 +23,9 @@ class Solution {
      * SC: O(1)
      */
     private int sumOfAllDivisorsBetter(int num) {
+        if (num < 6) {
+            return 0;
+        }
         int sum = 1 + num;
         int count = 0;
         int max = (int) Math.sqrt(num);
