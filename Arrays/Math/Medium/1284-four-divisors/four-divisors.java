@@ -25,7 +25,8 @@ class Solution {
     private int sumOfAllDivisorsBetter(int num) {
         int sum = 1 + num;
         int count = 0;
-        for (int i = 2; i <= (int) Math.sqrt(num); i++) { // TC: O(Sqrt(M))
+        int max = (int) Math.sqrt(num);
+        for (int i = 2; i <= max; i++) { // TC: O(Sqrt(M))
             if (num % i == 0) {
                 sum += i;
                 count++;
