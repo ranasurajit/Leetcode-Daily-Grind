@@ -1,8 +1,28 @@
 class Solution {
     private int n;
+    /**
+     * Approach III : Using Tabulation (Bottom Up) Approach
+     *
+     * TC: O(N)
+     * SC: O(N)
+     * - O(N) - dp array memory
+     *
+     * Accepted (45 / 45 testcases passed)
+     */
+    public int climbStairs(int n) {
+        this.n = n;
+        // Initialization
+        int[] dp = new int[n + 1]; // SC: O(N)
+        dp[0] = 1;
+        // Iterative Calls
+        for (int i = 1; i <= n; i++) { // TC: O(N)
+            dp[i] = dp[i - 1] + (i > 1 ? dp[i - 2] : 0);
+        }
+        return dp[n];
+    }
 
     /**
-     * Approach II : Using Memoization Approach
+     * Approach II : Using Memoization (Top Down) Approach
      *
      * TC: O(N)
      * SC: O(N) + O(N)
@@ -11,7 +31,7 @@ class Solution {
      *
      * Accepted (45 / 45 testcases passed)
      */
-    public int climbStairs(int n) {
+    public int climbStairsMemoization(int n) {
         this.n = n;
         int[] memo = new int[n + 1]; // SC: O(N)
         Arrays.fill(memo, -1);
