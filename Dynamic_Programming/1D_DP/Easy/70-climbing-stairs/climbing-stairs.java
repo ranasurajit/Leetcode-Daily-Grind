@@ -1,6 +1,28 @@
 class Solution {
     private int n;
     /**
+     * Approach IV : Using Space Optimization (Optimized DP) Approach
+     *
+     * TC: O(N)
+     * SC: O(1)
+     *
+     * Accepted (45 / 45 testcases passed)
+     */
+    public int climbStairs(int n) {
+        this.n = n;
+        // Initialization
+        int prev2 = 0;
+        int prev1 = 1;
+        // Iterative Calls
+        for (int i = 1; i <= n; i++) { // TC: O(N)
+            int current = prev1 + prev2;
+            prev2 = prev1;
+            prev1 = current;
+        }
+        return prev1;
+    }
+
+    /**
      * Approach III : Using Tabulation (Bottom Up) Approach
      *
      * TC: O(N)
@@ -9,7 +31,7 @@ class Solution {
      *
      * Accepted (45 / 45 testcases passed)
      */
-    public int climbStairs(int n) {
+    public int climbStairsTabulation(int n) {
         this.n = n;
         // Initialization
         int[] dp = new int[n + 1]; // SC: O(N)
