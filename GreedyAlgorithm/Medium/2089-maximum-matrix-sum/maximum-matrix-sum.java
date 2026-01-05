@@ -14,15 +14,16 @@ class Solution {
     public long maxMatrixSum(int[][] matrix) {
         int n = matrix.length;
         int countNegatives = 0;
-        long minAbsolute = Long.MAX_VALUE;
+        long minAbsolute = (long) 1e5 + 1;
         long totalAbsSum = 0L;
         for (int i = 0; i < n; i++) { // TC: O(N)
             for (int j = 0; j < n; j++) { // TC: O(N)
-                if (matrix[i][j] < 0) {
+                int cellValue = matrix[i][j];
+                if (cellValue < 0) {
                     countNegatives++;
                 }
-                totalAbsSum += Math.abs(matrix[i][j]);
-                minAbsolute = Math.min(minAbsolute, Math.abs(matrix[i][j]));
+                totalAbsSum += Math.abs(cellValue);
+                minAbsolute = Math.min(minAbsolute, Math.abs(cellValue));
             }
         }
         if ((countNegatives & 1) == 0) {
