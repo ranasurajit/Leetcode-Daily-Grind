@@ -47,6 +47,7 @@ class Solution {
             return;
         }
         if (sumLevel.size() == level) {
+            // to create a placeholder at level in sumLevel
             sumLevel.add(0L);
         }
         sumLevel.set(level, sumLevel.get(level) + node.val); // adding current node's value
