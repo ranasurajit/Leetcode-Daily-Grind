@@ -17,20 +17,20 @@ class Solution {
     /**
      * Approach I : Using BFS Approach
      *
-     * TC: O(W + H)
-     * SC: O(W + H)
-     * where W = number of nodes at the highest level (leaf node level)
-     * and H = height of tree
+     * TC: O(N)
+     * SC: O(N)
+     * where N = number of nodes of the tree
      */
     public int maxLevelSum(TreeNode root) {
         if (root == null) {
             return 1;
         }
-        Map<Integer, Long> map = new HashMap<Integer, Long>(); // SC: O(H)
-        Queue<TreeNode> queue = new LinkedList<TreeNode>(); // SC: O(W)
+        Queue<TreeNode> queue = new LinkedList<TreeNode>(); // SC: O(N)
         queue.offer(root);
         int level = 1;
-        while (!queue.isEmpty()) { // TC: O(W)
+        long maxSum = Long.MIN_VALUE;
+        int maxLevel = 0;
+        while (!queue.isEmpty()) { // TC: O(N)
             int size = queue.size();
             long sumLevel = 0L;
             for (int i = 0; i < size; i++) {
@@ -43,17 +43,12 @@ class Solution {
                     queue.offer(current.right);
                 }
             }
-            map.put(level, sumLevel);
+            if (sumLevel > maxSum) {
+                maxSum = sumLevel;
+                maxLevel = level;
+            }
             level++;
         }
-        long maxSum = Long.MIN_VALUE;
-        int result = 0;
-        for (Integer key : map.keySet()) { // TC: O(H)
-            if (map.get(key) > maxSum) {
-                maxSum = map.get(key);
-                result = key;
-            }
-        }
-        return result;
+        return maxLevel;
     }
 }
