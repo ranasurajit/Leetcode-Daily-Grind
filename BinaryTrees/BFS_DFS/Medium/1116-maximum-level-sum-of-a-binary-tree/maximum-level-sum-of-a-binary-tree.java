@@ -18,11 +18,12 @@ class Solution {
      * Approach II : Using DFS Approach
      *
      * TC: O(N) + O(H) ~ O(N)
-     * SC: O(N) + O(H) - recursion stack
+     * SC: O(H) + O(H) ~ O(N)
+     * O(H) - recursion stack
      * where N = number of nodes of the tree, H = height of tree = log(N) ~ N (in worst case)
      */
     public int maxLevelSum(TreeNode root) {
-        List<Long> sumLevel = new ArrayList<Long>();
+        List<Long> sumLevel = new ArrayList<Long>(); // SC: O(H)
         dfsTree(root, 0, sumLevel); // TC: O(N), SC: O(H)
         long maxSum = Long.MIN_VALUE;
         int maxLevel = 0;
