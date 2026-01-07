@@ -1,5 +1,29 @@
 class Solution {
     /**
+     * Approach IV : Using Space Optimization (Optimized DP) Approach
+     *
+     * TC: O(N)
+     * SC: O(1)
+     *
+     * Accepted (70 / 70 testcases passed)
+     */
+    public int rob(int[] nums) {
+        int n = nums.length;
+        // Initialization
+        int prev2 = 0;
+        int prev1 = 0;
+        // Iterative Calls
+        for (int idx = 0; idx < n; idx++) { // TC: O(N)
+            int optionOne = nums[idx] + (idx > 1 ? prev2 : 0);
+            int optionTwo = idx > 0 ? prev1 : 0;
+            int current = Math.max(optionOne, optionTwo);
+            prev2 = prev1;
+            prev1 = current;
+        }
+        return prev1;
+    }
+
+    /**
      * Approach III : Using Tabulation (Bottom-Up) Approach
      *
      * TC: O(N)
@@ -8,7 +32,7 @@ class Solution {
      *
      * Accepted (70 / 70 testcases passed)
      */
-    public int rob(int[] nums) {
+    public int robTabulation(int[] nums) {
         int n = nums.length;
         // Initialization
         int[] dp = new int[n + 1]; // SC: O(N)
