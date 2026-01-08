@@ -5,10 +5,12 @@ class Solution {
     /**
      * Approach II : Using Memoization (Top-Down) Approach
      *
-     * TC: O(2 ^ Min(M, N))
-     * SC: O(Min(M, N))
+     * TC: O(M x N)
+     * SC: O(M x N) + O(Min(M, N))
+     * - O(M x N) - memoization memory
+     * - O(Min(M, N)) - recursion stack space
      *
-     * Time Limit Exceeded (19 / 69 testcases passed)
+     * Accepted (69 / 69 testcases passed)
      */
     public int maxDotProduct(int[] nums1, int[] nums2) {
         this.m = nums1.length;
@@ -23,8 +25,8 @@ class Solution {
     /**
      * Using Memoization Approach
      *
-     * TC: O(2 ^ Min(M, N))
-     * SC: O(Min(M, N))
+     * TC: O(M x N)
+     * SC: O(Min(M , N)) - recursion stack space
      */
     private int solveMemoization(int i1, int i2, int[] nums1, int[] nums2, int[][] memo) {
         // Base Case
@@ -54,6 +56,7 @@ class Solution {
      *
      * TC: O(2 ^ Min(M, N))
      * SC: O(Min(M, N))
+     * - O(Min(M, N)) - recursion stack space
      *
      * Time Limit Exceeded (19 / 69 testcases passed)
      */
@@ -67,7 +70,7 @@ class Solution {
      * Using Recursion Approach
      *
      * TC: O(2 ^ Min(M, N))
-     * SC: O(Min(M, N))
+     * SC: O(Min(M, N)) - recursion stack space
      */
     private int solveRecursion(int i1, int i2, int[] nums1, int[] nums2) {
         // Base Case
