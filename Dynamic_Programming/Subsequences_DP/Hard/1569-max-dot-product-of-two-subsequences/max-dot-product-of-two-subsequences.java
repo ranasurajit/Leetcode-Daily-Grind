@@ -3,6 +3,38 @@ class Solution {
     private int n;
 
     /**
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC: O(M x N) + O(M) + O(N) ~ O(M x N)
+     * SC: O(M x N)
+     * - O(M x N) - dp array memory
+     *
+     * Accepted (69 / 69 testcases passed)
+     */
+    public int maxDotProduct(int[] nums1, int[] nums2) {
+        this.m = nums1.length;
+        this.n = nums2.length;
+        // Initialization
+        int[][] dp = new int[m + 1][n + 1]; // SC: O(M x N)
+        for (int i1 = 0; i1 <= m; i1++) { // TC: O(M)
+            dp[i1][n] = Integer.MIN_VALUE;
+        }
+        for (int i2 = 0; i2 <= n; i2++) { // TC: O(N)
+            dp[m][i2] = Integer.MIN_VALUE;
+        }
+        // Iterative Calls
+        for (int i1 = m - 1; i1 >= 0; i1--) { // TC: O(M)
+            for (int i2 = n - 1; i2 >= 0; i2--) { // TC: O(N)
+                int skip1 = dp[i1 + 1][i2];
+                int skip2 = dp[i1][i2 + 1];
+                int pick = nums1[i1] * nums2[i2] + Math.max(0, dp[i1 + 1][i2 + 1]);
+                dp[i1][i2] = Math.max(pick, Math.max(skip1, skip2));
+            }
+        }
+        return dp[0][0];
+    }
+
+    /**
      * Approach II : Using Memoization (Top-Down) Approach
      *
      * TC: O(M x N)
@@ -12,7 +44,7 @@ class Solution {
      *
      * Accepted (69 / 69 testcases passed)
      */
-    public int maxDotProduct(int[] nums1, int[] nums2) {
+    public int maxDotProductMemoization(int[] nums1, int[] nums2) {
         this.m = nums1.length;
         this.n = nums2.length;
         int[][] memo = new int[m][n];
