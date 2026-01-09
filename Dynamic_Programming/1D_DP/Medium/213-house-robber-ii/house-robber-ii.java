@@ -1,6 +1,56 @@
 class Solution {
     /**
-     * Approach II : Using Memoization Approach
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC: O(N) + O(N) + O(N) ~ O(N)
+     * SC: O(N) + O(N) + O(N) + O(N) ~ O(N)
+     * - O(N) - dp array and nums1 and nums2 space
+     *
+     * Accepted (75 / 75 testcases passed)
+     */
+    public int rob(int[] nums) {
+        int n = nums.length;
+        if (n < 2) {
+            return nums[0];
+        }
+        int[] nums1 = new int[n - 1]; // SC: O(N)
+        int[] nums2 = new int[n - 1]; // SC: O(N)
+        for (int i = 0; i < n - 1; i++) { // TC: O(N)
+            nums1[i] = nums[i];
+            nums2[i] = nums[i + 1];
+        }
+        return Math.max(
+            solveTabulation(nums1, n - 1),
+            solveTabulation(nums2, n - 1)
+        );
+    }
+
+    /**
+     * Using Tabulation Approach
+     *
+     * TC: O(N)
+     * SC: O(N)
+     * - O(N) - dp array space
+     */
+    private int solveTabulation(int[] nums, int n) {
+        int[] dp = new int[n];        // SC: O(N)
+        int skip = Integer.MIN_VALUE;
+        int pick = 0;
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            pick = nums[i];
+            if (i > 1) {
+                pick += dp[i - 2];
+            }
+            if (i > 0) {
+                skip = dp[i - 1];
+            }
+            dp[i] = Math.max(pick, skip);
+        }
+        return dp[n - 1];
+    }
+
+    /**
+     * Approach II : Using Memoization (Top-Down) Approach
      *
      * TC: O(N) + O(N) + O(N) ~ O(N)
      * SC: O(N) + O(N) + O(N) + O(N) + O(N) ~ O(N) + O(N)
@@ -9,7 +59,7 @@ class Solution {
      *
      * Accepted (75 / 75 testcases passed)
      */
-    public int rob(int[] nums) {
+    public int robMemoization(int[] nums) {
         int n = nums.length;
         if (n < 2) {
             return nums[0];
