@@ -1,14 +1,66 @@
 class Solution {
     /**
-     * Approach III : Using Tabulation (Bottom-Up) Approach
+     * Approach IV : Using Space Optimization (Optimized DP) Approach
      *
      * TC: O(N) + O(N) + O(N) ~ O(N)
-     * SC: O(N) + O(N) + O(N) + O(N) ~ O(N)
-     * - O(N) - dp array and nums1 and nums2 space
+     * SC: O(N) + O(N) ~ O(N)
+     * - O(N) - nums1 and nums2 array space
      *
      * Accepted (75 / 75 testcases passed)
      */
     public int rob(int[] nums) {
+        int n = nums.length;
+        if (n < 2) {
+            return nums[0];
+        }
+        int[] nums1 = new int[n - 1]; // SC: O(N)
+        int[] nums2 = new int[n - 1]; // SC: O(N)
+        for (int i = 0; i < n - 1; i++) { // TC: O(N)
+            nums1[i] = nums[i];
+            nums2[i] = nums[i + 1];
+        }
+        return Math.max(
+            solveOptimization(nums1, n - 1),
+            solveOptimization(nums2, n - 1)
+        );
+    }
+
+    /**
+     * Using Space Optimization Approach
+     *
+     * TC: O(N)
+     * SC: O(1)
+     */
+    private int solveOptimization(int[] nums, int n) {
+        int prev1 = 0;
+        int prev2 = 0;
+        int skip = Integer.MIN_VALUE;
+        int pick = 0;
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            pick = nums[i];
+            if (i > 1) {
+                pick += prev2;
+            }
+            if (i > 0) {
+                skip = prev1;
+            }
+            int current = Math.max(pick, skip);
+            prev2 = prev1;
+            prev1 = current;
+        }
+        return prev1;
+    }
+
+    /**
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC: O(N) + O(N) + O(N) ~ O(N)
+     * SC: O(N) + O(N) + O(N) + O(N) ~ O(N)
+     * - O(N) - dp array and nums1 and nums2 array space
+     *
+     * Accepted (75 / 75 testcases passed)
+     */
+    public int robTabulation(int[] nums) {
         int n = nums.length;
         if (n < 2) {
             return nums[0];
