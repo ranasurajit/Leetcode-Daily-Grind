@@ -141,7 +141,7 @@ class Solution {
     private int solveMemoization(int[] nums, int idx, int[] memo) {
         // Base Case
         if (idx < 0) {
-            return Integer.MIN_VALUE;
+            return 0;
         }
         // Memoization Check
         if (memo[idx] != -1) {
@@ -196,7 +196,7 @@ class Solution {
     private int solveRecursion(int[] nums, int idx) {
         // Base Case
         if (idx < 0) {
-            return Integer.MIN_VALUE;
+            return 0;
         }
         // Recursion Calls
         // if index 'idx' is skipped
