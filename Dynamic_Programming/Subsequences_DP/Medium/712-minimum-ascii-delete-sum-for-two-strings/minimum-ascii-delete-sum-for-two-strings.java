@@ -1,6 +1,47 @@
 class Solution {
     private int m;
     private int n;
+    /**
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC: O(M x N) + O(M) + O(N) + O(M) + O(N) ~ O(M x N)
+     * SC: O(M x N)
+     * - O(M x N) - dp array memory
+     *
+     * Accepted (93 / 93 testcases passed)
+     */
+    public int minimumDeleteSum(String s1, String s2) {
+        this.m = s1.length();
+        this.n = s2.length();
+        // Initialization
+        int[][] dp = new int[m + 1][n + 1]; // SC: O(M x N)
+        for (int i = 0; i <= m; i++) { // TC: O(M)
+            dp[i][n] = 0;
+        }
+        for (int j = 0; j <= n; j++) { // TC: O(N)
+            dp[m][j] = 0;
+        }
+        // Iterative Calls
+        for (int i = m - 1; i >= 0; i--) { // TC: O(M)
+            for (int j = n - 1; j >= 0; j--) { // TC: O(N)
+                int pick = 0;
+                int skip1 = dp[i + 1][j];
+                int skip2 = dp[i][j + 1];
+                if (s1.charAt(i) == s2.charAt(j)) {
+                    pick = (int) s1.charAt(i) + dp[i + 1][j + 1];
+                }
+                dp[i][j] = Math.max(pick, Math.max(skip1, skip2));
+            }
+        }
+        int totalASCIISum = 0;
+        for (int i = 0; i < m; i++) { // TC: O(M)
+            totalASCIISum += (int) s1.charAt(i);
+        }
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            totalASCIISum += (int) s2.charAt(i);
+        }
+        return totalASCIISum - 2 * dp[0][0];
+    }
 
     /**
      * Approach II : Using Memoization (Top-Down) Approach
@@ -12,7 +53,7 @@ class Solution {
      *
      * Accepted (93 / 93 testcases passed)
      */
-    public int minimumDeleteSum(String s1, String s2) {
+    public int minimumDeleteSumMemoization(String s1, String s2) {
         this.m = s1.length();
         this.n = s2.length();
         int[][] memo = new int[m][n]; // SC: O(M x N)
