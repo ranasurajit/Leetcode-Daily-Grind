@@ -2,6 +2,48 @@ class Solution {
     private int m;
     private int n;
     /**
+     * Approach IV : Using Space Optimization (Optimized DP) Approach
+     *
+     * TC: O(M x N) + O(M) + O(N) + O(N) ~ O(M x N)
+     * SC: O(N) + O(N) ~ O(N)
+     * - O(N) - current and next array memory
+     *
+     * Accepted (93 / 93 testcases passed)
+     */
+    public int minimumDeleteSum(String s1, String s2) {
+        this.m = s1.length();
+        this.n = s2.length();
+        // Initialization
+        int[] next = new int[n + 1];    // SC: O(N)
+        int[] current = new int[n + 1]; // SC: O(N)
+        for (int j = 0; j <= n; j++) {  // TC: O(N)
+            next[j] = 0;
+            current[j] = 0;
+        }
+        // Iterative Calls
+        for (int i = m - 1; i >= 0; i--) {     // TC: O(M)
+            for (int j = n - 1; j >= 0; j--) { // TC: O(N)
+                int pick = 0;
+                int skip1 = next[j];
+                int skip2 = current[j + 1];
+                if (s1.charAt(i) == s2.charAt(j)) {
+                    pick = (int) s1.charAt(i) + next[j + 1];
+                }
+                current[j] = Math.max(pick, Math.max(skip1, skip2));
+            }
+            next = current.clone();
+        }
+        int totalASCIISum = 0;
+        for (int i = 0; i < m; i++) { // TC: O(M)
+            totalASCIISum += (int) s1.charAt(i);
+        }
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            totalASCIISum += (int) s2.charAt(i);
+        }
+        return totalASCIISum - 2 * next[0];
+    }
+
+    /**
      * Approach III : Using Tabulation (Bottom-Up) Approach
      *
      * TC: O(M x N) + O(M) + O(N) + O(M) + O(N) ~ O(M x N)
@@ -10,7 +52,7 @@ class Solution {
      *
      * Accepted (93 / 93 testcases passed)
      */
-    public int minimumDeleteSum(String s1, String s2) {
+    public int minimumDeleteSumTabulation(String s1, String s2) {
         this.m = s1.length();
         this.n = s2.length();
         // Initialization
