@@ -31,7 +31,11 @@ class Solution {
                 }
                 current[j] = Math.max(pick, Math.max(skip1, skip2));
             }
-            next = current.clone();
+            // swap the arrays next and current
+            int[] temp = next;
+            next = current;
+            current = temp;
+            Arrays.fill(current, 0);
         }
         int totalASCIISum = 0;
         for (int i = 0; i < m; i++) { // TC: O(M)
