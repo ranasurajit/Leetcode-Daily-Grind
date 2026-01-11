@@ -1,84 +1,82 @@
 class Solution {
     /**
      * Approach : Using Monotonic Stack Approach
-     * 
-     * TC: O(M x N) + O(M x N) ~ O(M x N)
-     * SC: O(M x N) + O(N) ~ O(M x N)
+     *
+     * TC: O(M x  2 x N) ~ O(M x N)
+     * SC: O(N) + O(N) (reused M times) ~ O(N)
      */
     public int maximalRectangle(char[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;
-        int[] heights = new int[n]; // SC: O(N)
+        int[] height = new int[n]; // SC: O(N)
         int maxArea = 0;
-        for (int i = 0; i < m; i++) { // TC: O(M)
+        for (int i = 0; i < m; i++) {     // TC: O(M)
             for (int j = 0; j < n; j++) { // TC: O(N)
-                if (i == 0) {
-                    heights[j] = matrix[i][j] == '1' ? 1 : 0;
+                if (matrix[i][j] == '1') {
+                    height[j] += 1;
                 } else {
-                    if (matrix[i][j] == '0') {
-                        heights[j] = 0;
-                    } else {
-                        heights[j] += matrix[i][j] == '1' ? 1 : 0;
-                    }
+                    height[j] = 0;
                 }
             }
-            maxArea = Math.max(maxArea, maxAreaHistogram(heights, n)); // TC: O(N), SC: O(N)
+            maxArea = Math.max(maxArea, maxAreaHistogram(height, n)); // TC: O(N), SC: O(N)
         }
         return maxArea;
     }
 
     /**
      * Using Monotonic Stack Approach
-     * 
+     *
      * TC: O(N) + O(N) + O(N) ~ O(N)
      * SC: O(N) + O(N) + O(N) ~ O(N)
      */
-    private int maxAreaHistogram(int[] heights, int n) {
-        int maxArea = 0;
-        int[] pse = new int[n]; // SC: O(N)
-        int[] nse = new int[n]; // SC: O(N)
-        Deque<Integer> deque = new ArrayDeque<Integer>(); // SC: O(N)
-        previousSmallerElement(heights, n, pse, deque); // TC: O(N), SC: O(1)
-        deque.clear();
-        nextSmallerElement(heights, n, nse, deque); // TC: O(N), SC: O(1)
+    private int maxAreaHistogram(int[] height, int n) {
+        int maxRowArea = 0;
+        Stack<Integer> st = new Stack<Integer>();               // SC: O(N)
+        int[] pse = previousSmallerElementIndex(height, n, st); // TC: O(N), SC: O(N)
+        st.clear();
+        int[] nse = nextSmallerElementIndex(height, n, st);     // TC: O(N), SC: O(N)
         for (int i = 0; i < n; i++) { // TC: O(N)
-            int leftIdx = pse[i] + 1;
-            int rightIdx = nse[i] - 1;
-            int currentArea = (rightIdx - leftIdx + 1) * heights[i];
-            maxArea = Math.max(maxArea, currentArea);
+            int endIndex = nse[i] - 1;
+            int startIndex = pse[i] + 1;
+            int currentArea = (endIndex - startIndex + 1) * height[i];
+            maxRowArea = Math.max(maxRowArea, currentArea);
         }
-        return maxArea;
+        return maxRowArea;
     }
 
     /**
      * Using Monotonic Stack Approach
-     * 
+     *
      * TC: O(N)
-     * SC: O(1)
+     * SC: O(N)
      */
-    private void previousSmallerElement(int[] heights, int n, int[] pse, Deque<Integer> deque) {
-        for (int i = 0; i < n; i++) { // TC: O(N)
-            while (!deque.isEmpty() && heights[i] <= heights[deque.peek()]) {
-                deque.pop();
+    private int[] previousSmallerElementIndex(int[] row, int n, Stack<Integer> st) {
+        int[] pse = new int[n];
+        for (int i = 0; i < n; i++) {
+            while (!st.isEmpty() && row[i] <= row[st.peek()]) {
+                st.pop();
             }
-            pse[i] = deque.isEmpty() ? -1 : deque.peek();
-            deque.push(i);
+            pse[i] = st.isEmpty() ? -1 : st.peek();
+            st.push(i);
         }
+        return pse;
     }
 
     /**
      * Using Monotonic Stack Approach
-     * 
+     *
      * TC: O(N)
-     * SC: O(1)
+     * SC: O(N)
      */
-    private void nextSmallerElement(int[] heights, int n, int[] nse, Deque<Integer> deque) {
+    private int[] nextSmallerElementIndex(int[] row, int n, Stack<Integer> st) {
+        int[] nse = new int[n];
         for (int i = n - 1; i >= 0; i--) { // TC: O(N)
-            while (!deque.isEmpty() && heights[i] <= heights[deque.peek()]) {
-                deque.pop();
+            while (!st.isEmpty() && row[i] <= row[st.peek()]) {
+                st.pop();
             }
-            nse[i] = deque.isEmpty() ? n : deque.peek();
-            deque.push(i);
+            nse[i] = st.isEmpty() ? n : st.peek();
+            st.push(i);
         }
+        return nse;
     }
 }
