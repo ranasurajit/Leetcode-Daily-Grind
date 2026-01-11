@@ -31,7 +31,7 @@ class Solution {
      */
     private int maxAreaHistogramOptimal(int[] height, int n) {
         int maxRowArea = 0;
-        Deque<Integer> deque = new LinkedList<Integer>();                 // SC: O(N)
+        Deque<Integer> deque = new ArrayDeque<Integer>();                 // SC: O(N)
         int[] pse = previousSmallerElementIndexOptimal(height, n, deque); // TC: O(N), SC: O(N)
         deque.clear();
         int[] nse = nextSmallerElementIndexOptimal(height, n, deque);     // TC: O(N), SC: O(N)
