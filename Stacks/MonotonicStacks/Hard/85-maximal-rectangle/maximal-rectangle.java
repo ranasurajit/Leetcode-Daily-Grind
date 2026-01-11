@@ -3,7 +3,7 @@ class Solution {
      * Approach II : Using Monotonic Deque Approach
      *
      * TC: O(M x 2 x N) ~ O(M x N)
-     * SC: O(N) + O(M x N) ~ O(M x N)
+     * SC: O(N) + O(N) (reused m times) ~ O(N)
      */
     public int maximalRectangle(char[][] matrix) {
         int m = matrix.length;
@@ -84,7 +84,7 @@ class Solution {
      * Approach I : Using Monotonic Stack Approach
      *
      * TC: O(M x 2 x N) ~ O(M x N)
-     * SC: O(N) + O(M x N) ~ O(M x N)
+     * SC: O(N) + O(N) (reused m times) ~ O(N)
      */
     public int maximalRectangleUsingStack(char[][] matrix) {
         int m = matrix.length;
