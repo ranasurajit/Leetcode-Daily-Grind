@@ -1,5 +1,43 @@
 class Solution {
     /**
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC: O(M x N)
+     * SC: O(M x N)
+     * - O(M x N) - dp array memory
+     *
+     * Accepted (42 / 42 testcases passed)
+     */
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        if (obstacleGrid[0][0] == 1 || obstacleGrid[m - 1][n - 1] == 1) {
+            // top-left and bottom-right cells are blocked by obstacles
+            return 0;
+        }
+        // Initialization
+        int[][] dp = new int[m][n];       // SC: O(M x N)
+        // Iterative Calls
+        for (int i = 0; i < m; i++) {     // TC: O(M)
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                if (i == 0 && j == 0) {
+                    dp[i][j] = 1;
+                    continue;
+                }
+                if (obstacleGrid[i][j] == 1) {
+                    // obstacleGrid cell (i, j) has an obstacle so no path goes through this cell
+                    dp[i][j] = 0;
+                    continue;
+                }
+                int topWays = i > 0 ? dp[i - 1][j] : 0;
+                int leftWays = j > 0 ? dp[i][j - 1] : 0;
+                dp[i][j] = topWays + leftWays;
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+
+    /**
      * Approach II : Using Memoization (Top-Down) Approach
      *
      * TC: O(M x N)
@@ -9,7 +47,7 @@ class Solution {
      *
      * Accepted (42 / 42 testcases passed)
      */
-    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+    public int uniquePathsWithObstaclesMemoization(int[][] obstacleGrid) {
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
         if (obstacleGrid[0][0] == 1 || obstacleGrid[m - 1][n - 1] == 1) {
