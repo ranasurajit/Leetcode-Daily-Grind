@@ -17,9 +17,9 @@ class Solution {
                     current[j] = 1;
                     continue;
                 }
-                int downWays = j > 0 ? current[j - 1] : 0;
-                int rightWays = i > 0 ? prev[j] : 0;
-                current[j] = downWays + rightWays;
+                int topWays = i > 0 ? prev[j] : 0;
+                int leftWays = j > 0 ? current[j - 1] : 0;
+                current[j] = topWays + leftWays;
             }
             prev = current;
         }
@@ -43,9 +43,9 @@ class Solution {
                     dp[i][j] = 1;
                     continue;
                 }
-                int downWays = j > 0 ? dp[i][j - 1] : 0;
-                int rightWays = i > 0 ? dp[i - 1][j] : 0;
-                dp[i][j] = downWays + rightWays;
+                int topWays = i > 0 ? dp[i - 1][j] : 0;
+                int leftWays = j > 0 ? dp[i][j - 1] : 0;
+                dp[i][j] = topWays + leftWays;
             }
         }
         return dp[m - 1][n - 1];
@@ -90,8 +90,8 @@ class Solution {
         }
         // Recursion Calls
         // here we are moving in opposite direction bottom-right to top-left
-        int topWays = solveMemoization(i, j - 1, memo);
-        int leftWays = solveMemoization(i - 1, j, memo);
+        int topWays = solveMemoization(i - 1, j, memo);
+        int leftWays = solveMemoization(i, j - 1, memo);
         return memo[i][j] = topWays + leftWays;
     }
 
@@ -125,8 +125,8 @@ class Solution {
         }
         // Recursion Calls
         // here we are moving in opposite direction bottom-right to top-left
-        int topWays = solveRecursion(i, j - 1);
-        int leftWays = solveRecursion(i - 1, j);
+        int topWays = solveRecursion(i - 1, j);
+        int leftWays = solveRecursion(i, j - 1);
         return topWays + leftWays;
     }
 }
