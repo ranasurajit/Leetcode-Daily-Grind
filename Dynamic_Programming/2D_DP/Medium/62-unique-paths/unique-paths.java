@@ -1,5 +1,32 @@
 class Solution {
     /**
+     * Approach IV : Using Space Optimization (Optimized DP) Approach
+     *
+     * TC: O(M x N)
+     * SC: O(N) + O(N) ~ O(N)
+     * - O(N) - dp array memory
+     *
+     * Accepted (64 / 64 testcases passed)
+     */
+    public int uniquePaths(int m, int n) {
+        int[] prev = new int[n];          // SC: O(N)
+        int[] current = new int[n];       // SC: O(N)
+        for (int i = 0; i < m; i++) {     // TC: O(M)
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                if (i == 0 && j == 0) {
+                    current[j] = 1;
+                    continue;
+                }
+                int downWays = j > 0 ? current[j - 1] : 0;
+                int rightWays = i > 0 ? prev[j] : 0;
+                current[j] = downWays + rightWays;
+            }
+            prev = current;
+        }
+        return prev[n - 1];
+    }
+
+    /**
      * Approach III : Using Tabulation (Bottom-Up) Approach
      *
      * TC: O(M x N)
@@ -8,7 +35,7 @@ class Solution {
      *
      * Accepted (64 / 64 testcases passed)
      */
-    public int uniquePaths(int m, int n) {
+    public int uniquePathsTabulation(int m, int n) {
         int[][] dp = new int[m][n];       // SC: O(M x N)
         for (int i = 0; i < m; i++) {     // TC: O(M)
             for (int j = 0; j < n; j++) { // TC: O(N)
