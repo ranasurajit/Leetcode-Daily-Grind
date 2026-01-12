@@ -16,9 +16,9 @@ class Solution {
                     dp[i][j] = 1;
                     continue;
                 }
-                int topWays = j > 0 ? dp[i][j - 1] : 0;
-                int leftWays = i > 0 ? dp[i - 1][j] : 0;
-                dp[i][j] = topWays + leftWays;
+                int downWays = j > 0 ? dp[i][j - 1] : 0;
+                int rightWays = i > 0 ? dp[i - 1][j] : 0;
+                dp[i][j] = downWays + rightWays;
             }
         }
         return dp[m - 1][n - 1];
