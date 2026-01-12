@@ -1,6 +1,31 @@
 class Solution {
     /**
-     * Approach II : Using Memoization Approach
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC: O(M x N)
+     * SC: O(M x N)
+     * - O(M x N) - dp array memory
+     *
+     * Accepted (64 / 64 testcases passed)
+     */
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];       // SC: O(M x N)
+        for (int i = 0; i < m; i++) {     // TC: O(M)
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                if (i == 0 && j == 0) {
+                    dp[i][j] = 1;
+                    continue;
+                }
+                int topWays = j > 0 ? dp[i][j - 1] : 0;
+                int leftWays = i > 0 ? dp[i - 1][j] : 0;
+                dp[i][j] = topWays + leftWays;
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+
+    /**
+     * Approach II : Using Memoization (Top-Down) Approach
      *
      * TC: O(M x N)
      * SC: O(M x N) + O(M + N)
@@ -9,7 +34,7 @@ class Solution {
      *
      * Accepted (64 / 64 testcases passed)
      */
-    public int uniquePaths(int m, int n) {
+    public int uniquePathsMemoization(int m, int n) {
         int[][] memo = new int[m][n]; // SC: O(M x N)
         for (int[] mem : memo) {
             Arrays.fill(mem, -1);
@@ -18,7 +43,7 @@ class Solution {
     }
 
     /**
-     * Using Memoization (Top-Down) Approach
+     * Using Memoization Approach
      *
      * TC: O(M x N)
      * SC: O(M + N) - recursion stack space
