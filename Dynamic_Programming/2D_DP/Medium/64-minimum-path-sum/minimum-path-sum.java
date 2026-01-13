@@ -16,7 +16,6 @@ class Solution {
             for (int j = 0; j < n; j++) {
                 if (i == 0 && j == 0) {
                     dp[i][j] = grid[0][0];
-                    continue;
                 } else {
                     int topMoveSum = grid[i][j] + (i > 0 ? dp[i - 1][j] : (int) 1e9);
                     int leftMoveSum = grid[i][j] + (j > 0 ? dp[i][j - 1] : (int) 1e9);
