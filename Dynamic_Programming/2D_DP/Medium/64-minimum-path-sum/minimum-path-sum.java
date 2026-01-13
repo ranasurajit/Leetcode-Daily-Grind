@@ -1,5 +1,34 @@
 class Solution {
     /**
+     * Approach IV : Using Space Optimization (Optimized DP) Approach
+     *
+     * TC: O(M x N)
+     * SC: O(N) + O(N) ~ O(N)
+     * - O(N) - current and prev array memory
+     *
+     * Accepted (66 / 66 testcases passed)
+     */
+    public int minPathSum(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[] prev = new int[n]; // SC: O(N)
+        int[] current = new int[n]; // SC: O(N)
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0 && j == 0) {
+                    current[j] = grid[0][0];
+                } else {
+                    int topMoveSum = grid[i][j] + (i > 0 ? prev[j] : (int) 1e9);
+                    int leftMoveSum = grid[i][j] + (j > 0 ? current[j - 1] : (int) 1e9);
+                    current[j] = Math.min(topMoveSum, leftMoveSum);
+                }
+            }
+            prev = current;
+        }
+        return prev[n - 1];
+    }
+
+    /**
      * Approach III : Using Tabulation (Bottom-Up) Approach
      *
      * TC: O(M x N)
@@ -8,7 +37,7 @@ class Solution {
      *
      * Accepted (66 / 66 testcases passed)
      */
-    public int minPathSum(int[][] grid) {
+    public int minPathSumTabulation(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
         int[][] dp = new int[m][n]; // SC: O(M x N)
