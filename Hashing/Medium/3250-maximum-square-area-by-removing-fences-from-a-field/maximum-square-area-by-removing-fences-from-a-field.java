@@ -5,7 +5,7 @@ class Solution {
      * Approach : Using Hashing + Sorting Approach
      *
      * TC: O(H) + O(V) + O(H x log(H)) + O(V x log(V)) + O(H²) + O(V²) ~ O(H²) + O(V²)
-     * SC: O(H) + O(V) + O(H) ~ O(H + V)
+     * SC: O(H) + O(V) + O(H²) ~ O(H²)
      *
      * where H = size(hFences), V = size(vFences)
      */
@@ -29,7 +29,7 @@ class Solution {
         // we would need to sort the fences for a comparison between gaps they create
         Collections.sort(hList); // TC: O(H x log(H))
         Collections.sort(vList); // TC: O(V x log(V))
-        Set<Long> gapSet = new HashSet<Long>(); // SC: O(H)
+        Set<Long> gapSet = new HashSet<Long>(); // SC: O(H²)
         // comparing the gaps during horizontal fence scan
         for (int i = 0; i < h + 1; i++) { // TC: O(H)
             for (int j = i + 1; j < h + 2; j++) { // TC: O(H)
