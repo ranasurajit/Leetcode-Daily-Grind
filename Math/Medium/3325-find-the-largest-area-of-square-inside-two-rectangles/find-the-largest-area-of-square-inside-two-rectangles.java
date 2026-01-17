@@ -23,19 +23,12 @@ class Solution {
      * SC: O(1)
      */
     private long getSquareSide(int[][] bottomLeft, int[][] topRight, int i, int j) {
-        int[] bottomLeftA = bottomLeft[i];
-        int[] bottomLeftB = bottomLeft[j];
-        int[] topRightA = topRight[i];
-        int[] topRightB = topRight[j];
-        long leftMax = Math.max(bottomLeftA[0], bottomLeftB[0]);
-        long rightMin = Math.min(topRightA[0], topRightB[0]);
-        long bottomMax = Math.max(bottomLeftA[1], bottomLeftB[1]);
-        long topMin = Math.min(topRightA[1], topRightB[1]);
+        long leftMax = Math.max(bottomLeft[i][0], bottomLeft[j][0]);
+        long rightMin = Math.min(topRight[i][0], topRight[j][0]);
+        long bottomMax = Math.max(bottomLeft[i][1], bottomLeft[j][1]);
+        long topMin = Math.min(topRight[i][1], topRight[j][1]);
         long width = rightMin - leftMax;
         long height = topMin - bottomMax;
-        if (width <= 0 || height <= 0) {
-            return 0;
-        }
         return Math.min(width, height);
     }
 }
