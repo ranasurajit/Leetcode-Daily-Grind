@@ -41,7 +41,7 @@ class Solution {
     }
 
     /**
-     * Using 2D - Matrix Simulation Approach
+     * Using 2D - Matrix Prefix Sum Approach
      *
      * TC: O(K) + O(K) ~ O(K)
      * SC: O(1)
