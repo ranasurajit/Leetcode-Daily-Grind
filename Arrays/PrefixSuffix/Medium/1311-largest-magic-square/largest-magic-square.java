@@ -6,7 +6,7 @@ class Solution {
      * Approach II : Using Optimal (2D - Matrix Prefix Sum) Approach
      *
      * TC: O(M x N x Min(M, N) x K)
-     * SC: O(1)
+     * SC: O(M x N)
      */
     public int largestMagicSquare(int[][] grid) {
         this.m = grid.length;
