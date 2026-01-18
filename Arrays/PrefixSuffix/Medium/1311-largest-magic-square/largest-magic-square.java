@@ -28,10 +28,11 @@ class Solution {
             for (int j = 0; j < n - 1; j++) { // TC: O(N)
                 // (i, j) is the start cell of the matrix
                 int p = Math.min(n - j, m - i); // maximum size k till k = 2 can be checked
-                for (int k = p; k >= 2; k--) { // TC: O(Min(M, N))
+                for (int k = p; k > maxK; k--) { // TC: O(Min(M, N))
                     if (isValidMagicSquareOptimal(i, j, k, rowPrefix, 
                             colPrefix, leftDiagPrefix, rightDiagPrefix)) { // TC: O(K)
-                        maxK = Math.max(maxK, k);
+                        maxK = k;
+                        break; // no need to shrink the dimension further
                     }
                 }
             }
