@@ -44,14 +44,12 @@ class Solution {
      * SC: O(1)
      */
     private boolean matrixHasSum(int[][] prefixSum, int k, int threshold) {
-        for (int r = 0; r < m; r++) {     // TC: O(M)
-            for (int c = 0; c < n; c++) { // TC: O(N)
-                if (r + k <= m && c + k <= n) {
-                    int subMatrixSum = prefixSum[r + k][c + k] - 
-                        prefixSum[r][c + k] - prefixSum[r + k][c] + prefixSum[r][c];
-                    if (subMatrixSum <= threshold) {
-                        return true;
-                    }
+        for (int r = 0; r + k <= m; r++) {     // TC: O(M)
+            for (int c = 0; c + k <= n; c++) { // TC: O(N)
+                int subMatrixSum = prefixSum[r + k][c + k] - 
+                    prefixSum[r][c + k] - prefixSum[r + k][c] + prefixSum[r][c];
+                if (subMatrixSum <= threshold) {
+                    return true;
                 }
             }
         }
