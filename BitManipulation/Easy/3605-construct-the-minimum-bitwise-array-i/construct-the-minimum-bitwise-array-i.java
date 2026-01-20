@@ -1,11 +1,17 @@
 class Solution {
     /**
      * Approach II : Using Optimal (Bit-Manipulation) Approach
+     **
+     * Intuition:
+     * When computing (x | (x + 1)), adding 1 flips all trailing 1s to 0
+     * and turns the first 0 (from the right) into 1. As a result, all bits
+     * below that first 0-bit become 1 in the OR result.
      *
-     * Intuition: when we perform (x | (x + 1)) to get nums[i]
-     * then, we notice to make x minimum we need to flip the
-     * left-most significant set bit to 0 if we iterate from 
-     * end
+     * To obtain nums[i] while keeping x minimal, we locate the lowest
+     * 0-bit in nums[i] and clear the bit immediately below it.
+     *
+     * If nums[i] is even, no such x exists because (x | (x + 1)) is always odd.
+     *
      *
      * TC: O(N)
      * SC: O(1)
