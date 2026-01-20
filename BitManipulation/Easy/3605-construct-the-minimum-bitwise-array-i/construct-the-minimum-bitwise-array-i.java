@@ -20,9 +20,9 @@ class Solution {
                     found = true;
                     break;
                 }
-                if (!found) {
-                    result[i] = -1;
-                }
+            }
+            if (!found) {
+                result[i] = -1;
             }
         }
         return result;
