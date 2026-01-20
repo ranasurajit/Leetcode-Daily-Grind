@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach : Using Two Pointers Approach
+     * Approach : Using Backtracking Approach
      *
      * TC: O(N x 2 ^ N) - due to pruning
      * SC: O(N) + O(N) ~ O(N)
@@ -14,7 +14,7 @@ class Solution {
     }
 
     /**
-     * Using Two Pointers Approach
+     * Using Backtracking Approach
      *
      * TC: O(N² x 2 ^ N) ~ O(N x 2 ^ N) - due to pruning
      * SC: O(N)
