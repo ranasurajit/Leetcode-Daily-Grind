@@ -2,6 +2,11 @@ class Solution {
     /**
      * Approach II : Using Optimal (Bit-Manipulation) Approach
      *
+     * Intuition: when we perform (x | (x + 1)) to get nums[i]
+     * then, we notice to make x minimum we need to flip the
+     * left-most significant set bit to 0 if we iterate from 
+     * end
+     *
      * TC: O(N)
      * SC: O(1)
      */
@@ -32,7 +37,7 @@ class Solution {
             index = i;
             break;
         }
-        // we need to flip (index - 1)th bit to 0
+        // we need to flip (index - 1)th bit to 0 i.e we can subtract 2 ^ (index - 1) from num
         return num - (1 << (index - 1));
     }
 
