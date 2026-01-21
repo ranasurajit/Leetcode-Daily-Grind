@@ -38,7 +38,7 @@ class Solution {
         }
         // Recursion Calls
         for (int j = 0; j < k; j++) { // TC: O(K)
-            if (idx >= n || dist[j] + cookies[idx] >= result) {
+            if (dist[j] + cookies[idx] >= result) {
                 // pruning 1 : already worst than best answer
                 continue;
             }
