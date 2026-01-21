@@ -33,10 +33,10 @@ class Solution {
      */
     private int computeFromNum(int num) {
         int index = 0;
+        if ((num & 1) == 0) {
+            return -1;
+        }
         for (int i = 0; i < 32; i++) { // TC: O(32)
-            if (i == 0 && ((num >> i) & 1) == 0) {
-                return -1;
-            }
             if (((num >> i) & 1) == 1) {
                 continue;
             }
