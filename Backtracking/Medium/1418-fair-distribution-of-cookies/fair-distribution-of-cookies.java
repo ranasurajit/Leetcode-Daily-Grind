@@ -34,6 +34,7 @@ class Solution {
                 unfairness = Math.max(unfairness, dist[i]);
             }
             result = Math.min(result, unfairness);
+            return;
         }
         // Recursion Calls
         for (int j = 0; j < k; j++) { // TC: O(K)
