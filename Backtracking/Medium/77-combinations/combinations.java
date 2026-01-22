@@ -3,7 +3,7 @@ class Solution {
     private List<List<Integer>> result = new ArrayList<List<Integer>>();
 
     /**
-     * Approach II : Using Backtracking Approach
+     * Approach III : Using Backtracking (Template 2) Approach
      *
      * TC: O(2 ^ N)
      * SC: O(N) + O(K)
@@ -11,6 +11,40 @@ class Solution {
      * - O(K) - current array memory
      */
     public List<List<Integer>> combine(int n, int k) {
+        this.k = k;
+        List<Integer> current = new ArrayList<Integer>(); // SC: O(K)
+        solveOptimal(1, n, k, current); // TC: O(2 ^ N), SC: O(N)
+        return result;
+    }
+
+    /**
+     * Using Backtracking Approach
+     *
+     * TC: O(2 ^ N)
+     * SC: O(N) - recursion stack
+     */
+    private void solveOptimal(int start, int n, int k, List<Integer> current) {
+        // Base Case
+        if (k == 0) {
+            result.add(new ArrayList<Integer>(current));
+        }
+        // Recursion Calls
+        for (int i = start; i <= n; i++) {
+            current.add(i); // modify - pick
+            solveOptimal(i + 1, n, k - 1, current); // explore - pick
+            current.remove(current.size() - 1); // backtrack
+        }
+    }
+
+    /**
+     * Approach II : Using Backtracking (Template 1) Approach
+     *
+     * TC: O(2 ^ N)
+     * SC: O(N) + O(K)
+     * - O(N) - recursion stack
+     * - O(K) - current array memory
+     */
+    public List<List<Integer>> combineBetter(int n, int k) {
         this.k = k;
         List<Integer> current = new ArrayList<Integer>(); // SC: O(K)
         solveBetter(1, n, k, current); // TC: O(2 ^ N), SC: O(N)
@@ -39,7 +73,7 @@ class Solution {
     }
 
     /**
-     * Approach I : Using Backtracking Approach
+     * Approach I : Using Backtracking (Brute-Force) Approach
      *
      * TC: O(2 ^ N)
      * SC: O(N) + O(2 ^ N)
