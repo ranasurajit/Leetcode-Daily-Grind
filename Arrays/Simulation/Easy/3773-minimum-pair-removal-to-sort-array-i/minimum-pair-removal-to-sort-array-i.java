@@ -8,7 +8,7 @@ class Solution {
     public int minimumPairRemoval(int[] nums) {
         int n = nums.length;
         int operations = 0;
-        while (true) { // TC: O(N)
+        while (n > 1) { // TC: O(N)
             Pair pair = isNonDecreasing(nums, n); // TC: O(N)
             boolean isValid = pair.isValid;
             int index = pair.index;
@@ -22,6 +22,7 @@ class Solution {
             operations++;
             n--;
         }
+        return operations;
     }
 
     /**
