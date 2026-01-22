@@ -28,19 +28,19 @@ class Solution {
     private void backtrack(int idx, int count, int[][] requests, int[] movement) {
         // Base Case
         if (idx == m) {
-            boolean isValid = true;
             for (int i = 0; i < n; i++) { // TC: O(N)
                 if (movement[i] != 0) {
-                    isValid = false;
-                    break;
+                    return;
                 }
             }
-            if (isValid) {
-                maxTransfers = Math.max(maxTransfers, count);
-            }
+            maxTransfers = Math.max(maxTransfers, count);
             return;
         }
         // Recursion Calls
+        if (count + (m - idx) <= maxTransfers) {
+            // early pruning - even if we take the requests it cannot beat maxTransfers
+            return;
+        }
         int from = requests[idx][0];
         int to = requests[idx][1];
         // modify
