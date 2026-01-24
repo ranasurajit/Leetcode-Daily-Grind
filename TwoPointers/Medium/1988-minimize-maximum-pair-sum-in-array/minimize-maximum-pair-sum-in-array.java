@@ -4,8 +4,6 @@ class Solution {
      *
      * TC: O(N x log(N)) + O(N) ~ O(N x log(N))
      * SC: O(1)
-     *
-     * where R = Range (nums[n - 1] + nums[0], nums[n - 1] + nums[n - 2])
      */
     public int minPairSum(int[] nums) {
         int n = nums.length;
