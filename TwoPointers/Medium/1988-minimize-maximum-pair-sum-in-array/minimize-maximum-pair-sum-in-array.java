@@ -18,8 +18,7 @@ class Solution {
         int j = n - 1; // end pointer
         int maxSum = 0;
         while (i < j) { // TC: O(N)
-            int currentSum = nums[i] + nums[j];
-            maxSum = Math.max(maxSum, currentSum);
+            maxSum = Math.max(maxSum, nums[i] + nums[j]);
             i++;
             j--;
         }
