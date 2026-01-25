@@ -7,7 +7,8 @@ class Solution {
      */
     public int minimumDifference(int[] nums, int k) {
         int n = nums.length;
-        if (n == 1) {
+        if (n == 1 || k == 1) {
+            // edge case when this difference is zero
             return 0;
         }
         // sorting the nums so that we can compare it in k windows
@@ -38,7 +39,8 @@ class Solution {
      */
     public int minimumDifferenceUsingSortingSimulation(int[] nums, int k) {
         int n = nums.length;
-        if (n == 1) {
+        if (n == 1 || k == 1) {
+            // edge case when this difference is zero
             return 0;
         }
         // sorting the nums so that we can compare it in k windows
