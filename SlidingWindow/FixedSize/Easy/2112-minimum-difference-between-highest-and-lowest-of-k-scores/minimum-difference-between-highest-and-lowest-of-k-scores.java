@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach II : Using Sorting + Sliding Window (Fixed Size) Approach
      *
-     * TC: O((N - K) x K) + O(N x log(N)) ~ O(N x (K + log(N)))
+     * TC: O(N x log(N)) + O(N) ~ O(N x log(N))
      * SC: O(1)
      */
     public int minimumDifference(int[] nums, int k) {
@@ -15,8 +15,9 @@ class Solution {
         int minDiff = Integer.MAX_VALUE;
         int i = 0; // start pointer of sliding window
         int j = 0; // end pointer of sliding window
-        while (j < n) {
+        while (j < n) { // TC: O(N)
             if (j - i + 1 == k) {
+                // sliding window size of k is met
                 minDiff = Math.min(minDiff, nums[j] - nums[i]);
                 /**
                  * remove computation from index 'i' for next sliding window 
