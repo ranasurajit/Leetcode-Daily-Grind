@@ -19,13 +19,8 @@ class Solution {
         }
         List<List<Integer>> pairsList = new ArrayList<List<Integer>>();
         for (int i = 1; i < n; i++) { // TC: O(N)
-            List<Integer> pairs = new ArrayList<Integer>(); // SC: O(2)
             if (arr[i] - arr[i - 1] == minDiff) {
-                pairs.add(arr[i - 1]);
-                pairs.add(arr[i]);
-            }
-            if (!pairs.isEmpty()) {
-                pairsList.add(pairs);
+                pairsList.add(Arrays.asList(arr[i - 1], arr[i]));
             }
         }
         return pairsList;
