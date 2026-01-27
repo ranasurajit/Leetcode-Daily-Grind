@@ -41,6 +41,10 @@ class Solution {
             if (w > dist[u]) {
                 continue;
             }
+            if (u == n - 1) {
+                // early exit
+                break;
+            }
             // normal node traversal
             for (int[] ngbr : adj[u]) { // TC: O(E)
                 int v = ngbr[0];
