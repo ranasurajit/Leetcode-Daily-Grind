@@ -86,7 +86,14 @@ class Solution {
             if (cost > minCost[u]) {
                 continue;
             }
-            for (int[] ngbr : adj.getOrDefault(u, new ArrayList<int[]>())) { // TC: O(V)
+            ArrayList<int[]> neighbours = adj.get(u);
+            if (neighbours == null) {
+                continue;
+            }
+            for (int[] ngbr : neighbours) { // TC: O(V)
+                if (ngbr == null) {
+                    continue;
+                }
                 int v = ngbr[0];
                 long edgeCost = (long) ngbr[1];
                 if (cost + edgeCost < minCost[v]) {
