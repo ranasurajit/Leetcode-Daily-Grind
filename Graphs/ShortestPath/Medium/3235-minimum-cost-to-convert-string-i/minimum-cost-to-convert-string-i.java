@@ -4,10 +4,10 @@ class Solution {
     /**
      * Approach II : Using Dijkstra's Algorithm Approach
      *
-     * TC: O(N x M), where N = size(source/target), M = size(original/changed)
-     * SC: O(1)
+     * TC: O(N x M) + O(26 x N), where N = size(source/target), M = size(original/changed)
+     * SC: O(26 x 26) + O(26) ~ O(1)
      *
-     * Time Limit Exceeded (571 / 581 testcases passed)
+     * Accepted (581 / 581 testcases passed)
      */
     public long minimumCost(String source, String target, char[] original, 
         char[] changed, int[] cost) {
@@ -27,13 +27,19 @@ class Solution {
          * character (a-z) to any other destination character (a-z)
          */
         long[][] minCostAll = new long[26][26]; // SC: O(26 x 26)
-        for (int i = 0; i < 26; i++) {
-            for (int j = 0; j < 26; j++) {
-                if (i == j) {
-                    minCostAll[i][j] = 0L;
+        Set<Integer> computedSet = new HashSet<Integer>(); // SC: O(26)
+        for (int i = 0; i < n; i++) {     // TC: O(N)
+            int src = source.charAt(i) - 'a';
+            if (computedSet.contains(src)) {
+                continue;
+            }
+            for (int des = 0; des < 26; des++) { // TC: O(26)
+                computedSet.add(src);
+                if (src == des) {
+                    minCostAll[src][des] = 0L;
                     continue;
                 }
-                minCostAll[i][j] = dijkstraMinCost(i, j, adj); // TC: O(M), SC: O(1)
+                minCostAll[src][des] = dijkstraMinCost(src, des, adj); // TC: O(M), SC: O(1)
             }
         }
         /**
