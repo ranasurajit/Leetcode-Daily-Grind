@@ -33,14 +33,8 @@ class Solution {
             if (computedSet.contains(src)) {
                 continue;
             }
-            for (int des = 0; des < 26; des++) { // TC: O(26)
-                computedSet.add(src);
-                if (src == des) {
-                    minCostAll[src][des] = 0L;
-                    continue;
-                }
-                minCostAll[src][des] = dijkstraMinCost(src, des, adj); // TC: O(M), SC: O(1)
-            }
+            computedSet.add(src);
+            minCostAll[src] = dijkstraOptimal(src, adj); // TC: O(M), SC: O(1)
         }
         /**
          * as per constraints, 1 <= cost[i] <= 10^6 so, we can perform Dijkstra's
@@ -60,6 +54,46 @@ class Solution {
                 return -1;
             }
             minCost += currentCost;
+        }
+        return minCost;
+    }
+
+    /**
+     * Using Dijkstra's Algorithm Approach
+     *
+     * TC: O((E + V) x log(V)) ~ O(E) as V is at max 26
+     * SC: O(V) ~ O(1)
+     */
+    private long[] dijkstraOptimal(int src, Map<Integer, ArrayList<int[]>> adj) {
+        /**
+         * as per constraints, source, target consist of lowercase English letters 
+         * so we can create a minCost array of size 26 to store min cost to change
+         * from src to des
+         */
+        long[] minCost = new long[26]; // SC: O(26)
+        Arrays.fill(minCost, INF);
+        minCost[src] = 0L;
+        /**
+         * we need a Min-Heap to store the { cost, node } in order of cost
+         */
+        PriorityQueue<Pair> pq =
+            new PriorityQueue<Pair>((p, q) -> Long.compare(p.cost, q.cost)); // SC: O(V)
+        pq.offer(new Pair(0L, src));
+        while (!pq.isEmpty()) { // TC: O(E)
+            Pair current = pq.poll();
+            long cost = current.cost;
+            int u = current.node;
+            if (cost > minCost[u]) {
+                continue;
+            }
+            for (int[] ngbr : adj.getOrDefault(u, new ArrayList<int[]>())) { // TC: O(V)
+                int v = ngbr[0];
+                long edgeCost = (long) ngbr[1];
+                if (cost + edgeCost < minCost[v]) {
+                    minCost[v] = cost + edgeCost;
+                    pq.offer(new Pair(cost + edgeCost, v)); // TC: O(log(V))
+                }
+            }
         }
         return minCost;
     }
