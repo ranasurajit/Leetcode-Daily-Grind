@@ -14,10 +14,10 @@ class Solution {
          */
         for (int j = 1; j < n - 1; j++) {     // TC: O(N)
             for (int k = j + 1; k < n; k++) { // TC: O(N)
-                int currentCost = nums[0] + nums[j] + nums[k];
+                int currentCost = nums[j] + nums[k];
                 minCost = Math.min(minCost, currentCost);
             }
         }
-        return minCost;
+        return nums[0] + minCost;
     }
 }
