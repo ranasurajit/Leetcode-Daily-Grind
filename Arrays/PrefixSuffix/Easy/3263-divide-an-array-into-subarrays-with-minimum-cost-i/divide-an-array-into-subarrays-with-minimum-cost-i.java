@@ -23,9 +23,9 @@ class Solution {
         // compute minimum cost
         int minCost = Integer.MAX_VALUE;
         for (int j = 1; j < n - 1; j++) {  // TC: O(N)
-            minCost = Math.min(minCost, nums[0] + nums[j] + rightMin[j + 1]);
+            minCost = Math.min(minCost, nums[j] + rightMin[j + 1]);
         }
-        return minCost;
+        return nums[0] + minCost;
     }
 
     /**
