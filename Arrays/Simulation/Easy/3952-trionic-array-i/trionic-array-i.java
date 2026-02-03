@@ -11,7 +11,7 @@ class Solution {
         int p = 0;
         for (int i = 1; i < n; i++) { // TC: O(N1)
             if (nums[i] > nums[i - 1]) {
-                p++;
+                p = i;
             } else {
                 break;
             }
@@ -23,7 +23,7 @@ class Solution {
         int q = n - 1;
         for (int i = n - 2; i >= 0; i--) { // TC: O(N2)
             if (nums[i] < nums[i + 1]) {
-                q--;
+                q = i;
             } else {
                 break;
             }
