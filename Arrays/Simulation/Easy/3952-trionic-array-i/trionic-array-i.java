@@ -1,17 +1,48 @@
 class Solution {
     /**
-     * Approach : Using Array Simulation Approach
+     * Approach II : Using Array Simulation Approach
      *
-     * TC: O(N1 + N2 + N3) ~ O(N)
+     * TC: O(N1 + N2 + N3) ~ O(N) - traverses all elements exactly once
      * SC: O(1)
      */
     public boolean isTrionic(int[] nums) {
         int n = nums.length;
-        // we will find if there is an index p < n which is strictly increasing
+        // strictly increasing check
+        int p = 0;
+        while (p + 1 < n && nums[p + 1] > nums[p]) { // TC: O(N1)
+            p++;
+        }
+        if (p == 0 || p == n - 1) {
+            // no such count found / count exceeds nums elements
+            return false;
+        }
+        int q = p;
+        while (q + 1 < n && nums[q + 1] < nums[q]) { // TC: O(N2)
+            q++;
+        }
+        if (q == p || q == n - 1) {
+            // count exceeds nums elements so no further chance to get strictly increasing again
+            return false;
+        }
+        while (q + 1 < n && nums[q + 1] > nums[q]) { // TC: O(N3)
+            q++;
+        }
+        return q == n - 1;
+    }
+
+    /**
+     * Approach I : Using Array Simulation Approach
+     *
+     * TC: O(N1 + N2 + N3) ~ O(N) - traverses all elements exactly once
+     * SC: O(1)
+     */
+    public boolean isTrionicIndexCountApproach(int[] nums) {
+        int n = nums.length;
+        // we will find if there is an index count p < n which is strictly increasing
         int p = 0;
         for (int i = 1; i < n; i++) { // TC: O(N1)
             if (nums[i] > nums[i - 1]) {
-                p = i;
+                p++;
             } else {
                 break;
             }
@@ -19,11 +50,11 @@ class Solution {
         if (p == 0 || p == n - 1) {
             return false;
         }
-        // we will find if there is an index q < n which is strictly increasing
+        // we will find if there is an index count q < n which is strictly increasing
         int q = n - 1;
         for (int i = n - 2; i >= 0; i--) { // TC: O(N2)
             if (nums[i] < nums[i + 1]) {
-                q = i;
+                q--;
             } else {
                 break;
             }
