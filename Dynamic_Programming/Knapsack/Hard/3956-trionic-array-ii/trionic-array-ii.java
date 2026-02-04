@@ -4,6 +4,76 @@ class Solution {
     private long INF = (long) -1e14 + 1;
 
     /**
+     * Approach VI : Using Space Optimization (Optimized DP) Approach
+     *
+     * TC: O(N x 4) ~ O(N)
+     * SC: O(4 + 4) ~ O(1)
+     *
+     * Accepted (858 / 858 testcases passed)
+     */
+    public long maxSumTrionic(int[] nums) {
+        this.n = nums.length;
+        this.nums = nums;
+        /**
+         * case 0: for subarray [l...p], trend = 0 (not started)
+         * case 1: for subarray [l...p], trend = 1 (strictly increasing)
+         * case 2: for subarray [p...q], trend = 2 (strictly decreasing)
+         * case 3: for subarray [q...r], trend = 3 (strictly increasing)
+         */
+        long[] nextDP = new long[4]; // SC: O(4) ~ O(1)
+        long[] currentDP = new long[4]; // SC: O(4) ~ O(1)
+        nextDP[3] = 0L;
+        currentDP[3] = 0L;
+        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+            for (int trend = 3; trend >= 0; trend--) { // TC: O(4)
+                long skip = INF;
+                long pick = INF;
+                if (trend == 3) {
+                    // we can end it here
+                    pick = nums[i];
+                }
+                if (i < n - 1) {
+                    int current = nums[i];
+                    int next = nums[i + 1];
+                    if (trend == 0) {
+                        skip = nextDP[0];
+                    }
+                    if (trend == 0 && current < next) {
+                        // we can start strictly increasing
+                        // pick
+                        pick = Math.max(pick, current + nextDP[1]);
+                    } else if (trend == 1) {
+                        // strictly increasing
+                        // pick only
+                        if (current < next) {
+                            // trend = 1 here so we will continue
+                            pick = Math.max(pick, current + nextDP[1]);
+                        } else if (current > next) {
+                            // trend = 1 here but we need to start next decreasing trend - 2
+                            pick = Math.max(pick, current + nextDP[2]);
+                        }
+                    } else if (trend == 2) {
+                        // strictly decreasing
+                        if (current > next) {
+                            // trend = 2 here so we will continue
+                            pick = Math.max(pick, current + nextDP[2]);
+                        } else if (current < next) {
+                            // trend = 2 here so we are bound to go to next increasing trend - 3
+                            pick = Math.max(pick, current + nextDP[3]); 
+                        }
+                    } else if (trend == 3 && current < next) {
+                        // trend = 2 here so we will continue
+                        pick = Math.max(pick, current + nextDP[3]);
+                    }
+                }
+                currentDP[trend] = Math.max(pick, skip);
+            }
+            nextDP = currentDP.clone();
+        }
+        return nextDP[0];
+    }
+
+    /**
      * Approach V : Using Tabulation (Bottom-Up) Approach
      *
      * TC: O(N x 4) ~ O(N)
@@ -12,7 +82,7 @@ class Solution {
      *
      * Accepted (858 / 858 testcases passed)
      */
-    public long maxSumTrionic(int[] nums) {
+    public long maxSumTrionicTabulation(int[] nums) {
         this.n = nums.length;
         this.nums = nums;
         /**
