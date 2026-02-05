@@ -1,11 +1,28 @@
 class Solution {
     /**
-     * Approach : Using Array Simulation Approach
+     * Approach II : Using Array Simulation (Cleaner) Approach
      *
      * TC: O(N)
      * SC: O(1)
      */
     public int[] constructTransformedArray(int[] nums) {
+        int n = nums.length;
+        int[] result = new int[n];
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            // using property of circular array indexing
+            int idx = ((i + nums[i]) % n + n) % n;
+            result[i] = nums[idx];
+        }
+        return result;
+    }
+
+    /**
+     * Approach I : Using Array Simulation (Brute-Force) Approach
+     *
+     * TC: O(N)
+     * SC: O(1)
+     */
+    public int[] constructTransformedArrayBruteForce(int[] nums) {
         int n = nums.length;
         int[] result = new int[n];
         for (int i = 0; i < n; i++) { // TC: O(N)
