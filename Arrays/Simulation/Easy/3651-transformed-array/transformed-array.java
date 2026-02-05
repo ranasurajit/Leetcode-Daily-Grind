@@ -1,5 +1,4 @@
 class Solution {
-
     /**
      * Approach : Using Array Simulation Approach
      *
