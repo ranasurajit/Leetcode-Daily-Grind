@@ -16,7 +16,7 @@ class Solution {
         int q = 1; // end pointer
         int maxWindowSize = 1;
         while (q < n) { // TC: O(N)
-            while (q < n && nums[q] > (long) k * nums[p]) {
+            while (nums[q] > (long) k * nums[p]) {
                 // increase start index
                 p++;
             }
