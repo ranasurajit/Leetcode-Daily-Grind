@@ -16,7 +16,7 @@ class Solution {
         int j = 1; // end pointer as array of size 1 is always balanced
         int maxWindowSize = 1;
         while (j < n) {    // TC: O(N)
-            while (i < n && nums[j] > (long) nums[i] * k) {
+            while (i <= j && nums[j] > (long) nums[i] * k) {
                 // we need to shrink the ith index
                 i++;
             }
