@@ -45,15 +45,15 @@ class Solution {
         }
         // Recursion Calls
         int left = dfsTreeOptimal(root.left);
-        int right = dfsTreeOptimal(root.right);
-        if (Math.abs(left - right) > 1) {
-            // not balanced
-            return -1;
-        }
         if (left == -1) {
             return -1;
         }
+        int right = dfsTreeOptimal(root.right);
         if (right == -1) {
+            return -1;
+        }
+        if (Math.abs(left - right) > 1) {
+            // not balanced
             return -1;
         }
         return 1 + Math.max(left, right);
