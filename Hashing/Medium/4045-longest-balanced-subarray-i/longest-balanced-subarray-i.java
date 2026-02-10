@@ -8,9 +8,10 @@ class Solution {
     public int longestBalanced(int[] nums) {
         int n = nums.length;
         int maxLength = 0;
+        Set<Integer> seen = new HashSet<Integer>(); // SC: O(N)
         for (int i = 0; i < n; i++) {     // TC: O(N)
             int balance = 0; // reset balance on every index 'i' shift
-            Set<Integer> seen = new HashSet<Integer>(); // SC: O(N)
+            seen.clear();
             for (int j = i; j < n; j++) { // TC: O(N)
                 if (!seen.contains(nums[j])) {
                     // to determine if nums[j] was earlier seen so balance would not be changed
