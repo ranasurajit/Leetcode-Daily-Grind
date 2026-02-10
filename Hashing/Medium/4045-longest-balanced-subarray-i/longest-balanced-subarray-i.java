@@ -1,11 +1,41 @@
 class Solution {
     /**
-     * Approach : Using Two Pointers + Hashing Approach
+     * Approach II : Using Two Pointers + Hashing Approach
+     *
+     * TC: O(N²)
+     * SC: O(N)
+     */
+    public int longestBalanced(int[] nums) {
+        int n = nums.length;
+        int maxLength = 0;
+        for (int i = 0; i < n; i++) {     // TC: O(N)
+            int balance = 0; // reset balance on every index 'i' shift
+            Set<Integer> seen = new HashSet<Integer>(); // SC: O(N)
+            for (int j = i; j < n; j++) { // TC: O(N)
+                if (!seen.contains(nums[j])) {
+                    // to determine if nums[j] was earlier seen so balance would not be changed
+                    if ((nums[j] & 1) == 0) {
+                        balance++;
+                    } else {
+                        balance--;
+                    }
+                }
+                if (balance == 0) {
+                    maxLength = Math.max(maxLength, j - i + 1);
+                }
+                seen.add(nums[j]);
+            }
+        }
+        return maxLength;
+    }
+
+    /**
+     * Approach I : Using Two Pointers + Hashing Approach
      *
      * TC: O(N²)
      * SC: O(N1 + N2) ~ O(N)
      */
-    public int longestBalanced(int[] nums) {
+    public int longestBalancedBruteForce(int[] nums) {
         int n = nums.length;
         Map<Integer, Integer> evenMap = new HashMap<Integer, Integer>(); // SC: O(N1)
         Map<Integer, Integer> oddMap = new HashMap<Integer, Integer>();  // SC: O(N2)
