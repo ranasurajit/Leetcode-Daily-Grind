@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach II : Using Two Pointers + Hashing Approach
+     * Approach II : Using Better (Two Pointers + Hashing) Approach
      *
      * TC: O(N²)
      * SC: O(N)
@@ -31,7 +31,7 @@ class Solution {
     }
 
     /**
-     * Approach I : Using Two Pointers + Hashing Approach
+     * Approach I : Using Brute-Force (Two Pointers + Hashing) Approach
      *
      * TC: O(N²)
      * SC: O(N1 + N2) ~ O(N)
