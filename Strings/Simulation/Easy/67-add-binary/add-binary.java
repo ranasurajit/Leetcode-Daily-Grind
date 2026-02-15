@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach : Using String Simulation (Concise) Approach
+     * Approach II : Using String Simulation (Concise) Approach
      *
      * TC: O(N + M)
      * SC: O(N + M)
