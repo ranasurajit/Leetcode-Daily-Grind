@@ -8,10 +8,8 @@ class Solution {
     public int reverseBits(int n) {
         int result = 0;
         for (int i = 31; i >= 0; i--) { // TC: O(32)
-            // extract last bit
-            int lastBit = (n & 1);
-            // make empty space to right of result and make OR operation
-            result = ((result << 1) | lastBit);
+            // extract last bit and make empty space to right of result and make OR operation
+            result = ((result << 1) | (n & 1));
             // finally right shift n
             n = (n >> 1);
         }
