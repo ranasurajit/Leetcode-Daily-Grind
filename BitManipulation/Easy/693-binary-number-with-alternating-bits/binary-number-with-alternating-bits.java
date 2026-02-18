@@ -2,6 +2,11 @@ class Solution {
     /**
      * Approach II : Using Bit-Manipulation Approach
      *
+     * Idea:
+     *
+     * If bits alternate, then n ^ (n >> 1) becomes all 1s (111...111).
+     * A number with all 1s satisfies: x & (x + 1) == 0
+     *
      * TC: O(1)
      * SC: O(1)
      */
@@ -13,12 +18,12 @@ class Solution {
     }
 
     /**
-     * Approach I : Using Bit-Manipulation Approach
+     * Approach I : Using Bit-Manipulation (Bit By Bit Comparison) Approach
      *
      * TC: O(32) ~ O(1)
      * SC: O(1)
      */
-    public boolean hasAlternatingBitsApproachI(int n) {
+    public boolean hasAlternatingBitsComparisonApproach(int n) {
         int i = 31;
         while (((n >> i) & 1) != 1) { // TC: O(N1)
             i--;
