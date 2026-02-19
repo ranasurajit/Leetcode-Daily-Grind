@@ -9,7 +9,7 @@ class Solution {
         int n = s.length();
         int i = 0; // start pointer
         int j = 0; // end pointer
-        int prevGroupLength = -1;
+        int prevGroupLength = 0;
         int count = 0;
         while (j < n) { // TC: O(N)
             char ch = s.charAt(j);
@@ -17,9 +17,7 @@ class Solution {
                 j++;
             }
             int currentGroupLength = j - i;
-            if (prevGroupLength != -1) {
-                count += Math.min(prevGroupLength, currentGroupLength);
-            }
+            count += Math.min(prevGroupLength, currentGroupLength);
             i = j;
             prevGroupLength = currentGroupLength;
         }
