@@ -1,7 +1,7 @@
 class Solution {
     private int[] sieve;
     /**
-     * Approach II : Using Bit-Manipulation + Sieve of Eratosthenes Approach
+     * Approach II : Using Optimal (Bit-Manipulation + Sieve of Eratosthenes) Approach
      *
      * TC: O(R) + O(32) + O(32 x log(log(32))) ~ O(R)
      * SC: O(32) ~ O(1)
