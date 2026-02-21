@@ -1,7 +1,7 @@
 class Solution {
     private int[] sieve;
     /**
-     * Approach II : Using Optimal (Bit-Manipulation + Sieve of Eratosthenes) Approach
+     * Approach III : Using Optimal (Math + Sieve of Eratosthenes) Approach
      *
      * TC: O(R) + O(21) + O(20 x log(log(20))) ~ O(R)
      * SC: O(20) ~ O(1)
@@ -9,6 +9,30 @@ class Solution {
      * where R = right - left + 1 ~ (Max - 10^4 as per constraint)
      */
     public int countPrimeSetBits(int left, int right) {
+        /**
+         * we need to compute Sieve of primes numbers from 1 to 20
+         * as 10 ^ 6 (11110100001001000000) has atmost 20 bits
+         */
+        sieve = new int[21]; // SC: O(20)
+        computePrimeSieve(); // TC: O(20 x log(log(20)))
+        int count = 0;
+        for (int i = left; i <= right; i++) { // TC: O(R)
+            if (sieve[Integer.bitCount(i)] == 1) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Approach II : Using Better (Bit-Manipulation + Sieve of Eratosthenes) Approach
+     *
+     * TC: O(R) + O(21) + O(20 x log(log(20))) ~ O(R)
+     * SC: O(20) ~ O(1)
+     *
+     * where R = right - left + 1 ~ (Max - 10^4 as per constraint)
+     */
+    public int countPrimeSetBitsBetter(int left, int right) {
         /**
          * we need to compute Sieve of primes numbers from 1 to 20
          * as 10 ^ 6 (11110100001001000000) has atmost 20 bits
