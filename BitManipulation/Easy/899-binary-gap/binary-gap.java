@@ -10,9 +10,9 @@ class Solution {
         int maxGap = 0;
         for (int i = 31; i >= 0; i--) { // TC: O(32)
             if (((n >> i) & 1) == 1) {
-                int currentSetBit = (32 - i);
+                int currentSetBit = i;
                 if (lastSetBit != -1) {
-                    maxGap = Math.max(maxGap, currentSetBit - lastSetBit);
+                    maxGap = Math.max(maxGap, lastSetBit - currentSetBit);
                 }
                 lastSetBit = currentSetBit;
             }
