@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach : Using Sliding Window (Fixed Size) Approach
      *
-     * TC: O(N)
+     * TC: O(N x K)
      * SC: O(K x Min(N - K + 1, 2 ^ K)) ~ O(K x Min(N, 2 ^ K)) 
      */
     public boolean hasAllCodes(String s, int k) {
