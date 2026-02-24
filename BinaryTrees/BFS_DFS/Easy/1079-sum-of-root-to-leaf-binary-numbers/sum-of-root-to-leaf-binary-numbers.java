@@ -15,14 +15,46 @@
  */
 class Solution {
     /**
-     * Approach : Using DFS (Pre-Order Traversal) Approach
+     * Approach II : Using DFS (Pre-Order Traversal - Without Extra Space) Approach
+     *
+     * TC: O(N)
+     * SC: O(N)
+     */
+    public int sumRootToLeaf(TreeNode root) {
+        return dfsTreeOptimal(0, root);
+    }
+
+    /**
+     * Using DFS (Pre-Order Traversal) Approach
+     *
+     * TC: O(N)
+     * SC: O(H) ~ O(N) - recursion stack
+     */
+    private int dfsTreeOptimal(int lastValue, TreeNode node) {
+        // Base Case
+        if (node == null) {
+            return 0;
+        }
+        int currentValue = (lastValue << 1) + node.val;
+        if (node.left == null && node.right == null) {
+            // leaf node
+            return currentValue;
+        }
+        // Recursion Calls
+        int leftValue = dfsTreeOptimal(currentValue, node.left);
+        int rightValue = dfsTreeOptimal(currentValue, node.right);
+        return leftValue + rightValue;
+    }
+
+    /**
+     * Approach I : Using DFS (Pre-Order Traversal - With Extra Space) Approach
      *
      * TC: O(N)
      * SC: O(N) + O(K) ~ O(N)
      *
      * where K = number of leaf nodes
      */
-    public int sumRootToLeaf(TreeNode root) {
+    public int sumRootToLeafWithExtraSpace(TreeNode root) {
         List<Integer> binaryList = new ArrayList<>(); // SC: O(K)
         dfsTree(0, root, binaryList);
         int sum = 0;
