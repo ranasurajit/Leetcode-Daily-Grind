@@ -1,11 +1,38 @@
 class Solution {
     /**
-     * Approach II : Using Sorting on Running Bit Counts Approach
+     * Approach III : Using Sorting on Running Bit Counts (In-built Method) Approach
      *
      * TC: O(N) + O(N x log(N)) + O(N) ~ O(N x log(N))
      * SC: O(N)
      */
     public int[] sortByBits(int[] arr) {
+        int n = arr.length;
+        Integer[] nums = new Integer[n]; // SC: O(N)
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            nums[i] = Integer.valueOf(arr[i]);
+        }
+        Arrays.sort(nums, (a, b) -> {
+            int aBits = Integer.bitCount(a);
+            int bBits = Integer.bitCount(b);
+            if (aBits == bBits) {
+                return a - b;
+            }
+            return aBits - bBits;
+        }); // TC: O(N x log(N))
+        int[] sorted = new int[n]; // SC: O(N) - can be neglected as this is the output
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            sorted[i] = nums[i];
+        }
+        return sorted;
+    }
+
+    /**
+     * Approach II : Using Sorting on Running Bit Counts Approach
+     *
+     * TC: O(N) + O(N x log(N)) + O(N) ~ O(N x log(N))
+     * SC: O(N)
+     */
+    public int[] sortByBitsRunningBitsComparison(int[] arr) {
         int n = arr.length;
         Integer[] nums = new Integer[n]; // SC: O(N)
         for (int i = 0; i < n; i++) { // TC: O(N)
