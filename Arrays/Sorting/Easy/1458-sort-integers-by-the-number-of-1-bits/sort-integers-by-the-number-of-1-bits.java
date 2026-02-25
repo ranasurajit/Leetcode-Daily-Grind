@@ -66,7 +66,7 @@ class Solution {
      * Approach I : Using Bit-By-Bit Count (Sorting + Bit-Manipulation) Approach
      *
      * TC: O(N) + O(N x log(N)) + O(N) ~ O(N x log(N))
-     * SC: O(N)
+     * SC: O(2 x N) ~ O(N)
      */
     public int[] sortByBitsBitByBitCountApproach(int[] arr) {
         int n = arr.length;
