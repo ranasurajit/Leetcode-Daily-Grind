@@ -9,9 +9,10 @@ class Solution {
      */
     public int numSteps(String s) {
         int steps = 0;
-        while (!s.equals("1")) { // TC: O(N)
-            int n = s.length();
-            int lastBit = (s.charAt(n - 1) - '0');
+        StringBuilder sb = new StringBuilder(s); // SC: O(N)
+        while (!sb.toString().equals("1")) { // TC: O(N)
+            int n = sb.length();
+            int lastBit = (sb.charAt(n - 1) - '0');
             if (lastBit == 1) {
                 /**
                  * s denotes an odd number, so to add 1 to it,
@@ -19,22 +20,23 @@ class Solution {
                  * and make it 1 and rest all towards right to zero
                  */
                 int j = n - 1;
-                while (j > 0 && s.charAt(j) != '0') {
+                while (j > 0 && sb.charAt(j) != '0') {
                     j--;
                 }
                 if (j == 0) {
-                    s = "1";
+                    sb = new StringBuilder("1");
                 } else {
-                    s = s.substring(0, j) + "1";
+                    sb.delete(j, sb.length());
+                    sb.append("1");
                     j++;
                 }
                 while (j < n) { // TC: O(N)
-                    s += "0";
+                    sb.append("0");
                     j++;
                 }
             } else {
                 // s denotes an even number
-                s = s.substring(0, s.length() - 1); // TC: O(N)
+                sb.deleteCharAt(sb.length() - 1); // TC: O(N)
             }
             steps++;
         }
