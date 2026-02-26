@@ -1,13 +1,43 @@
 class Solution {
     /**
-     * Approach II : Using Optimal (String Simulation + Bit-Manipulation) Approach
+     * Approach III : Using Optimal (String Simulation + Bit-Manipulation) Approach
+     *
+     * TC: O(N)
+     * SC: O(1) 
+     *
+     * Note: This approach will handle overflows
+     */
+    public int numSteps(String s) {
+        int n = s.length();
+        int steps = 0;
+        int carry = 0;
+        for (int i = n - 1; i >= 1; i--) { // TC: O(N)
+            int effectiveBit = carry + (s.charAt(i) - '0');
+            if (effectiveBit == 1) {
+                // then we add 1 (+1 step) and it becomes even and then we divide it by 2
+                steps += 2;
+                carry = 1;
+            } else {
+                // only divide it by 2
+                steps += 1;
+            }
+        }
+        /**
+         * if carry is 1 here so Most Significant Bit has an 
+         * effective bit of 1, so we need 1 more additional step
+         */
+        return steps + carry;
+    }
+
+    /**
+     * Approach II : Using Better (String Simulation + Bit-Manipulation) Approach
      *
      * TC: O(N²)
      * SC: O(1) 
      *
      * Note: This approach will handle overflows
      */
-    public int numSteps(String s) {
+    public int numStepsBetterApproach(String s) {
         int steps = 0;
         StringBuilder sb = new StringBuilder(s); // SC: O(N)
         while (!sb.toString().equals("1")) { // TC: O(N)
