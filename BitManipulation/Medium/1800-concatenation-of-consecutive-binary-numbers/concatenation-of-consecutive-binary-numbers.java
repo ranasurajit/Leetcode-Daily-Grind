@@ -23,7 +23,7 @@ class Solution {
                 // here 'i' is power of 2
                 bits++;
             }
-            result = ((result << bits) % MOD + i) % MOD;
+            result = ((result << bits) + i) % MOD;
         }
         return (int) result;
     }
