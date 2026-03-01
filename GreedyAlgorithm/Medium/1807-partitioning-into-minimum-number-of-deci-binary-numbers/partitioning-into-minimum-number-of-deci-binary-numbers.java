@@ -1,11 +1,33 @@
 class Solution {
     /**
+     * Approach II : Using Optimal (Greedy + String Simulation) Approach
+     *
+     * TC: O(M)
+     * SC: O(1)
+     */
+    public int minPartitions(String n) {
+        int m = n.length();
+        int steps = 0;
+        /**
+         * think in term of layers of all digits,
+         * the number of steps needed to make the
+         * sum = n is number of steps to subtract
+         * deci-binary number to make it zero
+         * so steps = Max Digit (n)
+         */
+        for (int i = 0; i < m; i++) { // TC: O(M)
+            steps = Math.max(steps, n.charAt(i) - '0');
+        }
+        return steps;
+    }
+
+    /**
      * Approach I : Using Brute-Force (String Simulation) Approach
      *
      * TC: O(M²)
      * SC: O(M)
      */
-    public int minPartitions(String n) {
+    public int minPartitionsBruteForce(String n) {
         int steps = 0;
         while (!n.equals("0")) {       // TC: O(9)
             n = subtractAndGetNext(n); // TC: O(M²)
