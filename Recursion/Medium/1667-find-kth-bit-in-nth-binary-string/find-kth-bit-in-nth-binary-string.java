@@ -1,11 +1,53 @@
 class Solution {
     /**
-     * Approach : Using Recursion Approach
+     * Approach II: Using Optimal Recursion (Without String Formation) Approach
      *
-     * TC: O(N²)
-     * SC: O(N)
+     * TC: O(n)
+     * SC: O(n)
+     * - O(n) - recursion stack
      */
     public char findKthBit(int n, int k) {
+        return solve(n, k);
+    }
+
+    /**
+     * Using Optimal Recursion (Without String Formation) Approach
+     *
+     * TC: O(n)
+     * SC: O(n)
+     */
+    private char solve(int n, int k) {
+        // Base Case
+        if (n == 1) {
+            return '0';
+        }
+        // Recursion Calls
+        int mid = (1 << (n - 1));
+        // the formed String is always odd
+        if (k == mid) {
+            return '1';
+        }
+        if (k < mid) {
+            return solve(n - 1, k);
+        }
+        if (k > mid) {
+            // the target will be mirror index i.e. (2^n - 1) - k + 1 = 2^n - k
+            int mirrorIdx = (1 << n) - k;
+            char ch = solve(n - 1, mirrorIdx);
+            // return inverse of char 'ch'
+            return ch == '0' ? '1' : '0';
+        }
+        return '0';
+    }
+
+    /**
+     * Approach I : Using Brute-Force (Recursion) Approach
+     *
+     * TC: O(2ⁿ)
+     * SC: O(2ⁿ) + O(n)
+     * - O(n) - recursion stack
+     */
+    public char findKthBitBruteForce(int n, int k) {
         String result = solveRecursion(n); // TC: O(N²), SC: O(N)
         System.out.println(result);
         return result.charAt(k - 1);
@@ -14,8 +56,8 @@ class Solution {
     /**
      * Using Recursion Approach
      *
-     * TC: O(N²)
-     * SC: O(N) + O(N) ~ O(N)
+     * TC: O(2ⁿ)
+     * SC: O(2ⁿ) + O(n)
      */
     private String solveRecursion(int n) {
         // Base Case
