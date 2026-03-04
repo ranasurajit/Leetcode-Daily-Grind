@@ -24,7 +24,10 @@ class Solution {
         }
         for (int i = 0; i < m; i++) {     // TC: O(M)
             for (int j = 0; j < n; j++) { // TC: O(N)
-                if (mat[i][j] == 1 && row1Counts[i] == 1 && col1Counts[j] == 1) {
+                if (row1Counts[i] != 1 || col1Counts[j] != 1) {
+                    continue;
+                }
+                if (mat[i][j] == 1) {
                     // { i, j } is special cell
                     count++;
                 }
