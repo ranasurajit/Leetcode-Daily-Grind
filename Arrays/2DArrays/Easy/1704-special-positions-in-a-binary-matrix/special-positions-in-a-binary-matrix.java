@@ -12,12 +12,12 @@ class Solution {
         this.m = mat.length;
         this.n = mat[0].length;
         int count = 0;
-        Set<String> set = new HashSet<String>(); // SC: O(Max(M, N))
+        Set<Integer> rowSet = new HashSet<Integer>(); // SC: O(M)
+        Set<Integer> colSet = new HashSet<Integer>(); // SC: O(N)
         for (int i = 0; i < m; i++) {     // TC: O(M)
             for (int j = 0; j < n; j++) { // TC: O(N)
                 if (mat[i][j] == 1) {
-                    String key = i + "_" + j;
-                    if (set.contains(key)) {
+                    if (rowSet.contains(i) || colSet.contains(j)) {
                         // early pruning
                         continue;
                     }
@@ -29,7 +29,8 @@ class Solution {
                          * so any other cells with value 1 in that 
                          * row and column cannot be special
                          */
-                        set.add(key);
+                        rowSet.add(i);
+                        colSet.add(j);
                     }
                 }
             }
