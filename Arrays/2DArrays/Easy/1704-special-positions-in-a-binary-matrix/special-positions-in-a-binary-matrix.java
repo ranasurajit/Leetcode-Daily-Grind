@@ -6,7 +6,7 @@ class Solution {
      * Approach II : Using Optimal(2D-Array Simulation) Approach
      *
      * TC: O(M x N) + O(M + N) ~ O(M x N)
-     * SC: O(Max(M, N))
+     * SC: O(M + N)
      */
     public int numSpecial(int[][] mat) {
         this.m = mat.length;
