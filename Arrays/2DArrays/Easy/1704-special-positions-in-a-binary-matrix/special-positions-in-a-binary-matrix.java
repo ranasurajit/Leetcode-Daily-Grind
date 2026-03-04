@@ -5,7 +5,7 @@ class Solution {
     /**
      * Approach II : Using Optimal(2D-Array Simulation) Approach
      *
-     * TC: O(M x N) + O(M x N) + O(M x N) ~ O(M x N)
+     * TC: O(M x N) + O(M x N) ~ O(M x N)
      * SC: O(M + N)
      */
     public int numSpecial(int[][] mat) {
@@ -15,22 +15,12 @@ class Solution {
         int[] row1Counts = new int[m]; // SC: O(M)
         int[] col1Counts = new int[n]; // SC: O(N)
         for (int i = 0; i < m; i++) {     // TC: O(M)
-            int oneCounts = 0;
             for (int j = 0; j < n; j++) { // TC: O(N)
                 if (mat[i][j] == 1) {
-                    oneCounts++;
+                    row1Counts[i]++;
+                    col1Counts[j]++;
                 }
             }
-            row1Counts[i] = oneCounts;
-        }
-        for (int j = 0; j < n; j++) {     // TC: O(N)
-            int oneCounts = 0;
-            for (int i = 0; i < m; i++) { // TC: O(M)
-                if (mat[i][j] == 1) {
-                    oneCounts++;
-                }
-            }
-            col1Counts[j] = oneCounts;
         }
         for (int i = 0; i < m; i++) {     // TC: O(M)
             for (int j = 0; j < n; j++) { // TC: O(N)
