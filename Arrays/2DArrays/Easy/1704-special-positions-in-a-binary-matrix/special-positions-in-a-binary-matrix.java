@@ -5,33 +5,38 @@ class Solution {
     /**
      * Approach II : Using Optimal(2D-Array Simulation) Approach
      *
-     * TC: O(M x N) + O(M + N) ~ O(M x N)
+     * TC: O(M x N) + O(M x N) + O(M x N) ~ O(M x N)
      * SC: O(M + N)
      */
     public int numSpecial(int[][] mat) {
         this.m = mat.length;
         this.n = mat[0].length;
         int count = 0;
-        Set<Integer> rowSet = new HashSet<Integer>(); // SC: O(M)
-        Set<Integer> colSet = new HashSet<Integer>(); // SC: O(N)
+        int[] row1Counts = new int[m]; // SC: O(M)
+        int[] col1Counts = new int[n]; // SC: O(N)
         for (int i = 0; i < m; i++) {     // TC: O(M)
+            int oneCounts = 0;
             for (int j = 0; j < n; j++) { // TC: O(N)
                 if (mat[i][j] == 1) {
-                    if (rowSet.contains(i) || colSet.contains(j)) {
-                        // early pruning
-                        continue;
-                    }
-                    if (isSpecial(mat, i, j)) { // TC: O(M + N)
-                        count++;
-                    } else {
-                        /**
-                         * if the cell { i, j } is 1 and not special 
-                         * so any other cells with value 1 in that 
-                         * row and column cannot be special
-                         */
-                        rowSet.add(i);
-                        colSet.add(j);
-                    }
+                    oneCounts++;
+                }
+            }
+            row1Counts[i] = oneCounts;
+        }
+        for (int j = 0; j < n; j++) {     // TC: O(N)
+            int oneCounts = 0;
+            for (int i = 0; i < m; i++) { // TC: O(M)
+                if (mat[i][j] == 1) {
+                    oneCounts++;
+                }
+            }
+            col1Counts[j] = oneCounts;
+        }
+        for (int i = 0; i < m; i++) {     // TC: O(M)
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                if (mat[i][j] == 1 && row1Counts[i] == 1 && col1Counts[j] == 1) {
+                    // { i, j } is special cell
+                    count++;
                 }
             }
         }
