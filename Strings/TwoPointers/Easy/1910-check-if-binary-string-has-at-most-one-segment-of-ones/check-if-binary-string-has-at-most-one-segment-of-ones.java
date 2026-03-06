@@ -1,11 +1,27 @@
 class Solution {
     /**
-     * Approach II : Using Two Pointers Approach
+     * Approach III : Using String Simulation Approach
      *
      * TC: O(N) - entire String s is traversed once
      * SC: O(1) - no extra space used
      */
     public boolean checkOnesSegment(String s) {
+        int n = s.length();
+        for (int i = 1; i < n; i++) { // TC: O(N)
+            if (s.charAt(i - 1) == '0' && s.charAt(i) == '1') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Approach II : Using Two Pointers Approach
+     *
+     * TC: O(N) - entire String s is traversed once
+     * SC: O(1) - no extra space used
+     */
+    public boolean checkOnesSegmentUsingTwoPointers(String s) {
         int n = s.length();
         int i = 0;
         int j = n - 1;
