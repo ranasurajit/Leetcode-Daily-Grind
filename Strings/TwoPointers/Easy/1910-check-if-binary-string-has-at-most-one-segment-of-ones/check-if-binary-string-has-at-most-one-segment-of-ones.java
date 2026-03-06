@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach : Using String Simulation Approach
+     * Approach : Using Two Pointers + String Simulation Approach
      *
      * TC: O(N) - entire String s is traversed once
      * SC: O(1) - no extra space used
