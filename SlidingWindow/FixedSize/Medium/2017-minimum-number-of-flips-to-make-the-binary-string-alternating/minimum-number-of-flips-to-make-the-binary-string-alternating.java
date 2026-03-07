@@ -28,8 +28,8 @@ class Solution {
                 // sliding window size is met
                 minOperations = Math.min(minOperations, Math.min(operations1, operations2));
                 // remove computation from index 'i'
-                int lastExpected1 = (i & 1) == 0 ? '1' : '0';
-                int lastExpected2 = (i & 1) == 0 ? '0' : '1';
+                char lastExpected1 = (i & 1) == 0 ? '1' : '0';
+                char lastExpected2 = (i & 1) == 0 ? '0' : '1';
                 char leftChar = s.charAt(i % n);
                 if (lastExpected1!= leftChar) {
                     operations1--;
