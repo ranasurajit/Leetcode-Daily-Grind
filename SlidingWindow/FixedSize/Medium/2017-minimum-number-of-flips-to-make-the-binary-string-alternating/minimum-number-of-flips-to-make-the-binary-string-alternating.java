@@ -9,18 +9,13 @@ class Solution {
      */
     public int minFlips(String s) {
         int n = s.length();
-        /**
-         * since we can perform Type-1 operation so we can
-         * append same String s to behave as circular String
-         */
-        s += s;
         int minOperations = n;
         int i = 0;
         int j = 0;
         int operations1 = 0;
         int operations2 = 0;
         while (j < 2 * n) { // TC: O(2 x N)
-            char current = s.charAt(j);
+            char current = s.charAt(j % n); // treat String 's' as circular
             char expected1 = (j & 1) == 0 ? '1' : '0';
             char expected2 = (j & 1) == 0 ? '0' : '1';
             if (expected1 != current) {
@@ -35,10 +30,10 @@ class Solution {
                 // remove computation from index 'i'
                 int lastExpected1 = (i & 1) == 0 ? '1' : '0';
                 int lastExpected2 = (i & 1) == 0 ? '0' : '1';
-                if (lastExpected1!= s.charAt(i)) {
+                if (lastExpected1!= s.charAt(i % n)) {
                     operations1--;
                 }
-                if (lastExpected2 != s.charAt(i)) {
+                if (lastExpected2 != s.charAt(i % n)) {
                     operations2--;
                 }
                 // slide to next window
