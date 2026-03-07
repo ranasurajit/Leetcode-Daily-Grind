@@ -30,10 +30,11 @@ class Solution {
                 // remove computation from index 'i'
                 int lastExpected1 = (i & 1) == 0 ? '1' : '0';
                 int lastExpected2 = (i & 1) == 0 ? '0' : '1';
-                if (lastExpected1!= s.charAt(i % n)) {
+                char leftChar = s.charAt(i % n);
+                if (lastExpected1!= leftChar) {
                     operations1--;
                 }
-                if (lastExpected2 != s.charAt(i % n)) {
+                if (lastExpected2 != leftChar) {
                     operations2--;
                 }
                 // slide to next window
