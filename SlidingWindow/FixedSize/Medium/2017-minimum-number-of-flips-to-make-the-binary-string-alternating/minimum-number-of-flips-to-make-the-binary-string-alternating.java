@@ -1,5 +1,55 @@
 class Solution {
     /**
+     * Approach III : Using Optimal (String Simulation) Approach
+     *
+     * TC: O(2 x N) ~ O(N)
+     * SC: O(1)
+     *
+     * Accepted (65 / 65 testcases passed)
+     */
+    public int minFlips(String s) {
+        int n = s.length();
+        /**
+         * since we can perform Type-1 operation so we can
+         * append same String s to behave as circular String
+         */
+        s += s;
+        int minOperations = n;
+        int i = 0;
+        int j = 0;
+        int operations1 = 0;
+        int operations2 = 0;
+        while (j < 2 * n) { // TC: O(2 x N)
+            char current = s.charAt(j);
+            char expected1 = (j & 1) == 0 ? '1' : '0';
+            char expected2 = (j & 1) == 0 ? '0' : '1';
+            if (expected1 != current) {
+                operations1++;
+            }
+            if (expected2 != current) {
+                operations2++;
+            }
+            if (j - i + 1 == n) {
+                // sliding window size is met
+                minOperations = Math.min(minOperations, Math.min(operations1, operations2));
+                // remove computation from index 'i'
+                int lastExpected1 = (i & 1) == 0 ? '1' : '0';
+                int lastExpected2 = (i & 1) == 0 ? '0' : '1';
+                if (lastExpected1!= s.charAt(i)) {
+                    operations1--;
+                }
+                if (lastExpected2 != s.charAt(i)) {
+                    operations2--;
+                }
+                // slide to next window
+                i++;
+            }
+            j++;
+        }
+        return minOperations;
+    }
+
+    /**
      * Approach II : Using Optimal (String Simulation) Approach
      *
      * TC: O(2 x N) + O(2 x N) ~ O(N)
@@ -7,7 +57,7 @@ class Solution {
      *
      * Accepted (65 / 65 testcases passed)
      */
-    public int minFlips(String s) {
+    public int minFlipsBetter(String s) {
         int n = s.length();
         /**
          * since we can perform Type-1 operation so we can
