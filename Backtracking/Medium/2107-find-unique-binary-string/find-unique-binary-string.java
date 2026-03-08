@@ -1,6 +1,4 @@
 class Solution {
-    private String result;
-
     /**
      * Approach : Using Backtracking Approach
      *
@@ -14,8 +12,9 @@ class Solution {
         for (String num : nums) { // TC: O(N)
             set.add(num);
         }
-        backtrack(0, n, new StringBuilder(), set); // TC: O(2 ^ N), SC: O(N)
-        return result;
+        String[] result = { null };
+        backtrack(0, n, new StringBuilder(), set, result); // TC: O(2 ^ N), SC: O(N)
+        return result[0];
     }
 
     /**
@@ -24,22 +23,22 @@ class Solution {
      * TC: O(2 ^ N)
      * SC: O(N)
      */
-    private void backtrack(int idx, int n, StringBuilder sb, Set<String> set) {
+    private void backtrack(int idx, int n, StringBuilder sb, Set<String> set, String[] result) {
         // Base Case
-        if (result != null) {
+        if (result[0] != null) {
             return;
         }
         if (idx == n) {
             // sb will have a String of length = n
             if (!set.contains(sb.toString())) {
-                result = sb.toString();
+                result[0] = sb.toString();
             }
             return;
         }
         // Recursion Calls
         for (int j = 0; j <= 1; j++) {
             sb.append(j);
-            backtrack(idx + 1, n, sb, set);
+            backtrack(idx + 1, n, sb, set, result);
             sb.setLength(sb.length() - 1);
         }
     }
