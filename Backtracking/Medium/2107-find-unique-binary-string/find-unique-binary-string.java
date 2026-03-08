@@ -1,12 +1,27 @@
 class Solution {
     /**
-     * Approach : Using Backtracking Approach
+     * Approach II : Using Optimal(Cantor’s Diagonal Argument - Diagonal Flipping) Approach
+     *
+     * TC: O(N)
+     * SC: O(N)
+     */
+    public String findDifferentBinaryString(String[] nums) {
+        int n = nums.length;
+        StringBuilder sb = new StringBuilder(); // SC: O(N)
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            sb.append(nums[i].charAt(i) == '0' ? '1' : '0');
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Approach I : Using Brute-Force(Backtracking) Approach
      *
      * TC: O(2 ^ N)
      * SC: O(N)
      * - O(N) - recursion stack space
      */
-    public String findDifferentBinaryString(String[] nums) {
+    public String findDifferentBinaryStringBruteForce(String[] nums) {
         int n = nums.length;
         Set<String> set = new HashSet<>(); // SC: O(N)
         for (String num : nums) { // TC: O(N)
