@@ -6,6 +6,7 @@ class Solution {
      *
      * TC: O(2 ^ N)
      * SC: O(N)
+     * - O(N) - recursion stack space
      */
     public String findDifferentBinaryString(String[] nums) {
         int n = nums.length;
@@ -13,7 +14,7 @@ class Solution {
         for (String num : nums) { // TC: O(N)
             set.add(num);
         }
-        backtrack(0, n, new StringBuilder(), set);
+        backtrack(0, n, new StringBuilder(), set); // TC: O(2 ^ N), SC: O(N)
         return result;
     }
 
@@ -25,6 +26,9 @@ class Solution {
      */
     private void backtrack(int idx, int n, StringBuilder sb, Set<String> set) {
         // Base Case
+        if (result != null) {
+            return;
+        }
         if (idx == n) {
             // sb will have a String of length = n
             if (!set.contains(sb.toString())) {
