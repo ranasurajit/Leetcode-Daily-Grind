@@ -2,13 +2,13 @@ class Solution {
     /**
      * Approach II : Using Optimal(Cantor’s Diagonal Argument - Diagonal Flipping) Approach
      *
-     * TC: O(N)
-     * SC: O(N)
+     * TC: O(n)
+     * SC: O(n)
      */
     public String findDifferentBinaryString(String[] nums) {
         int n = nums.length;
-        StringBuilder sb = new StringBuilder(); // SC: O(N)
-        for (int i = 0; i < n; i++) { // TC: O(N)
+        StringBuilder sb = new StringBuilder(); // SC: O(n)
+        for (int i = 0; i < n; i++) { // TC: O(n)
             sb.append(nums[i].charAt(i) == '0' ? '1' : '0');
         }
         return sb.toString();
@@ -17,26 +17,26 @@ class Solution {
     /**
      * Approach I : Using Brute-Force(Backtracking) Approach
      *
-     * TC: O(2 ^ N)
-     * SC: O(N)
-     * - O(N) - recursion stack space
+     * TC: O(n x 2ⁿ)
+     * SC: O(n)
+     * - O(n) - recursion stack space
      */
     public String findDifferentBinaryStringBruteForce(String[] nums) {
         int n = nums.length;
-        Set<String> set = new HashSet<>(); // SC: O(N)
-        for (String num : nums) { // TC: O(N)
+        Set<String> set = new HashSet<>(); // SC: O(n)
+        for (String num : nums) { // TC: O(n)
             set.add(num);
         }
         String[] result = { null };
-        backtrack(0, n, new StringBuilder(), set, result); // TC: O(2 ^ N), SC: O(N)
+        backtrack(0, n, new StringBuilder(), set, result); // TC: O(n x 2ⁿ), SC: O(n)
         return result[0];
     }
 
     /**
      * Using Backtracking Approach
      *
-     * TC: O(2 ^ N)
-     * SC: O(N)
+     * TC: O(n x 2ⁿ)
+     * SC: O(n)
      */
     private void backtrack(int idx, int n, StringBuilder sb, Set<String> set, String[] result) {
         // Base Case
