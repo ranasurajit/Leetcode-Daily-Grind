@@ -1,6 +1,42 @@
 class Solution {
     private static final int MOD = (int) 1e9 + 7;
     /**
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC: O(L x M x N)
+     * SC: O(M x N)
+     * - O(M x N) - dp array memory, where M = zero, N = one
+     *
+     * Accepted (670 / 670 testcases passed)
+     */
+    public int numberOfStableArrays(int zero, int one, int limit) {
+        /**
+         * To make the array as Stable Binary Array, we cannot use 
+         * either 1 or 0 contiguous occurences more than limit 
+         */
+        int[][][] dp = new int[zero + 1][one + 1][2]; // SC: O(M x N)
+        dp[0][0][0] = 1;
+        dp[0][0][1] = 1;
+        for (int i = 0; i <= zero; i++) { // TC: O(M)
+            for (int j = 0; j <= one; j++) { // TC: O(N)
+                if (i == 0 && j == 0) {
+                    continue;
+                }
+                int ways = 0;
+                for (int k = 1; k <= limit && k <= i; k++) { // TC: O(L)
+                    // choose either 0 or 1
+                    dp[i][j][0] = (dp[i][j][0] + dp[i - k][j][1]) % MOD;
+                }
+                for (int k = 1; k <= limit && k <= j; k++) { // TC: O(L)
+                    // choose either 0 or 1
+                    dp[i][j][1] = (dp[i][j][1] + dp[i][j - k][0]) % MOD;
+                }
+            }
+        }
+        return (dp[zero][one][0] + dp[zero][one][1]) % MOD;
+    }
+
+    /**
      * Approach II : Using Memoization (Top-Down) Approach
      *
      * TC: O(L x M x N)
@@ -10,7 +46,7 @@ class Solution {
      *
      * Accepted (670 / 670 testcases passed)
      */
-    public int numberOfStableArrays(int zero, int one, int limit) {
+    public int numberOfStableArraysMemoization(int zero, int one, int limit) {
         /**
          * To make the array as Stable Binary Array, we cannot use 
          * either 1 or 0 contiguous occurences more than limit 
