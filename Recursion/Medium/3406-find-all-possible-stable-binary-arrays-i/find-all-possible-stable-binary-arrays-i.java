@@ -4,9 +4,9 @@ class Solution {
      * Approach II : Using Memoization (Top-Down) Approach
      *
      * TC: O(L x M x N)
-     * SC: O(M + N) + O(L x M x N)
+     * SC: O(M + N) + O(M x N)
      * - O(M + N) - recursion stack space, where M = zero, N = one
-     * - O(L x M x N) - memoization memory
+     * - O(M x N) - memoization memory
      *
      * Accepted (670 / 670 testcases passed)
      */
@@ -15,7 +15,7 @@ class Solution {
          * To make the array as Stable Binary Array, we cannot use 
          * either 1 or 0 contiguous occurences more than limit 
          */
-        int[][][] memo = new int[zero + 1][one + 1][3]; // SC: O(M x N x L)
+        int[][][] memo = new int[zero + 1][one + 1][3]; // SC: O(M x N)
         for (int[][] mem : memo) {
             for (int[] m : mem) {
                 Arrays.fill(m, -1);
