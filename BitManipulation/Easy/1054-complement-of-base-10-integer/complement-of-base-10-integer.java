@@ -1,11 +1,42 @@
 class Solution {
     /**
+     * Approach III : Using Inbuilt Method + Bit-Manipulation Approach
+     *
+     * TC: O(30)
+     * SC: O(1)
+     */
+    public int bitwiseComplement(int n) {
+        int result = 0;
+        /**
+         * as per constraints, 0 <= n < 10^9, 
+         * so n can have fit within 30 bits
+         */
+        int maxBit = 29;
+        // find leftmost set bit
+        int setBitPos = 0;
+        for (int i = maxBit; i >= 0; i--) { // TC: O(30 - setBitPos)
+            int currentBit = ((n >> i) & 1);
+            if (currentBit == 1) {
+                setBitPos = i;
+                break;
+            }
+        }
+        for (int i = setBitPos; i >= 0; i--) { // TC: O(setBitPos)
+            int flippedBit = ((n >> i) & 1) == 1 ? 0 : 1;
+            if (flippedBit == 1) {
+                result += (1 << i);
+            }
+        }
+        return result;
+    }
+
+    /**
      * Approach II : Using Inbuilt Method + Bit-Manipulation Approach
      *
      * TC: O(M)
      * SC: O(M), where M = leftmost set bit
      */
-    public int bitwiseComplement(int n) {
+    public int bitwiseComplementUsingInbuiltMethod(int n) {
         int result = 0;
         String binaryStr = Integer.toBinaryString(n); // SC: O(M)
         int m = binaryStr.length();
@@ -24,7 +55,7 @@ class Solution {
      * TC: O(log(N) Base 2)
      * SC: O(1)
      */
-    public int bitwiseComplementDivisionMethod(int n) {
+    public int bitwiseComplementUsingDivisionMethod(int n) {
         int result = 0;
         if (n == 0) {
             return 1; // flipped
