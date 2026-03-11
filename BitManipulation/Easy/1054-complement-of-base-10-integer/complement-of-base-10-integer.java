@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach III : Using Inbuilt Method + Bit-Manipulation Approach
+     * Approach III : Using Bit By Bit Traverse Method + Bit-Manipulation Approach
      *
      * TC: O(30)
      * SC: O(1)
