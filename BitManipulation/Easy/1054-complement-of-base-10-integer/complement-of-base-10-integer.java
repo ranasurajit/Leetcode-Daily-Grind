@@ -1,11 +1,31 @@
 class Solution {
     /**
+     * Approach IV : Using Bit-Manipulation + Bit-Masking Approach
+     *
+     * TC: O(log(N) Base 2)
+     * SC: O(1)
+     */
+    public int bitwiseComplement(int n) {
+        int result = 0;
+        if (n == 0) {
+            return 1; // flipped
+        }
+        int temp = n;
+        int mask = 0;
+        while (temp > 0) { // TC: O(log(N) Base 2)
+            mask = ((mask << 1) | 1);
+            temp = temp >> 1;
+        }
+        return (n ^ mask);
+    }
+
+    /**
      * Approach III : Using Bit By Bit Traverse Method + Bit-Manipulation Approach
      *
      * TC: O(30)
      * SC: O(1)
      */
-    public int bitwiseComplement(int n) {
+    public int bitwiseComplementBitByBitComputation(int n) {
         int result = 0;
         /**
          * as per constraints, 0 <= n < 10^9, 
