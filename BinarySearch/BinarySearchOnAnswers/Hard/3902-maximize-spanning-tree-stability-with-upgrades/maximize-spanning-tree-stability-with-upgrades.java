@@ -3,7 +3,7 @@ class Solution {
      * Approach : Using Binary Search on Answers + Disjoint Set Union Approach
      *
      * TC: O(E x α(V)) + O(E x α(V)) + O(V x α(V)) ~ O((E + V) x α(V))
-     * SC: O(2 x V) + O(E x α(V)) + O(E x α(V) x log(S)) ~ O(V + (E x α(V) x log(S)))
+     * SC: O(2 x V) + O(E x α(V)) + O(E x α(V) x log(S)) ~ O(V + E)
      */
     public int maxStability(int n, int[][] edges, int k) {
         DSU dsu = new DSU(n); // SC: O(2 x V)
