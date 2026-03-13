@@ -4,6 +4,7 @@ class Solution {
      *
      * TC: O(N) + O(N x log(M))
      * SC: O(1)
+     * where M = (mountainHeight * (mountainHeight + 1)) * Min(workerTimes) / 2
      */
     public long minNumberOfSeconds(int mountainHeight, int[] workerTimes) {
         int n = workerTimes.length;
