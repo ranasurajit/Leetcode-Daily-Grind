@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach : Using Array Prefix + Two Pointers Approach
+     * Approach : Using Array Prefix Approach
      *
      * TC: O(M x N) + O(M x N x log(N)) ~ O(M x N x log(N))
      * SC: O(N)
