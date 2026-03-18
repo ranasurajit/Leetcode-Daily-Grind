@@ -1,11 +1,45 @@
 class Solution {
     /**
+     * Approach III : Using Optimal(Prefix-Sum - Single Pass, Inplace Replacement) Approach
+     *
+     * TC: O(M x N)
+     * SC: O(1)
+     */
+    public int countSubmatrices(int[][] grid, int k) {
+        int m = grid.length;
+        int n = grid[0].length;
+        /**
+         * Intuition is to compute the prefix sum of
+         * the 2D matrix grid and then count the 
+         * number of prefixSum cells greater than k
+         * as grid[i][j] >= 0)
+         *
+         * grid[i][j] = grid[i][j] + grid[i - 1][j] +
+         * grid[i][j - 1] - grid[i - 1][j - 1]
+         * compute count on-the-go
+         */
+        int count = 0;
+        for (int i = 0; i < m; i++) {     // TC: O(M)
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                grid[i][j] = grid[i][j] + 
+                    (i > 0 ? grid[i - 1][j] : 0) + 
+                    (j > 0 ? grid[i][j - 1] : 0) - 
+                    (i > 0 && j > 0 ? grid[i - 1][j - 1] : 0);
+                if (grid[i][j] <= k) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
      * Approach II : Using Better(Prefix-Sum - Single Pass) Approach
      *
      * TC: O(M x N)
      * SC: O(M x N)
      */
-    public int countSubmatrices(int[][] grid, int k) {
+    public int countSubmatricesBetter(int[][] grid, int k) {
         int m = grid.length;
         int n = grid[0].length;
         /**
