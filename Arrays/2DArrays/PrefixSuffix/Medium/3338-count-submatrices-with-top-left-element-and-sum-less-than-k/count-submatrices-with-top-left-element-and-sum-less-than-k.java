@@ -11,7 +11,7 @@ class Solution {
         /**
          * Intuition is to compute the prefix sum of
          * the 2D matrix grid and then count the 
-         * number of prefixSum cells greater than k
+         * number of prefixSum cells <= k
          * as grid[i][j] >= 0)
          *
          * grid[i][j] = grid[i][j] + grid[i - 1][j] +
@@ -21,13 +21,14 @@ class Solution {
         int count = 0;
         for (int i = 0; i < m; i++) {     // TC: O(M)
             for (int j = 0; j < n; j++) { // TC: O(N)
-                grid[i][j] = grid[i][j] + 
-                    (i > 0 ? grid[i - 1][j] : 0) + 
-                    (j > 0 ? grid[i][j - 1] : 0) - 
-                    (i > 0 && j > 0 ? grid[i - 1][j - 1] : 0);
-                if (grid[i][j] <= k) {
+                long currentSum = (long) grid[i][j] + 
+                    (i > 0 ? (long) grid[i - 1][j] : 0L) + 
+                    (j > 0 ? (long) grid[i][j - 1] : 0L) - 
+                    (i > 0 && j > 0 ? (long) grid[i - 1][j - 1] : 0L);
+                if (currentSum <= k) {
                     count++;
                 }
+                grid[i][j] = (int) currentSum;
             }
         }
         return count;
@@ -45,7 +46,7 @@ class Solution {
         /**
          * Intuition is to compute the prefix sum of
          * the 2D matrix grid and then count the 
-         * number of prefixSum cells greater than k
+         * number of prefixSum cells <= k
          * as grid[i][j] >= 0)
          *
          * prefix[i][j] = grid[i][j] + prefix[i - 1][j] +
@@ -80,7 +81,7 @@ class Solution {
         /**
          * Intuition is to compute the prefix sum of
          * the 2D matrix grid and then count the 
-         * number of prefixSum cells greater than k
+         * number of prefixSum cells <= k
          * as grid[i][j] >= 0)
          *
          * prefix[i][j] = grid[i][j] + prefix[i - 1][j] +
