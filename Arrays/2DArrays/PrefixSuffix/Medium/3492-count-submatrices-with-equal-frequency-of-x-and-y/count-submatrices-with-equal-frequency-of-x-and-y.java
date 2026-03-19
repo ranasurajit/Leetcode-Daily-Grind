@@ -9,9 +9,17 @@ class Solution {
         int m = grid.length;
         int n = grid[0].length;
         /**
-         * Intuition here is to pre-process the grid to
-         * find prefix counts of X's and Y's across cells
-         * and then increase count if prefixX's = prefixY's 
+         * Intuition:
+         * Since all valid submatrices must start from (0,0),
+         * we don’t need a full 2D prefix matrix.
+         * Instead, we compress the computation by maintaining
+         * column-wise cumulative contributions of (X - Y) and
+         * count of X up to the current row.
+         * For each row, we accumulate these column values 
+         * horizontally to build the result for submatrices ending
+         * at (i, j). If the cumulative difference becomes 0 
+         * and there is at least one 'X', we count it as a 
+         * valid submatrix.
          */
         int[] colDiff = new int[n]; // SC: O(N)
         int[] colX = new int[n];    // SC: O(N)
