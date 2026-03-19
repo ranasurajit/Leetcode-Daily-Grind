@@ -1,11 +1,49 @@
 class Solution {
     /**
+     * Approach II : Using Optimal (Prefix-Array) Approach
+     *
+     * TC: O(M x N)
+     * SC: O(N) + O(N) ~ O(N)
+     */
+    public int numberOfSubmatrices(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        /**
+         * Intuition here is to pre-process the grid to
+         * find prefix counts of X's and Y's across cells
+         * and then increase count if prefixX's = prefixY's 
+         */
+        int[] colDiff = new int[n]; // SC: O(N)
+        int[] colX = new int[n];    // SC: O(N)
+        int count = 0;
+        for (int i = 0; i < m; i++) {     // TC: O(M)
+            int currentDiff = 0;
+            int currentXSum = 0;
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                if (grid[i][j] == 'X') {
+                    colDiff[j] += 1;
+                    colX[j] += 1;
+                } else if (grid[i][j] == 'Y') {
+                    colDiff[j] -= 1;
+                }
+                // for sub-matrix (0, 0) to (i, j)
+                currentDiff += colDiff[j];
+                currentXSum += colX[j];
+                if (currentDiff == 0 && currentXSum > 0) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
      * Approach I : Using Brute-Force (Prefix-Array) Approach
      *
      * TC: O(M x N)
      * SC: O(M x N) + O(M x N) ~ O(M x N)
      */
-    public int numberOfSubmatrices(char[][] grid) {
+    public int numberOfSubmatricesBruteForce(char[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
         /**
