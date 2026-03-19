@@ -1,0 +1,36 @@
+class Solution {
+    /**
+     * Approach I : Using Brute-Force (Prefix-Array) Approach
+     *
+     * TC: O(M x N)
+     * SC: O(M x N) + O(M x N) ~ O(M x N)
+     */
+    public int numberOfSubmatrices(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        /**
+         * Intuition here is to pre-process the grid to
+         * find prefix counts of X's and Y's across cells
+         * and then increase count if prefixX's = prefixY's 
+         */
+        int[][] prefixX = new int[m][n];  // SC: O(M x N)
+        int[][] prefixY = new int[m][n];  // SC: O(M x N)
+        int count = 0;
+        for (int i = 0; i < m; i++) {     // TC: O(M)
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                prefixX[i][j] = (grid[i][j] == 'X' ? 1 : 0) + 
+                    (i > 0 ? prefixX[i - 1][j] : 0) + 
+                    (j > 0 ? prefixX[i][j - 1] : 0) - 
+                    (i > 0 && j > 0 ? prefixX[i - 1][j - 1] : 0);
+                prefixY[i][j] = (grid[i][j] == 'Y' ? 1 : 0) + 
+                    (i > 0 ? prefixY[i - 1][j] : 0) + 
+                    (j > 0 ? prefixY[i][j - 1] : 0) - 
+                    (i > 0 && j > 0 ? prefixY[i - 1][j - 1] : 0);
+                if (prefixX[i][j] != 0 && prefixX[i][j] == prefixY[i][j]) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
