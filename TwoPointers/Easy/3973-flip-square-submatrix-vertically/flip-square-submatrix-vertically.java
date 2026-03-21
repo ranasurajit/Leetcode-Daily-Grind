@@ -6,8 +6,6 @@ class Solution {
      * SC: O(1)
      */
     public int[][] reverseSubmatrix(int[][] grid, int x, int y, int k) {
-        int m = grid.length;
-        int n = grid[0].length;
         /**
          * As per constraints, 0 <= x < m, 0 <= y < n
          * 1 <= k <= min(m - x, n - y), so validation
