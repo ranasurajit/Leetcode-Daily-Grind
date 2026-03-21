@@ -15,8 +15,10 @@ class Solution {
          */
         int top = x;
         int bottom = x + k - 1;
+        int left = y;
+        int right = y + k - 1;
         while (top < bottom) { // TC: O(K)
-            for (int j = y; j < y + k; j++) { // TC: O(K)
+            for (int j = left; j <= right; j++) { // TC: O(K)
                 // swap elements grid[top][j] with grid[bottom][j]
                 int temp = grid[bottom][j];
                 grid[bottom][j] = grid[top][j];
