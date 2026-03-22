@@ -1,11 +1,45 @@
 class Solution {
     /**
-     * Approach : Using 2-D Array Simulation + Two Pointers Approach
+     * Approach II : Using 2-D Array Simulation (Without Mutation) Approach
+     *
+     * TC: O(N²)
+     * SC: O(1)
+     */
+    public boolean findRotation(int[][] mat, int[][] target) {
+        int n = mat.length;
+        boolean is0 = true;
+        boolean is90 = true;
+        boolean is180 = true;
+        boolean is270 = true;
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                if (is0 && mat[i][j] != target[i][j]) {
+                    is0 = false;
+                }
+                if (is90 && mat[n - j - 1][i] != target[i][j]) {
+                    is90 = false;
+                }
+                if (is180 && mat[n - i - 1][n - j - 1] != target[i][j]) {
+                    is180 = false;
+                }
+                if (is270 && mat[j][n - i - 1] != target[i][j]) {
+                    is270 = false;
+                }
+                if (!is0 && !is90 && !is180 && !is270) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Approach I : Using Brute-Force (2-D Array Simulation + Two Pointers) Approach
      *
      * TC: O(N²) + O(3 x 2 x N²) ~ O(N²)
      * SC: O(1)
      */
-    public boolean findRotation(int[][] mat, int[][] target) {
+    public boolean findRotationBruteForce(int[][] mat, int[][] target) {
         int n = mat.length;
         if (isEquivalent(mat, target, n)) { // TC: O(N²)
             return true;
