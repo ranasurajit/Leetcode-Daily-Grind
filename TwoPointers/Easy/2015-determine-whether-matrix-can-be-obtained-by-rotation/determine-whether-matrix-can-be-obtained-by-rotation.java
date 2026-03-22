@@ -70,7 +70,7 @@ class Solution {
         /**
          * To rotate matrix 90-deg, we need to 
          * 1: swap ith row with (n - i - 1)th row
-         * 2. swap cells across left diagonal
+         * 2. swap cells across main diagonal
          */
         // step 1 : swap ith row with (n - i - 1)th row
         int top = 0;
@@ -85,7 +85,7 @@ class Solution {
             top++;
             bottom--;
         }
-        // step 2 : swap cells across left diagonal
+        // step 2 : swap cells across main diagonal
         for (int i = 1; i < n; i++) { // TC: O(N)
             for (int j = 0; j < i; j++) { // TC: O(N / 2)
                 // swap mat[i][j] with mat[j][i]
