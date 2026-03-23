@@ -22,17 +22,18 @@ class Solution {
                 }
                 long min = Long.MAX_VALUE;
                 long max = Long.MIN_VALUE;
+                long val = grid[i][j];
                 if (j > 0) {
                     Pair left = current[j - 1];
-                    long a = grid[i][j] * left.min;
-                    long b = grid[i][j] * left.max;
+                    long a = val * left.min;
+                    long b = val * left.max;
                     min = Math.min(min, Math.min(a, b));
                     max = Math.max(max, Math.max(a, b));
                 }
                 if (i > 0) {
                     Pair up = previous[j];
-                    long a = grid[i][j] * up.min;
-                    long b = grid[i][j] * up.max;
+                    long a = val * up.min;
+                    long b = val * up.max;
                     min = Math.min(min, Math.min(a, b));
                     max = Math.max(max, Math.max(a, b));
                 }
