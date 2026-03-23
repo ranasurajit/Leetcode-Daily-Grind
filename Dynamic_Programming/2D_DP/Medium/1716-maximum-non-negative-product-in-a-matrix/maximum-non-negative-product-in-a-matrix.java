@@ -1,5 +1,51 @@
 class Solution {
     private static final int MOD = (int) 1e9 + 7;
+    /**
+     * Approach IV : Using Space Optimization Approach
+     *
+     * TC: O(M x N)
+     * SC: O(N) + O(N) ~ O(N)
+     * - O(N) - previous, current array memory
+     *
+     * Accepted (159 / 159 testcases passed)
+     */
+    public int maxProductPath(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        Pair[] previous = new Pair[n];    // SC: O(N)
+        for (int i = 0; i < m; i++) {     // TC: O(M)
+            Pair[] current = new Pair[n]; // SC: O(N)
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                if (i == 0 && j == 0) {
+                    current[j] = new Pair(grid[0][0], grid[0][0]);
+                    continue;
+                }
+                long min = Long.MAX_VALUE;
+                long max = Long.MIN_VALUE;
+                if (j > 0) {
+                    Pair left = current[j - 1];
+                    long a = grid[i][j] * left.min;
+                    long b = grid[i][j] * left.max;
+                    min = Math.min(min, Math.min(a, b));
+                    max = Math.max(max, Math.max(a, b));
+                }
+                if (i > 0) {
+                    Pair up = previous[j];
+                    long a = grid[i][j] * up.min;
+                    long b = grid[i][j] * up.max;
+                    min = Math.min(min, Math.min(a, b));
+                    max = Math.max(max, Math.max(a, b));
+                }
+                current[j] = new Pair(min, max);
+            }
+            previous = current;
+        }
+        long result = previous[n - 1].max;
+        if (result < 0) {
+            return -1;
+        }
+        return (int) (result % MOD);
+    }
 
     /**
      * Approach III : Using Tabulation Approach
@@ -10,7 +56,7 @@ class Solution {
      *
      * Accepted (159 / 159 testcases passed)
      */
-    public int maxProductPath(int[][] grid) {
+    public int maxProductPathTabulation(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
         Pair[][] dp = new Pair[m][n];     // SC: O(M x N)
