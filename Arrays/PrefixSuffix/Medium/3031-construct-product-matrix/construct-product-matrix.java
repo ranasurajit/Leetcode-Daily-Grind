@@ -1,7 +1,7 @@
 class Solution {
     private static final int MOD = 12345;
     /**
-     * Approach : Using Prefix Suffic Array Approach
+     * Approach : Using Brute-Force (Prefix-Suffix Array) Approach
      *
      * TC: O(N x M) + O(N x M) + O(N x M) ~ O(N x M)
      * SC: O(N x M) + O(N x M) ~ O(N x M)
