@@ -11,24 +11,24 @@ class Solution {
         k = k % n; // as row is same when rotated n times
         for (int i = 0; i < m; i++) { // TC: O(M)
             for (int j = 0; j < n; j++) { // TC: O(N)
+                int finalPos = -1;
                 if ((i & 1) == 0) {
                     // even-indexed row 
                     /**
                      * (i, (j + k) % n) is the final position
                      * of (i, j) after k left shifts
                      */
-                    if (mat[i][(j + k) % n] != mat[i][j]) {
-                        return false;
-                    }
+                    finalPos = (j + k) % n;
                 } else {
                     // odd-indexed row
                     /**
                      * (i, (j - k + n) % n) is the final position
                      * of (i, j) after k left shifts
                      */
-                    if (mat[i][(j - k + n) % n] != mat[i][j]) {
-                        return false;
-                    }
+                    finalPos = (j - k + n) % n;
+                }
+                if (mat[i][finalPos] != mat[i][j]) {
+                    return false;
                 }
             }
         }
