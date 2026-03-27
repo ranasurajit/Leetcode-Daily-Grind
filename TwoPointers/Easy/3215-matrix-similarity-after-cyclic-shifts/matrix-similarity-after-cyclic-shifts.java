@@ -1,11 +1,47 @@
 class Solution {
     /**
-     * Approach : Using Two Pointers Approach
+     * Approach II : Using Optimal (Array Simulation) Approach
+     *
+     * TC: O(M x N)
+     * SC: O(1)
+     */
+    public boolean areSimilar(int[][] mat, int k) {
+        int m = mat.length;
+        int n = mat[0].length;
+        k = k % n; // as row is same when rotated n times
+        for (int i = 0; i < m; i++) { // TC: O(M)
+            for (int j = 0; j < n; j++) { // TC: O(N)
+                if ((i & 1) == 0) {
+                    // even-indexed row 
+                    /**
+                     * (i, (j + k) % n) is the final position
+                     * of (i, j) after k left shifts
+                     */
+                    if (mat[i][(j + k) % n] != mat[i][j]) {
+                        return false;
+                    }
+                } else {
+                    // odd-indexed row
+                    /**
+                     * (i, (j - k + n) % n) is the final position
+                     * of (i, j) after k left shifts
+                     */
+                    if (mat[i][(j - k + n) % n] != mat[i][j]) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Approach I : Using Brute-Force (Two Pointers) Approach
      *
      * TC: O(M x N) + O(M x N) + O(M x N) ~ O(M x N)
      * SC: O(M x N)
      */
-    public boolean areSimilar(int[][] mat, int k) {
+    public boolean areSimilarBruteForce(int[][] mat, int k) {
         int m = mat.length;
         int n = mat[0].length;
         k = k % n; // as row is same when rotated n times
