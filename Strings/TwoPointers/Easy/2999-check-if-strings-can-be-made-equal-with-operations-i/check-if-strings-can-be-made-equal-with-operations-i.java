@@ -23,7 +23,6 @@ class Solution {
             char temp = ch1[j];
             ch1[j] = ch1[i];
             ch1[i] = temp;
-            System.out.println(ch1);
             i++;
         }
         return isStringsSame(ch1, ch2, n);
