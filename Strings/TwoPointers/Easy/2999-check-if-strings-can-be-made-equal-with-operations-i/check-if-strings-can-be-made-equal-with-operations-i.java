@@ -1,11 +1,40 @@
 class Solution {
     /**
-     * Approach : Using Two Pointers Approach
+     * Approach II : Using Optimal (Hashing) Approach
+     *
+     * TC: O(N) + O(26) ~ O(N)
+     * SC: O(26) + O(26) ~ O(1)
+     */
+    public boolean canBeEqual(String s1, String s2) {
+        int n = s1.length();
+        int[] even = new int[26]; // SC: O(26)
+        int[] odd = new int[26]; // SC: O(26)
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            if ((i & 1) == 0) {
+                // even index
+                even[s1.charAt(i) - 'a']++;
+                even[s2.charAt(i) - 'a']--;
+            } else {
+                // odd index
+                odd[s1.charAt(i) - 'a']++;
+                odd[s2.charAt(i) - 'a']--;
+            }
+        }
+        for (int i = 0; i < 26; i++) { // TC: O(26)
+            if (even[i] != 0 || odd[i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }   
+
+    /**
+     * Approach I : Using Brute-Force (Two Pointers) Approach
      *
      * TC: O(N²)
      * SC: O(N) + O(N) ~ O(N)
      */
-    public boolean canBeEqual(String s1, String s2) {
+    public boolean canBeEqualBruteForce(String s1, String s2) {
         char[] ch1 = s1.toCharArray(); // SC: O(N)
         char[] ch2 = s2.toCharArray(); // SC: O(N)
         int n = ch1.length;
