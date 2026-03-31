@@ -72,7 +72,7 @@ class Solution {
                         // we can modify if position is not fixed for 'T' scan
                         for (int ch = 0; ch < 26; ch++) { // TC: O(26)
                             char c = (char) (ch + 'a');
-                            if (c != word[pos]) {
+                            if (c != str2.charAt(j)) {
                                 word[pos] = c;
                                 modified = true;
                                 break;
