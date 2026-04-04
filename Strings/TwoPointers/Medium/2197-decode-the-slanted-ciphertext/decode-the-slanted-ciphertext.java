@@ -2,8 +2,9 @@ class Solution {
     /**
      * Approach I : Using Brute-Force (Two Pointers) Approach
      *
-     * TC: O(m x n) + O(n x (m + n)) + O(m x n) ~ O(m x n)
-     * SC: O(m x n)
+     * TC: O(m x n) + O(n x (m + n)) + O(m x n) ~ O(m x n) ~ O(N)
+     * SC: O(m x n) ~ O(N)
+     * where N = len(encodedText) = m x n
      */
     public String decodeCiphertext(String encodedText, int rows) {
         int m = rows;
