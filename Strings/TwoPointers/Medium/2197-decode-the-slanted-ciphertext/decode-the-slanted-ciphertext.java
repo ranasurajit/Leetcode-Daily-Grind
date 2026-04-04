@@ -7,6 +7,9 @@ class Solution {
      * where N = len(encodedText) = m x n
      */
     public String decodeCiphertext(String encodedText, int rows) {
+        if (rows == 1 || encodedText.isEmpty()) {
+            return encodedText;
+        }
         int n = encodedText.length() / rows;
         /**
          * we will not be generating matrix 'mat' at all
@@ -25,10 +28,8 @@ class Solution {
             }
             col++;
         }
-        int idx = sb.length() - 1;
-        while (idx > 0 && sb.charAt(idx) == ' ') { // TC: O(m x n)
+        while (sb.charAt(sb.length() - 1) == ' ') { // TC: O(m x n)
             sb.setLength(sb.length() - 1);
-            idx--;
         }
         return sb.toString();
     }
@@ -41,6 +42,9 @@ class Solution {
      * where N = len(encodedText) = m x n
      */
     public String decodeCiphertextBruteForce(String encodedText, int rows) {
+        if (rows == 1 || encodedText.isEmpty()) {
+            return encodedText;
+        }
         int m = rows;
         int n = encodedText.length() / m;
         char[][] mat = new char[m][n];    // SC: O(m x n)
