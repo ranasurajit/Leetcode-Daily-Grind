@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach I : Using Two Pointers Approach
+     * Approach I : Using Brute-Force (Two Pointers) Approach
      *
      * TC: O(m x n) + O(n x (m + n)) + O(m x n) ~ O(m x n)
      * SC: O(m x n)
@@ -14,7 +14,6 @@ class Solution {
                 mat[i][j] = encodedText.charAt(i * n + j);
             }
         }
-        System.out.println(Arrays.deepToString(mat));
         StringBuilder sb = new StringBuilder();
         int col = 0;
         while (col < n) { // TC: O(n)
