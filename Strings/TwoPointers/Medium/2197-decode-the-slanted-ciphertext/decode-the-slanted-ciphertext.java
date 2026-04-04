@@ -28,7 +28,8 @@ class Solution {
             }
             col++;
         }
-        while (sb.charAt(sb.length() - 1) == ' ') { // TC: O(m x n)
+        while (sb.length() > 0 && 
+            sb.charAt(sb.length() - 1) == ' ') { // TC: O(m x n)
             sb.setLength(sb.length() - 1);
         }
         return sb.toString();
@@ -65,10 +66,9 @@ class Solution {
             }
             col++;
         }
-        int idx = sb.length() - 1;
-        while (idx > 0 && sb.charAt(idx) == ' ') { // TC: O(m x n)
+        while (sb.length() > 0 && 
+            sb.charAt(sb.length() - 1) == ' ') { // TC: O(m x n)
             sb.setLength(sb.length() - 1);
-            idx--;
         }
         return sb.toString();
     }
