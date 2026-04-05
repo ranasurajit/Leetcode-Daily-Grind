@@ -6,18 +6,16 @@ class Solution {
      * SC: O(1)
      */
     public boolean judgeCircle(String moves) {
-        int n = moves.length();
         int x = 0;
         int y = 0;
-        for (int i = 0; i < n; i++) { // TC: O(n)
-            char ch = moves.charAt(i);
+        for (char ch : moves.toCharArray()) { // TC: O(n)
             if (ch == 'R') {
                 x++;
             } else if (ch == 'L') {
                 x--;
             } else if (ch == 'U') {
                 y++;
-            } else {
+            } else if (ch == 'D') {
                 y--;
             }
         }
