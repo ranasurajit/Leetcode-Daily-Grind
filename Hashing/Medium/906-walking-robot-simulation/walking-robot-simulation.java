@@ -30,10 +30,9 @@ class Solution {
                 d = (d + 3) % 4;
             } else {
                 // move k units (one unit at a time)
-                int[] delta = directions[d];
-                for (int i = 1; i <= k; i++) { // TC: O(k)
-                    int x = current[0] + delta[0];
-                    int y = current[1] + delta[1];
+                for (int i = 0; i < k; i++) { // TC: O(k)
+                    int x = current[0] + directions[d][0];
+                    int y = current[1] + directions[d][1];
                     long key = ((long) x << 32) | (y & 0xffffffffL);
                     if (obs.contains(key)) {
                         break;
@@ -72,10 +71,9 @@ class Solution {
                 d = (d + 3) % 4;
             } else {
                 // move k units (one unit at a time)
-                int[] delta = directions[d];
-                for (int i = 1; i <= k; i++) { // TC: O(k)
-                    int x = current[0] + delta[0];
-                    int y = current[1] + delta[1];
+                for (int i = 0; i < k; i++) { // TC: O(k)
+                    int x = current[0] + directions[d][0];
+                    int y = current[1] + directions[d][1];
                     if (obs.contains(x + "_" + y)) {
                         break;
                     }
