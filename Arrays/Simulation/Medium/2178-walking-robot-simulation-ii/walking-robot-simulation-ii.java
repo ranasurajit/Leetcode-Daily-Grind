@@ -83,16 +83,36 @@ class Robot {
      * SC: O(1)
      */
     public String getDir() {
-        if (!moved) return "East";
-        if (pos == 0) return "South";
-        if (pos == bottom) return "East";   // entering right edge
-        if (pos == right) return "North";   // entering top edge
-        if (pos == top) return "West";      // entering left edge
+        if (!moved) {
+            return "East";
+        }
+        if (pos == 0) {
+            return "South";
+        }
+        if (pos == bottom) {
+            // entering right edge
+            return "East";
+        }
+        if (pos == right) {
+            // entering top edge
+            return "North";
+        }
+        if (pos == top) {
+            // entering left edge
+            return "West";
+        }
         // Then normal ranges
-        if (pos < bottom) return "East";
-        else if (pos < right) return "North";
-        else if (pos < top) return "West";
-        else return "South";
+        if (pos < bottom) {
+            return "East";
+        } else if (pos < right) {
+            return "North";
+        }
+        else if (pos < top) {
+            return "West";
+        }
+        else {
+            return "South";
+        }
     }
 }
 
