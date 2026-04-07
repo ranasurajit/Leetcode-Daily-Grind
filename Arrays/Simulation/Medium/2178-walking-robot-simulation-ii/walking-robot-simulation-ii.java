@@ -46,32 +46,18 @@ class Robot {
             steps = cycleLength;
         }
         for (int i = 0; i < steps; i++) { // TC: O(n % l)
-            boolean dirNeedsChange = false; // flag reset on every step
-            if (d == 0) {
-                if (x + 1 >= w) {
-                    dirNeedsChange = true;
-                }
-            } else if (d == 1) {
-                if (y + 1 >= h) {
-                    dirNeedsChange = true;
-                }
-            } else if (d == 2) {
-                if (x - 1 < 0) {
-                    dirNeedsChange = true;
-                }
-            } else if (d == 3) {
-                if (y - 1 < 0) {
-                    dirNeedsChange = true;
-                }
-            }
-            if (dirNeedsChange) {
+            int nx = x + dir[d][0];
+            int ny = y + dir[d][1];
+            if (nx < 0 || nx >= w || ny < 0 || ny >= h) {
                 d = (d + 1) % 4;
+                nx = x + dir[d][0];
+                ny = y + dir[d][1];
             }
-            x = x + dir[d][0];
-            y = y + dir[d][1];
+            x = nx;
+            y = ny;
         }
     }
-    
+
     /**
      * Using Simulation Approach
      *
