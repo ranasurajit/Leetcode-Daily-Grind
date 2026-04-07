@@ -16,6 +16,7 @@ class Robot {
     private int x;
     private int y;
     private int cycleLength;
+    private boolean moved;
 
     public Robot(int width, int height) {
         this.w = width;
@@ -25,6 +26,7 @@ class Robot {
         this.x = 0; // start position { 0, 0 }
         this.y = 0; // start position { 0, 0 }
         this.cycleLength = 2 * (width + height) - 4; // removing edges
+        this.moved = false;
     }
     
     /**
@@ -35,6 +37,9 @@ class Robot {
      * where l = 2 * (w + h) - 4
      */
     public void step(int num) {
+        if (num > 0) {
+            moved = true;
+        }
         /**
          * if num = cycleLength then it completes full cycle
          * and will be back to its previous position so,
@@ -89,6 +94,9 @@ class Robot {
      * SC: O(1)
      */
     public String getDir() {
+        if (x == 0 && y == 0 && moved) {
+            return "South";
+        }
         if (d == 0) {
             return "East";
         } else if (d == 1) {
