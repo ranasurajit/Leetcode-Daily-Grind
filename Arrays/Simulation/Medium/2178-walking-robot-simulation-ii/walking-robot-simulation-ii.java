@@ -1,10 +1,108 @@
 /**
- * Approach : Using Simulation Approach
+ * Approach II : Using Math + Simulation Approach
+ *
+ * TC: O(1) for all operations
+ * SC: O(1)
+ */
+class Robot {
+    private int w;
+    private int h;
+    private int cycleLength;
+    private int pos; // effective distance along perimeter
+    private int bottom;
+    private int right;
+    private int top;
+    private boolean moved;
+    private boolean cycleCompleted;
+
+    public Robot(int width, int height) {
+        this.w = width;
+        this.h = height;
+        this.cycleLength = 2 * (width + height) - 4;
+        this.bottom = (w - 1);
+        this.right = this.bottom + (h - 1);
+        this.top = this.right + (w - 1);
+        this.moved = false;
+        this.cycleCompleted = false;
+    }
+    
+    /**
+     * Using Math + Simulation Approach
+     *
+     * TC: O(1)
+     * SC: O(1)
+     */
+    public void step(int num) {
+        if (cycleLength == 0) {
+            if (num > 0) {
+                moved = true;
+            }
+            return;
+        }
+        if (num > 0) {
+            moved = true;
+        }
+        int prevPos = pos;
+        pos = (prevPos + num) % cycleLength;
+        cycleCompleted = (num > 0 && ((prevPos + num) % cycleLength) == 0);
+    }
+    
+    /**
+     * Using Math + Simulation Approach
+     *
+     * TC: O(1)
+     * SC: O(1)
+     */
+    public int[] getPos() {
+        int x = 0;
+        int y = 0;
+        if (pos < bottom) {
+            // bottom edge
+            x = pos;
+            y = 0;
+        } else if (pos < right) {
+            // right edge
+            x = w - 1;
+            y = pos - bottom; 
+        } else if (pos < top) {
+            // top edge
+            x = (w - 1) - (pos - right);
+            y = h - 1;
+        } else {
+            // left edge
+            x = 0;
+            y = (h - 1) - (pos - top);
+        }
+        return new int[] { x, y };
+    }
+    
+    /**
+     * Using Math + Simulation Approach
+     *
+     * TC: O(1)
+     * SC: O(1)
+     */
+    public String getDir() {
+        if (!moved) return "East";
+        if (pos == 0) return "South";
+        if (pos == bottom) return "East";   // entering right edge
+        if (pos == right) return "North";   // entering top edge
+        if (pos == top) return "West";      // entering left edge
+        // Then normal ranges
+        if (pos < bottom) return "East";
+        else if (pos < right) return "North";
+        else if (pos < top) return "West";
+        else return "South";
+    }
+}
+
+/**
+ * Approach I : Using Simulation Approach
  *
  * TC: O(n % l) for step and O(1) for other operations
  * SC: O(1)
  */
-class Robot {
+class RobotBruteForce {
     // directions offset for East, North, West, South
     private static final int[][] dir = {
         { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 }
@@ -17,7 +115,7 @@ class Robot {
     private int y;
     private int cycleLength;
 
-    public Robot(int width, int height) {
+    public RobotBruteForce(int width, int height) {
         this.w = width;
         this.h = height;
         this.grid = new int[width][height];
