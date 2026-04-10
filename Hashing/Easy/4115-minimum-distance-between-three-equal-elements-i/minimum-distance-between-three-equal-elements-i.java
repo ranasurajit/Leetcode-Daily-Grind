@@ -1,11 +1,40 @@
 class Solution {
     /**
-     * Approach II : Using Optimal (Hashing) Approach
+     * Approach III : Using Optimal (Hashing) Approach
+     *
+     * TC: O(n)
+     * SC: O(n) + O(n) ~ O(n)
+     */
+    public int minimumDistance(int[] nums) {
+        int n = nums.length;
+        int minDist = Integer.MAX_VALUE;
+        int[] last = new int[n + 1];   // SC: O(n)
+        int[] second = new int[n + 1]; // SC: O(n)
+        Arrays.fill(last, -1);
+        Arrays.fill(second, -1);
+        for (int i = 0; i < n; i++) {  // TC: O(n)
+            int val = nums[i];
+            if (second[val] != -1) {
+                /**
+                 * the index is filled now we can compare
+                 * (j - i) + (k - j) + (k - i) is
+                 * dependent on (k - i) as (j - i) + (k - j) = (k - i)
+                 */
+                minDist = Math.min(minDist, 2 * (i - second[val]));
+            }
+            second[val] = last[val];
+            last[val] = i;
+        }
+        return minDist == Integer.MAX_VALUE ? -1 : minDist;
+    }
+
+    /**
+     * Approach II : Using Better (Hashing) Approach
      *
      * TC: O(n) + O(k x n) ~ O(n²)
      * SC: O(n)
      */
-    public int minimumDistance(int[] nums) {
+    public int minimumDistanceBetter(int[] nums) {
         int n = nums.length;
         int minDist = Integer.MAX_VALUE;
         Map<Integer, ArrayList<Integer>> map = new HashMap<>(); // SC: O(n)
