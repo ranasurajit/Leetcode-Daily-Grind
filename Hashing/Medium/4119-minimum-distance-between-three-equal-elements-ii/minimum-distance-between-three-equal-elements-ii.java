@@ -1,5 +1,36 @@
 class Solution {
     /**
+     * Approach III : Using Optimal (Array Hashing) Approach
+     *
+     * TC: O(n)
+     * SC: O(n) + O(n) ~ O(n)
+     *
+     * Accepted (979 / 979 testcases passed)
+     */
+    public int minimumDistance(int[] nums) {
+        int n = nums.length;
+        int minDist = Integer.MAX_VALUE;
+        int[] last = new int[n + 1];     // SC: O(n)
+        int[] secondLast = new int[n + 1]; // SC: O(n)
+        Arrays.fill(last, -1);
+        Arrays.fill(secondLast, -1);
+        for (int i = 0; i < n; i++) { // TC: O(n)
+            int val = nums[i];
+            if (secondLast[val] != -1) {
+                /**
+                 * we got the 3rd value already i.e. ith index
+                 * (j - i) + (k - j) + (k - i) = 2 * (k - i)
+                 * as (k - j) + (j - i) = k - i
+                 */
+                minDist = Math.min(minDist, 2 * (i - secondLast[val]));
+            }
+            secondLast[val] = last[val];
+            last[val] = i;
+        }
+        return minDist == Integer.MAX_VALUE ? -1 : minDist;
+    }
+
+    /**
      * Approach II : Using Better (Hashing) Approach
      *
      * TC: O(n) + O(k x (n / k)) ~ O(n)
@@ -7,7 +38,7 @@ class Solution {
      *
      * Accepted (979 / 979 testcases passed)
      */
-    public int minimumDistance(int[] nums) {
+    public int minimumDistanceBetter(int[] nums) {
         int n = nums.length;
         int minDist = Integer.MAX_VALUE;
         Map<Integer, ArrayList<Integer>> map = new HashMap<>(); // SC: O(n)
