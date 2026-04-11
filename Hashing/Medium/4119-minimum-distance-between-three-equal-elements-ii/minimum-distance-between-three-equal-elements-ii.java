@@ -14,19 +14,15 @@ class Solution {
         for (int i = 0; i < n; i++) { // TC: O(n)
             map.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
         }
-        for (Integer key : map.keySet()) { // TC: O(k)
-            ArrayList<Integer> list = map.get(key);
+        for (ArrayList<Integer> list : map.values()) { // TC: O(k)
             int size = list.size();
             if (size > 2) {
-                int k = size - 1;
-                while (k >= 2) { // TC: O(n / k)
-                    int i = k - 2;
+                for (int i = 0; i + 2 < size; i++) { // TC: O(n / k)
                     /**
                      * (j - i) + (k - j) + (k - i) = 2 * (k - i)
                      * as (k - j) + (j - i) = k - i
                      */
-                    minDist = Math.min(minDist, 2 * (list.get(k) - list.get(i)));
-                    k--;
+                    minDist = Math.min(minDist, 2 * (list.get(i + 2) - list.get(i)));
                 }
             }
         }
