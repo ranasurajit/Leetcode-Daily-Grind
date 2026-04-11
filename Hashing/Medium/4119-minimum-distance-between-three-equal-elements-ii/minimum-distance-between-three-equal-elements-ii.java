@@ -2,10 +2,10 @@ class Solution {
     /**
      * Approach II : Using Better (Hashing) Approach
      *
-     * TC: O(n)
-     * SC: O(1)
+     * TC: O(n) + O(k x (n / k)) ~ O(n)
+     * SC: O(n)
      *
-     * Time Limit Exceeded (941 / 979 testcases passed)
+     * Accepted (979 / 979 testcases passed)
      */
     public int minimumDistance(int[] nums) {
         int n = nums.length;
