@@ -1,6 +1,35 @@
 class Solution {
     private String word;
     private int n;
+    /**
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC: O(n x 27 x 27) ~ O(n)
+     * SC: O(n)
+     * - O(n) - dp array memory
+     * Accepted (55 / 55 testcases passed)
+     */
+    public int minimumDistance(String word) {
+        this.word = word;
+        this.n = word.length();
+        // Initialization
+        int[][][] dp = new int[n + 1][27][27]; // SC: O(n x 27 x 27) ~ O(n)
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) { // TC: O(n)
+            for (int left = 0; left <= 26; left++) { // TC: O(26)
+                for (int right = 0; right <= 26; right++) { // TC: O(26)
+                    // ith character typed with left finger
+                    int leftDist = computeDistance(word.charAt(i) - 'A', left) +
+                        dp[i + 1][word.charAt(i) - 'A'][right];
+                    // ith character typed with right finger
+                    int rightDist = computeDistance(word.charAt(i) - 'A', right) +
+                        dp[i + 1][left][word.charAt(i) - 'A'];
+                    dp[i][left][right] = Math.min(leftDist, rightDist);
+                }
+            }
+        }
+        return dp[0][26][26];
+    }
 
     /**
      * Approach II : Using Memoization (Top-Down) Approach
@@ -11,7 +40,7 @@ class Solution {
      * - O(n) - memoization memory
      * Accepted (55 / 55 testcases passed)
      */
-    public int minimumDistance(String word) {
+    public int minimumDistanceMemoization(String word) {
         this.word = word;
         this.n = word.length();
         int[][][] memo = new int[n][27][27]; // SC: O(n x 27 x 27) ~ O(n)
