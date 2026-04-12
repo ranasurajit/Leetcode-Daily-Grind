@@ -2,6 +2,38 @@ class Solution {
     private String word;
     private int n;
     /**
+     * Approach IV : Using Space Optimization (Optimized DP) Approach
+     *
+     * TC: O(n x 27 x 27) ~ O(n)
+     * SC: O(27 x 27) + O(27 x 27) ~ O(1)
+     * 
+     * Accepted (55 / 55 testcases passed)
+     */
+    public int minimumDistance(String word) {
+        this.word = word;
+        this.n = word.length();
+        // Initialization
+        int[][] next = new int[27][27]; // SC: O(27 x 27) ~ O(1)
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) { // TC: O(n)
+            int[][] current = new int[27][27]; // SC: O(27 x 27) ~ O(1)
+            for (int left = 0; left <= 26; left++) { // TC: O(26)
+                for (int right = 0; right <= 26; right++) { // TC: O(26)
+                    // ith character typed with left finger
+                    int leftDist = computeDistance(word.charAt(i) - 'A', left) +
+                        next[word.charAt(i) - 'A'][right];
+                    // ith character typed with right finger
+                    int rightDist = computeDistance(word.charAt(i) - 'A', right) +
+                        next[left][word.charAt(i) - 'A'];
+                    current[left][right] = Math.min(leftDist, rightDist);
+                }
+            }
+            next = current;
+        }
+        return next[26][26];
+    }
+
+    /**
      * Approach III : Using Tabulation (Bottom-Up) Approach
      *
      * TC: O(n x 27 x 27) ~ O(n)
@@ -9,7 +41,7 @@ class Solution {
      * - O(n) - dp array memory
      * Accepted (55 / 55 testcases passed)
      */
-    public int minimumDistance(String word) {
+    public int minimumDistanceTabulation(String word) {
         this.word = word;
         this.n = word.length();
         // Initialization
