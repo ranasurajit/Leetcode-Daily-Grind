@@ -9,8 +9,8 @@ class Solution {
         int n = nums.length;
         int minDist = Integer.MAX_VALUE;
         for (int i = 0; i < n; i++) { // TC: O(n)
-            int left = Math.abs(start - i);
-            int right = Math.abs(start + i);
+            int left = start - i;
+            int right = start + i;
             if (left >= 0 && nums[left] == target) {
                 return i;
             }
