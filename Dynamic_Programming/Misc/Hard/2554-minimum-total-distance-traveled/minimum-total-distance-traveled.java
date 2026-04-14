@@ -5,7 +5,51 @@ class Solution {
     private List<Integer> factories;
 
     /**
-     * Approach II : Using Memoization Approach
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC: O(n x m) + O(n x log(n)) + O(m x log(m)) + O(n) + O(m) ~ O(n x m)
+     * SC: O(n x m)
+     * - O(n x m) - dp array memory
+     *
+     * Accepted (40 / 40 testcases passed)
+     */
+    public long minimumTotalDistance(List<Integer> robot, int[][] factory) {
+        this.n = robot.size();
+        this.robot = robot;
+        Collections.sort(robot);                     // TC: O(n x log(n))
+        Arrays.sort(factory, (a, b) -> a[0] - b[0]); // TC: O(m x log(m))
+        this.factories = new ArrayList<>();
+        for (int[] f : factory) {
+            int pos = f[0];
+            int freq = f[1];
+            for (int j = 0; j < freq; j++) {
+                factories.add(pos);
+            }
+        }
+        this.m = factories.size();
+        // i = robot position, j = factory position
+        long[][] dp = new long[n + 1][m + 1]; // SC: O(n x m)
+        // Initialization
+        for (int j = 0; j < m; j++) { // TC: O(m)
+            dp[n][j] = 0L;
+        }
+        for (int i = 0; i < n; i++) { // TC: O(n)
+            dp[i][m] = (long) 1e12;
+        }
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) { // TC: O(n)
+            for (int j = m - 1; j >= 0; j--) { // TC: O(m)
+                long skip = dp[i][j + 1];
+                long pick = Math.abs((long) robot.get(i) -
+                    (long) factories.get(j)) + dp[i + 1][j + 1];
+                dp[i][j] = Math.min(skip, pick);
+            }
+        }
+        return dp[0][0];
+    }
+
+    /**
+     * Approach II : Using Memoization (Top-Down) Approach
      *
      * TC: O(n x m) + O(n x log(n)) + O(m x log(m)) ~ O(n x m)
      * SC: O(n x m) + O(n + m)
@@ -14,7 +58,8 @@ class Solution {
      *
      * Accepted (40 / 40 testcases passed)
      */
-    public long minimumTotalDistance(List<Integer> robot, int[][] factory) {
+    public long minimumTotalDistanceMemoization(List<Integer> robot,
+        int[][] factory) {
         this.n = robot.size();
         this.robot = robot;
         Collections.sort(robot);                     // TC: O(n x log(n))
