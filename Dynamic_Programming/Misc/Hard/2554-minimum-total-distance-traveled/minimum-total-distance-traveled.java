@@ -3,6 +3,47 @@ class Solution {
     private int m;
     private List<Integer> robot;
     private List<Integer> factories;
+    /**
+     * Approach IV : Using Space Optimization (Optimized-DP) Approach
+     *
+     * TC: O(n x m) + O(n x log(n)) + O(m x log(m)) ~ O(n x m)
+     * SC: O(m) + O(m) ~ O(m)
+     * - O(m) - next and current array memory
+     *
+     * Accepted (40 / 40 testcases passed)
+     */
+    public long minimumTotalDistance(List<Integer> robot, int[][] factory) {
+        this.n = robot.size();
+        this.robot = robot;
+        Collections.sort(robot);                     // TC: O(n x log(n))
+        Arrays.sort(factory, (a, b) -> a[0] - b[0]); // TC: O(m x log(m))
+        this.factories = new ArrayList<>();
+        for (int[] f : factory) {
+            int pos = f[0];
+            int freq = f[1];
+            for (int j = 0; j < freq; j++) {
+                factories.add(pos);
+            }
+        }
+        this.m = factories.size();
+        // i = robot position, j = factory position
+        long[] next = new long[m + 1]; // SC: O(m)
+        // Initialization
+        Arrays.fill(next, 0L);
+        // Iterative Calls
+        for (int i = n - 1; i >= 0; i--) { // TC: O(n)
+            long[] current = new long[m + 1]; // SC: O(m)
+            current[m] = (long) 1e12;
+            for (int j = m - 1; j >= 0; j--) { // TC: O(m)
+                long skip = current[j + 1];
+                long pick = Math.abs((long) robot.get(i) -
+                    (long) factories.get(j)) + next[j + 1];
+                current[j] = Math.min(skip, pick);
+            }
+            next = current.clone();
+        }
+        return next[0];
+    }
 
     /**
      * Approach III : Using Tabulation (Bottom-Up) Approach
@@ -13,7 +54,8 @@ class Solution {
      *
      * Accepted (40 / 40 testcases passed)
      */
-    public long minimumTotalDistance(List<Integer> robot, int[][] factory) {
+    public long minimumTotalDistanceTabulation(List<Integer> robot,
+        int[][] factory) {
         this.n = robot.size();
         this.robot = robot;
         Collections.sort(robot);                     // TC: O(n x log(n))
