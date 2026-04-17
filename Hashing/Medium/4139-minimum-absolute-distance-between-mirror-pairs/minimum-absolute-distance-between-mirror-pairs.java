@@ -11,8 +11,13 @@ class Solution {
         int minDist = Integer.MAX_VALUE;
         for (int i = n - 1; i >= 0; i--) { // TC: O(n)
             int rev = reverse(nums[i]);
-            if (map.containsKey(rev)) {    // TC: O(9)
-                minDist = Math.min(minDist, map.get(rev) - i);
+            Integer j = map.get(rev);
+            if (j != null) {
+                minDist = Math.min(minDist, j - i);
+                if (minDist == 1) {
+                    // cannot be less than 1 so early exit
+                    return 1;
+                }
             }
             map.put(nums[i], i);
         }
