@@ -14,15 +14,12 @@ class Solution {
         int i = 0; // pointer at the start of nums1
         int j = 0; // pointer at the start of nums2
         while (i < m && j < n) { // TC: O(m + n)
-            while (j < n && nums2[j] >= nums1[i]) {
-                j++;
-            }
-            j--; // resetting j back if above loop breaks
-            if (j < n) {
+            if (nums2[j] >= nums1[i]) {
                 maxDist = Math.max(maxDist, j - i);
+                j++;
+            } else {
+                i++;
             }
-            i++;
-            j++;
         }
         return maxDist;
     }
