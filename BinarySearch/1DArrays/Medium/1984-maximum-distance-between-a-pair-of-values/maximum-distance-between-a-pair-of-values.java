@@ -1,13 +1,41 @@
 class Solution {
     /**
-     * Approach II : Using Optimal approach (Binary Search) Approach
+     * Approach III : Using Optimal Approach (Two Pointers) Approach
+     *
+     * TC : O(m + n)
+     * SC : O(1)
+     *
+     * Accepted (32 / 32 testcases passed)
+     */
+    public int maxDistance(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        int maxDist = 0;
+        int i = 0; // pointer at the start of nums1
+        int j = 0; // pointer at the start of nums2
+        while (i < m && j < n) { // TC: O(m + n)
+            while (j < n && nums2[j] >= nums1[i]) {
+                j++;
+            }
+            j--; // resetting j back if above loop breaks
+            if (j < n) {
+                maxDist = Math.max(maxDist, j - i);
+            }
+            i++;
+            j++;
+        }
+        return maxDist;
+    }
+
+    /**
+     * Approach II : Using Better Approach (Binary Search) Approach
      *
      * TC : O(m x log(n))
      * SC : O(1)
      *
      * Accepted (32 / 32 testcases passed)
      */
-    public int maxDistance(int[] nums1, int[] nums2) {
+    public int maxDistanceBetter(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
         int maxDist = 0;
