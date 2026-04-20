@@ -7,17 +7,16 @@ class Solution {
      */
     public int maxDistance(int[] colors) {
         int n = colors.length;
-        int dist1 = 0;
-        int dist2 = 0;
+        int maxDist = 0;
         for (int i = 1; i < n; i++) { // TC : O(n)
             if (colors[i] != colors[0]) {
-                dist1 = Math.max(dist1, i);
+                maxDist = Math.max(maxDist, i);
             }
             if (colors[i] != colors[n - 1]) {
-                dist2 = Math.max(dist2, n - 1 - i);
+                maxDist = Math.max(maxDist, n - 1 - i);
             }
         }
-        return Math.max(dist1, dist2);
+        return maxDist;
     }
 
     /**
