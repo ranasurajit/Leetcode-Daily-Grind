@@ -30,9 +30,9 @@ class Solution {
                 freqMap.put(source[idx], freqMap.getOrDefault(source[idx], 0) + 1);
             }
             for (Integer idx : indices) { // TC: O(n / k)
-                if (freqMap.getOrDefault(target[idx], 0) > 0) {
-                    freqMap.put(target[idx],
-                        freqMap.getOrDefault(target[idx], 0) - 1);
+                int freq = freqMap.getOrDefault(target[idx], 0);
+                if (freq > 0) {
+                    freqMap.put(target[idx], freq - 1);
                 } else {
                     mismatches++;
                 }
