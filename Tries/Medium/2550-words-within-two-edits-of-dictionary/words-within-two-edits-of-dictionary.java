@@ -16,6 +16,9 @@ class Solution {
                 while (p < n && q < n) { // TC: O(2 x n)
                     if (query.charAt(p) != word.charAt(q)) {
                         edits++;
+                        if (edits > 2) {
+                            break;
+                        }
                     }
                     p++;
                     q++;
