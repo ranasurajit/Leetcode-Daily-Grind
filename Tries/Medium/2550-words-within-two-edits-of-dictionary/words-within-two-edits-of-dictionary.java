@@ -7,11 +7,9 @@ class Solution {
      */
     public List<String> twoEditWords(String[] queries, String[] dictionary) {
         List<String> result = new ArrayList<>();
+        int n = queries[0].length();
         for (String query : queries) {       // TC : O(q)
             for (String word : dictionary) { // TC : O(d)
-                int p = 0; // pointer at the start of String 'query'
-                int q = 0; // pointer at the start of String 'word'
-                int n = word.length();
                 int edits = 0;
                 for (int i = 0; i < n; i++) { // TC : O(n)
                     if (query.charAt(i) != word.charAt(i)) {
