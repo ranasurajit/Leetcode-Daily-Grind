@@ -27,12 +27,9 @@ class Solution {
             for (int k = 0; k < size; k++) { // TC : O(n / k)
                 int idx = list.get(k);
                 /**
-                 * contribution at index 'idx' =
-                 * leftSum : contribution of indices less than idx + 
-                 * rightSum : contribution of indices greater than idx
-                 * countLessThanCurrentIndex * i - prefixSum(i - 1) +
-                * (size - countLessThanCurrentIndex - 1) * prefixSum(size - 1)
-                */
+                 * left  = k * idx - sum(left indices)
+                 * right = sum(right indices) - (countRight * idx)
+                 */
                 long leftSum = ((long) k * idx) - (k > 0 ? prefixSum[k - 1] : 0);
                 long rightSum = (prefixSum[size - 1] - prefixSum[k]) -
                     (size - k - 1) * (long) idx;
