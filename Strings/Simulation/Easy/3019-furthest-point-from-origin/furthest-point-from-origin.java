@@ -1,11 +1,34 @@
 class Solution {
     /**
-     * Approach : Using String Simulation Approach
+     * Approach II : Using Optimal (String Simulation) Approach
      *
      * TC : O(n)
      * SC : O(1)
      */
     public int furthestDistanceFromOrigin(String moves) {
+        int n = moves.length();
+        int countL = 0;
+        int countR = 0;
+        int countBlank = 0;
+        for (int i = 0; i < n; i++) { // TC : O(n)
+            if (moves.charAt(i) == 'R') {
+                countR++;
+            } else if (moves.charAt(i) == 'L') {
+                countL++;
+            } else {
+                countBlank++;
+            }
+        }
+        return Math.abs(countR - countL) + countBlank;
+    }
+
+    /**
+     * Approach I : Using Brute-Force (String Simulation) Approach
+     *
+     * TC : O(n)
+     * SC : O(1)
+     */
+    public int furthestDistanceFromOriginBruteForce(String moves) {
         int n = moves.length();
         int posL = 0;
         int posR = 0;
