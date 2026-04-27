@@ -15,15 +15,18 @@ class Solution {
     /**
      * Approach : Using DFS Approach
      *
-     * TC : O(m + n)
-     * SC : O(m + n) + O(m x n) ~ O(m x n)
+     * TC : O(m x n)
+     * SC : O(m x n) + O(m x n) ~ O(m x n)
+     *
+     * O(m x n) - recursion stack
+     * O(m x n) - visited array space
      */
     public boolean hasValidPath(int[][] grid) {
         this.m = grid.length;
         this.n = grid[0].length;
         this.grid = grid;
         boolean[][] visited = new boolean[m][n]; // SC : O(m x n)
-        if (dfsGrid(0, 0, visited)) { // TC : O(m + n), SC : O(m + n) 
+        if (dfsGrid(0, 0, visited)) { // TC : O(m x n), SC : O(m x n) 
             return true;
         }
         return false;
@@ -32,8 +35,8 @@ class Solution {
     /**
      * Using DFS Approach
      *
-     * TC : O(4 x (m + n)) ~ O(m + n)
-     * SC : O(m + n)
+     * TC : O(4 x (m x n)) ~ O(m x n), worst case all cells are visited once
+     * SC : O(m x n)
      */
     private boolean dfsGrid(int i, int j, boolean[][] visited) {
         if (i == m - 1 && j == n - 1) {
@@ -57,16 +60,12 @@ class Solution {
             int newStreetType = grid[x][y] - 1;
             int[][] newDir = directions[newStreetType];
             for (int[] nd : newDir) { // TC : O(2)
-                int effX = x + nd[0];
-                int effY = y + nd[1];
-                if (effX == i && effY == j) {
-                    /**
-                     * If we can go back from (x, y) to previous cell 
-                     * (i, j) from where we came then it forms a path
-                     */
-                    if (dfsGrid(x, y, visited)) {
-                        return true;
-                    }
+                /**
+                 * If we can go back from (x, y) to previous cell 
+                 * (i, j) from where we came then it forms a path
+                 */
+                if (nd[0] == -d[0] && nd[1] == -d[1] && dfsGrid(x, y, visited)) {
+                    return true;
                 }
             }
         }
