@@ -59,14 +59,19 @@ class Solution {
             }
             int newStreetType = grid[x][y] - 1;
             int[][] newDir = directions[newStreetType];
+            boolean isConnected = false;
             for (int[] nd : newDir) { // TC : O(2)
                 /**
                  * If we can go back from (x, y) to previous cell 
                  * (i, j) from where we came then it forms a path
                  */
-                if (nd[0] == -d[0] && nd[1] == -d[1] && dfsGrid(x, y, visited)) {
-                    return true;
+                if (nd[0] == -d[0] && nd[1] == -d[1]) {
+                    isConnected = true;
+                    break;
                 }
+            }
+            if (isConnected && dfsGrid(x, y, visited)) {
+                return true;
             }
         }
         return false;
