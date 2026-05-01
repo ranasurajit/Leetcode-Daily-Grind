@@ -25,7 +25,7 @@ class Solution {
             currentFn += total - (n * nums[i]);
             maxFn = Math.max(maxFn, currentFn);
         }
-        return maxFn == Integer.MIN_VALUE ? 0 : maxFn;
+        return maxFn;
     }
 
     /**
