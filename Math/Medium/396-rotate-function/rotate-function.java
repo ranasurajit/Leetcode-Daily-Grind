@@ -23,7 +23,7 @@ class Solution {
         maxFn = Math.max(maxFn, currentFn);
         for (int i = n - 1; i > 0; i--) { // TC : O(n)
             // here element at index 'i' is the start of rotated array
-            currentFn += (total - nums[i]) - ((n - 1) * nums[i]);
+            currentFn += total - (n * nums[i]);
             maxFn = Math.max(maxFn, currentFn);
         }
         return maxFn == Integer.MIN_VALUE ? 0 : maxFn;
