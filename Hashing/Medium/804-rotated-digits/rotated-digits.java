@@ -1,15 +1,14 @@
 class Solution {
-    private static int[][] pairs = {
-        { 0, 0 }, { 1, 1 }, { 2, 5 }, { 6, 9 }, { 8, 8 }
-    };
-
     /**
-     * Approach : Using Math + Hashing Approach
+     * Approach I : Using Math + Hashing Approach
      *
      * TC : O(n x log₁₀(n))
      * SC : O(1)
      */
     public int rotatedDigits(int n) {
+        int[][] pairs = {
+            { 0, 0 }, { 1, 1 }, { 2, 5 }, { 6, 9 }, { 8, 8 }
+        };
         Map<Integer, Integer> rotatedMap = new HashMap<>(); // SC : O(10) ~ O(1)
         /**
          * out of digits 0-9, the numbers 0, 1, 2, 5, 6, 8, 9 
