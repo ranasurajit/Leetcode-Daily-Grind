@@ -1,11 +1,49 @@
 class Solution {
     /**
-     * Approach I : Using Math + Hashing Approach
+     * Approach II : Using Math (Clean and Optimal) Approach
      *
      * TC : O(n x log₁₀(n))
      * SC : O(1)
      */
     public int rotatedDigits(int n) {
+        int count = 0;
+        for (int i = 1; i <= n; i++) { // TC : O(n)
+            if (isGoodIntegerOptimal(i)) { // TC : O(log₁₀(n))
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Using Math Approach
+     *
+     * TC : O(log₁₀(n))
+     * SC : O(1)
+     */
+    private boolean isGoodIntegerOptimal(int num) {
+        boolean hasChangedOnce = false;
+        while (num > 0) { // TC : O(log₁₀(n))
+            int rem = num % 10;
+            if (rem == 3 || rem == 4 || rem == 7) {
+                // becomes invalid digit after rotation
+                return false;
+            }
+            if (rem == 2 || rem == 5 || rem == 6 || rem == 9) {
+                hasChangedOnce = true;
+            }
+            num /= 10;
+        }
+        return hasChangedOnce;
+    }
+
+    /**
+     * Approach I : Using Math + Hashing Approach
+     *
+     * TC : O(n x log₁₀(n))
+     * SC : O(1)
+     */
+    public int rotatedDigitsHashing(int n) {
         int[][] pairs = {
             { 0, 0 }, { 1, 1 }, { 2, 5 }, { 6, 9 }, { 8, 8 }
         };
