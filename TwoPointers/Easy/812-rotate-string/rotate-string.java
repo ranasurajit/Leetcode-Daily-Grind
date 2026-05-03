@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach II : Using Optimal Two Pointers Approach
      *
-     * TC : O(2 x n) ~ O(n)
+     * TC : O(2 x n) ~ O(n) (In worst case - O(n²))
      * SC : O(1)
      */
     public boolean rotateString(String s, String goal) {
