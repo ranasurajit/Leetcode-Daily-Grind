@@ -23,11 +23,8 @@ class Solution {
      */
     private double fastPow(double x, long N) {
         // Base Case
-        if (x == 1.0 || N == 0) {
+        if (N == 0) {
             return 1.0;
-        }
-        if (N == 1) {
-            return x; 
         }
         // Recursion Calls
         double powHalf = fastPow(x, N / 2);
