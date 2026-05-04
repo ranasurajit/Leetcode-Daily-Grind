@@ -2,13 +2,13 @@ class Solution {
     /**
      * Approach : Using 2D-Array Simulation + Two Pointers Approach
      *
-     * TC : O(n) + O(n²) ~ O(n²)
-     * SC : O(n)
+     * TC : O(n) + O(n² / 2) ~ O(n²)
+     * SC : O(1)
      */
     public void rotate(int[][] matrix) {
         int n = matrix.length;
         // We need to reverse the rows of the matrix
-        reverseRows(matrix, n); // TC : O(n), SC : O(n)
+        reverseRows(matrix, n); // TC : O(n), SC : O(1)
         /**
          * we need to swap bottom-left half elements 
          * with to-right half elements
@@ -27,7 +27,7 @@ class Solution {
      * Using Two Pointers Approach
      *
      * TC : O(n / 2) ~ O(n)
-     * SC : O(n)
+     * SC : O(1)
      */
     private void reverseRows(int[][] matrix, int n) {
         int i = 0;
