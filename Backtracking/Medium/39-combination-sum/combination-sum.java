@@ -37,11 +37,10 @@ class Solution {
         if (target >= candidates[idx]) {
             // take
             // we can use candidates[idx] if target - candidates[idx] >= 0
-            int currentLeft = target - candidates[idx]; // modify
             current.add(candidates[idx]); // modify
             // we can use same element at index 'idx'
-            solve(idx, n, candidates, currentLeft, current, result); // explore
-            target += candidates[idx]; // backtrack
+            solve(idx, n, candidates, target - candidates[idx],
+                current, result); // explore
             current.remove(current.size() - 1); // backtrack
         }
     }
