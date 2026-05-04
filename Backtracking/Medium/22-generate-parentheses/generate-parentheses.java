@@ -2,12 +2,13 @@ class Solution {
     /**
      * Approach : Using Backtracking Approach
      *
-     * TC : O(4ⁿ)
-     * SC : O(n)
+     * TC : O(2 x n x Catalan Number) ~ O(4ⁿ / √n)
+     *      (Only valid sequences are generated = Catalan Number)
+     * SC : O(2 x n) + O(n) ~ O(n)
      */
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(); // SC : O(n)
         solve(0, 0, n, sb, result);
         return result;
     }
@@ -15,8 +16,8 @@ class Solution {
     /**
      * Using Backtracking Approach
      *
-     * TC : O(4ⁿ)
-     * SC : O(n)
+     * TC : O(2 x n x Catalan Number) ~ O(4ⁿ / √n)
+     * SC : O(2 x n)
      */
     private void solve(int open, int close, int n, StringBuilder sb,
         List<String> result) {
