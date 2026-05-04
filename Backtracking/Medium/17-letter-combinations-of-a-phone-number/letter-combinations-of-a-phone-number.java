@@ -15,9 +15,9 @@ class Solution {
     private Map<Integer, char[]> keysMap;
 
     /**
-     * Using Backtracking Approach
+     * Approach : Using Backtracking Approach
      *
-     * TC : O(4ⁿ)
+     * TC : O(n x 4ⁿ)
      * SC : O(n) + O(n) ~ O(n)
      *
      * - O(n) - recursion stack
@@ -30,14 +30,14 @@ class Solution {
         }
         List<String> result = new ArrayList<>();
         StringBuilder sb = new StringBuilder(); // SC : O(n)
-        solve(0, n, digits, sb, result); // TC : O(4ⁿ), SC : O(n)
+        solve(0, n, digits, sb, result); // TC : O(n x 4ⁿ), SC : O(n)
         return result;
     }
 
     /**
      * Using Backtracking Approach
      *
-     * TC : O(4ⁿ)
+     * TC : O(n x 4ⁿ)
      * SC : O(n)
      */
     private void solve(int idx, int n, String digits, 
