@@ -18,6 +18,7 @@ class Solution {
      * Approach : Using Backtracking Approach
      *
      * TC : O(n x 4ⁿ)
+     * - at most 4 characters for a key is present
      * SC : O(n) + O(n) ~ O(n)
      *
      * - O(n) - recursion stack
@@ -38,6 +39,7 @@ class Solution {
      * Using Backtracking Approach
      *
      * TC : O(n x 4ⁿ)
+     * - at most 4 characters for a key is present
      * SC : O(n)
      */
     private void solve(int idx, int n, String digits, 
