@@ -7,11 +7,14 @@ class Solution {
      */
     public void rotate(int[][] matrix) {
         int n = matrix.length;
-        // We need to reverse the rows of the matrix
+        /**
+         * We need to reverse the rows of the matrix
+         */
         reverseRows(matrix, n); // TC : O(n), SC : O(1)
         /**
-         * we need to swap bottom-left half elements 
-         * with to-right half elements
+         * After reversing the matrix vertically, we need
+         * transpose it across the main diagonal (i.e. 
+         * swap matrix[i][j] with matrix[j][i] for j < i)
          */
         for (int i = 1; i < n; i++) { // TC : O(n)
             for (int j = 0; j < i; j++) { // TC : O(n / 2)
