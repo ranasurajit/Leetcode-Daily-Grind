@@ -1,0 +1,90 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    /**
+     * Approach : Using Two Pointers Approach
+     *
+     * TC : O(n) + O(n) + O(k % n) + O(n) + O(k % n) ~ O(n)
+     * SC : O(1)
+     */
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0) {
+            return head;
+        }
+        /**
+         * we need to count the length of LinkedList
+         */
+        int length = 0;
+        ListNode current = head;
+        while (current != null) { // TC : O(n)
+            current = current.next;
+            length++;
+        }
+        k = k % length;
+        if (k == 0) {
+            return head;
+        }
+        /**
+         * first we will reverse the entire LinkedList
+         */
+        ListNode revHead = reverseLL(head); // TC : O(n)
+        /**
+         * now we need to traverse in revHead till count becomes k
+         */
+        int count = 1;
+        current = revHead;
+        while (count < k && current != null) { // TC : O(k)
+            current = current.next;
+            count++;
+        }
+        ListNode secondLL = current.next; // partition LinkedList
+        current.next = null; // removing tail of current
+        /**
+         * now we will reverse both parts of the LinkedLists
+         */
+        ListNode revFirst = reverseLL(revHead);   // TC : O(k)
+        ListNode revSecond = reverseLL(secondLL); // TC : O(n - k)
+        /**
+         * we need to join First LinkedList's tail with 
+         * second LinkedList's head and return First 
+         * LinkedList's head
+         */
+        count = 1;
+        current = revFirst;
+        while (count < k && current != null) { // TC : O(k)
+            current = current.next;
+            count++;
+        }
+        current.next = revSecond; // joined here
+        return revFirst;
+    }
+
+    /**
+     * Using Two Pointers Approach
+     *
+     * TC : O(n)
+     * SC : O(1)
+     */
+    private ListNode reverseLL(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode prev = null;
+        ListNode current = head;
+        while (current != null) { // TC : O(n)
+            ListNode temp = current.next;
+            current.next = prev;
+            prev = current;
+            current = temp;
+        }
+        return prev;
+    }
+}
