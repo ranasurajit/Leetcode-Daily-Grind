@@ -10,12 +10,61 @@
  */
 class Solution {
     /**
+     * Approach III : Using Circular LinkedList Pointer Approach
+     *
+     * TC : O(n) + O(n - k) ~ O(n)
+     * SC : O(1)
+     */
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0) {
+            return head;
+        }
+        /**
+         * we need to count the length of LinkedList
+         */
+        int length = 0;
+        ListNode current = head;
+        ListNode tail = null;
+        while (current != null) { // TC : O(n)
+            tail = current;
+            current = current.next;
+            length++;
+        }
+        /**
+         * we need to remove un-necessary rotations 
+         * as if k % length = 0, that means LinkedList
+         * after rotations is identical to head
+         */
+        k = k % length;
+        if (k == 0) {
+            return head;
+        }
+        /**
+         * Converting LinkedList to Circular LinkedList
+         */
+        tail.next = head;
+        /**
+         * Now we need to traverse to find the (n - k)th Node
+         */
+        current = head;
+        int count = 1;
+        while (count < length - k && current != null) { // TC : O(n - k)
+            current = current.next;
+            count++;
+        }
+        ListNode newHead = current.next;
+        // Breaking the Circular LinkedList at current (as Tail)
+        current.next = null;
+        return newHead;
+    }
+
+    /**
      * Approach II : Using Single Pointers Approach
      *
      * TC : O(n) + O(n) ~ O(n)
      * SC : O(1)
      */
-    public ListNode rotateRight(ListNode head, int k) {
+    public ListNode rotateRightSinglePointer(ListNode head, int k) {
         if (head == null || head.next == null || k == 0) {
             return head;
         }
