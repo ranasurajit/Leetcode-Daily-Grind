@@ -48,7 +48,7 @@ class Solution {
          */
         current = head;
         int count = 1;
-        while (count < length - k && current != null) { // TC : O(n - k)
+        while (count < length - k) { // TC : O(n - k)
             current = current.next;
             count++;
         }
