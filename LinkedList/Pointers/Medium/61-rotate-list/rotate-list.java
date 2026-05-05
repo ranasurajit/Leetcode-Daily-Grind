@@ -28,6 +28,11 @@ class Solution {
             current = current.next;
             length++;
         }
+        /**
+         * we need to remove un-necessary rotations 
+         * as if k % length = 0, that means LinkedList
+         * after rotations is identical to head
+         */
         k = k % length;
         if (k == 0) {
             return head;
