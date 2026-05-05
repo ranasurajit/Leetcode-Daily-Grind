@@ -10,12 +10,57 @@
  */
 class Solution {
     /**
-     * Approach : Using Two Pointers Approach
+     * Approach II : Using Single Pointers Approach
+     *
+     * TC : O(n) + O(n) ~ O(n)
+     * SC : O(1)
+     */
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0) {
+            return head;
+        }
+        /**
+         * we need to count the length of LinkedList
+         */
+        int length = 0;
+        ListNode current = head;
+        while (current != null) { // TC : O(n)
+            current = current.next;
+            length++;
+        }
+        /**
+         * we need to remove un-necessary rotations 
+         * as if k % length = 0, that means LinkedList
+         * after rotations is identical to head
+         */
+        k = k % length;
+        if (k == 0) {
+            return head;
+        }
+        current = head;
+        int count = 1;
+        while (count < length - k) { // TC : O(n - k)
+            current = current.next;
+            count++;
+        }
+        ListNode newHead = current.next;
+        current.next = null; // removing tail of current
+        ListNode temp = newHead;
+        while (count < length - 1) { // TC : O(k)
+            temp = temp.next;
+            count++;
+        }
+        temp.next = head;
+        return newHead;
+    }
+
+    /**
+     * Approach I : Using Two Pointers Approach
      *
      * TC : O(n) + O(n) + O(k % n) + O(n) + O(k % n) ~ O(n)
      * SC : O(1)
      */
-    public ListNode rotateRight(ListNode head, int k) {
+    public ListNode rotateRightTwoPointers(ListNode head, int k) {
         if (head == null || head.next == null || k == 0) {
             return head;
         }
