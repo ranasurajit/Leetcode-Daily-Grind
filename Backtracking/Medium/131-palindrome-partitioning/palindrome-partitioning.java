@@ -2,37 +2,37 @@ class Solution {
     /**
      * Approach : Using Backtracking Approach
      *
-     * TC: O(N x 2 ^ N) - due to pruning
-     * SC: O(N) + O(N) ~ O(N)
+     * TC : O(n x 2ⁿ)
+     * SC : O(n x 2ⁿ) + O(n x 2ⁿ)
+     *
+     * - O(n x 2ⁿ) - recursion stack
      */
     public List<List<String>> partition(String s) {
         int n = s.length();
-        List<List<String>> result = new ArrayList<List<String>>(); // SC: O(N)
-        List<String> current = new ArrayList<String>(); // SC: O(N)
-        backtrack(0, n, s, current, result); // TC: O(N x 2 ^ N), SC: O(N)
+        List<List<String>> result = new ArrayList<>();
+        List<String> current = new ArrayList<>(); // TC : O(n x 2ⁿ)
+        solve(0, n, s, current, result);
         return result;
     }
 
     /**
      * Using Backtracking Approach
      *
-     * TC: O(N² x 2 ^ N) ~ O(N x 2 ^ N) - due to pruning
-     * SC: O(N)
+     * TC : O(n x 2ⁿ)
+     * SC : O(n x 2ⁿ)
      */
-    private void backtrack(int idx, int n, String s, 
-        List<String> current, List<List<String>> result) {
+    private void solve(int idx, int n, String s, List<String> current,
+        List<List<String>> result) {
         // Base Case
         if (idx == n) {
-            result.add(new ArrayList<String>(current));
+            result.add(new ArrayList<>(current));
             return;
         }
         // Recursion Calls
-        for (int i = idx + 1; i <= n; i++) { // TC: O(N)
-            String subStr = s.substring(idx, i);
-            if (subStr.length() == 1 || isPalindrome(subStr)) { // TC: O(N)
-                // if above condition satisfies then only we can explore further in this path
-                current.add(subStr); // modify
-                backtrack(i, n, s, current, result); // explore
+        for (int i = idx; i < n; i++) { // TC : O(n)
+            if (isPalindrome(s, idx, i)) { // TC : O(n)
+                current.add(s.substring(idx, i + 1)); // modify
+                solve(i + 1, n, s, current, result); // explore
                 current.remove(current.size() - 1);
             }
         }
@@ -41,18 +41,16 @@ class Solution {
     /**
      * Using Two Pointers Approach
      *
-     * TC: O(N)
-     * SC: O(1)
+     * TC : O(L)
+     * SC : O(1)
      */
-    private boolean isPalindrome(String s) {
-        int low = 0;
-        int high = s.length() - 1;
-        while (low < high) { // TC: O(N / 2)
-            if (s.charAt(low) != s.charAt(high)) {
+    private boolean isPalindrome(String str, int i, int j) {
+        while (i < j) {
+            if (str.charAt(i) != str.charAt(j)) {
                 return false;
             }
-            low++;
-            high--;
+            i++;
+            j--;
         }
         return true;
     }
