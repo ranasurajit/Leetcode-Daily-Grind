@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach : Using BFS + Sieve of Eratosthenes Approach
      *
-     * TC : O(n) + O(L x log(log(L))) + O(n) + O(n x log(n)) ~ O(n x log(n))
+     * TC : O(n) + O(L x log(log(L))) + O(n) + O(n x log(n)) ~ O(L x log(L))
      * SC : O(L) + O(n) + O(n) + O(n) ~ O(n + L)
      *
      * where L = max(nums)
