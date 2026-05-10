@@ -1,6 +1,35 @@
 class Solution {
     /**
-     * Approach II : Using Memoization Approach
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC : O(n²)
+     * SC : O(n)
+     * - O(n) - dp array memory
+     *
+     * Accepted (2639 / 2639 testcases passed)
+     */
+    public int maximumJumps(int[] nums, int target) {
+        int n = nums.length;
+        int[] dp = new int[n]; // SC : O(n)
+        Arrays.fill(dp, -1); // marking indices non-reachable
+        dp[0] = 0;
+        for (int i = 0; i < n - 1; i++) { // TC : O(n)
+            if (dp[i] == -1) {
+                continue;
+            }
+            int steps = Integer.MIN_VALUE;
+            for (int j = i + 1; j < n; j++) { // TC : O(n)
+                if (Math.abs(nums[j] - nums[i]) <= target) {
+                    // we can then move to index 'j'
+                    dp[j] = Math.max(dp[j], 1 + dp[i]);
+                }
+            }
+        }
+        return dp[n - 1];
+    }
+
+    /**
+     * Approach II : Using Memoization (Top-Down) Approach
      *
      * TC : O(n²)
      * SC : O(n) + O(n)
@@ -9,7 +38,7 @@ class Solution {
      *
      * Accepted (2639 / 2639 testcases passed)
      */
-    public int maximumJumps(int[] nums, int target) {
+    public int maximumJumpsMemoization(int[] nums, int target) {
         int n = nums.length;
         int[] memo = new int[n]; // SC : O(n)
         Arrays.fill(memo, -1);
