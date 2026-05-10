@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach II : Using Memoization Approach
      *
-     * TC : O(n)
+     * TC : O(n²)
      * SC : O(n) + O(n)
      * - O(n) - recursion stack
      * - O(n) - memoization memory
@@ -20,7 +20,7 @@ class Solution {
     /**
      * Using Memoization Approach
      *
-     * TC : O(n)
+     * TC : O(n²)
      * SC : O(n)
      */
     private int solveMemoization(int idx, int n, int[] nums, 
@@ -48,7 +48,7 @@ class Solution {
     /**
      * Approach I : Using Recursion Approach
      *
-     * TC : O(n²)
+     * TC : O(2ⁿ)
      * SC : O(n)
      * - O(n) - recursion stack
      *
@@ -63,7 +63,7 @@ class Solution {
     /**
      * Using Recursion Approach
      *
-     * TC : O(n²)
+     * TC : O(2ⁿ)
      * SC : O(n)
      */
     private int solveRecursion(int idx, int n, int[] nums, int target) {
