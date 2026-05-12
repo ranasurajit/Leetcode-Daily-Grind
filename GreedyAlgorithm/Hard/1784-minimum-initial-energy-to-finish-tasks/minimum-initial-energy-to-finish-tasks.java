@@ -1,15 +1,53 @@
 class Solution {
     /**
-     * Approach : Using Binary Search on Answers Approach
+     * Approach II : Using Greedy + Simulation Approach
      *
-     * TC : O(n x log(n)) + O(n) + O(n x log(k)) ~ O(n x (log(n) + log(k)))
+     * TC : O(n x log(n)) + O(n) ~ O(n x log(n))
      * SC : O(1)
      */
     public int minimumEffort(int[][] tasks) {
         int n = tasks.length;
         /**
          * we can greedily try to pick the task with
-         * maximum difference (minimum - actual)
+         * maximum difference (minimum - actual) as 
+         * we have to finish all tasks and mimimum
+         * initial energy needed should be based upon
+         * that.
+         * so, we can sort tasks in descending order
+         * of (minimum - actual) energies needed
+         */
+        Arrays.sort(tasks, (a, b) -> {
+            return (b[1] - b[0]) - (a[1] - a[0]);
+        }); // TC : O(n x log(n))
+        int minEnergy = 0;
+        int currentEnergy = 0;
+        for (int[] task : tasks) { // TC : O(n)
+            int actual = task[0];
+            int minimum = task[1];
+            if (currentEnergy < minimum) {
+                int needed = minimum - currentEnergy;
+                minEnergy += needed;
+                currentEnergy += needed;
+            }
+            currentEnergy -= actual;
+        }
+        return minEnergy;
+    }
+
+    /**
+     * Approach I : Using Greedy + Binary Search on Answers Approach
+     *
+     * TC : O(n x log(n)) + O(n) + O(n x log(k)) ~ O(n x (log(n) + log(k)))
+     * SC : O(1)
+     */
+    public int minimumEffortBinarySearch(int[][] tasks) {
+        int n = tasks.length;
+        /**
+         * we can greedily try to pick the task with
+         * maximum difference (minimum - actual) as 
+         * we have to finish all tasks and mimimum
+         * initial energy needed should be based upon
+         * that.
          * so, we can sort tasks in descending order
          * of (minimum - actual) energies needed
          */
