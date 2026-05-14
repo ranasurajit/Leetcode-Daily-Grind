@@ -11,12 +11,18 @@ class Solution {
         for (int i = 0; i < n; i++) {     // TC : O(n)
             max = Math.max(max, nums[i]);
         }
-        if (n <= max) {
+        /**
+         * For Base (x), x + 1 = n
+         */
+        if (max != n - 1) {
             // cannot be a good array
             return false;
         }
         int[] base = new int[n];          // SC : O(n)
         for (int i = 0; i < n; i++) {     // TC : O(n)
+            if (nums[i] >= n) {
+                return false;
+            }
             base[nums[i]]++;
         }
         for (int i = 1; i < n - 1; i++) { // TC : O(n)
