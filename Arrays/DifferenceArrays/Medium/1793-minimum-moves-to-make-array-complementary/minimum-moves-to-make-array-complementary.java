@@ -30,11 +30,11 @@ class Solution {
             int minSumRange = 1 + Math.min(a, b);
             int maxSumRange = limit + Math.max(a, b);
             // negating for 1 moves
-            diff[minSumRange] += (-1);
-            diff[maxSumRange + 1] -= (-1);
+            diff[minSumRange] -= 1;
+            diff[maxSumRange + 1] += 1;
             // negating for 0 moves
-            diff[a + b] += (-1);
-            diff[a + b + 1] -= (-1);
+            diff[a + b] -= 1;
+            diff[a + b + 1] += 1;
         }
         for (int sum = 2; sum <= 2 * limit; sum++) { // TC : O(2 x limit)
             diff[sum] += diff[sum - 1];
