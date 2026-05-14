@@ -21,14 +21,14 @@ class Solution {
          */
         int minMoves = Integer.MAX_VALUE;
         int[] diff = new int[2 * limit + 2]; // SC : O(2 x limit + 1)
+        // setting the range moves to 2 by default
+        diff[2] += 2 * (n / 2);
+        diff[2 * limit + 1] -= 2 * (n / 2);
         for (int i = 0; i < n / 2; i++) {  // TC : O(n / 2)
             int a = nums[i];
             int b = nums[n - 1 - i];
             int minSumRange = 1 + Math.min(a, b);
             int maxSumRange = limit + Math.max(a, b);
-            // setting the range moves to 2 by default
-            diff[2] += 2;
-            diff[2 * limit + 1] -= 2;
             // negating for 1 moves
             diff[minSumRange] += (-1);
             diff[maxSumRange + 1] -= (-1);
