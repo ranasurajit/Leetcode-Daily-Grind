@@ -1,11 +1,34 @@
 class Solution {
     /**
-     * Approach : Using Binary Search Approach
+     * Approach II : Using Binary Search Approach
      *
      * TC : O(log(n))
      * SC : O(1)
      */
     public int findMin(int[] nums) {
+        int n = nums.length;
+        int low = 0;
+        int high = n - 1;
+        while (low < high) { // TC : O(log(n))
+            int mid = low + (high - low) / 2;
+            if (nums[mid] > nums[high]) {
+                // left portion is sorted, so answer lies in right portion
+                low = mid + 1;
+            } else {
+                // right portion is sorted, so answer lies in left portion
+                high = mid;
+            }
+        }
+        return nums[low];
+    }
+
+    /**
+     * Approach I : Using Binary Search Approach
+     *
+     * TC : O(log(n))
+     * SC : O(1)
+     */
+    public int findMinBruteForce(int[] nums) {
         int n = nums.length;
         int low = 0;
         int high = n - 1;
