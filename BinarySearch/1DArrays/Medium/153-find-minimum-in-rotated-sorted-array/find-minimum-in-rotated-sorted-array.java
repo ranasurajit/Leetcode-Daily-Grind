@@ -7,26 +7,25 @@ class Solution {
      */
     public int findMin(int[] nums) {
         int n = nums.length;
-        if (n == 1) {
-            return nums[0];
-        }
         int low = 0;
-        int high = n;
-        int result = Integer.MAX_VALUE;
-        while (low < high) { // TC : O(log(n))
+        int high = n - 1;
+        while (low <= high) { // TC : O(log(n))
+            if (nums[low] <= nums[high]) {
+                return nums[low];
+            }
             int mid = low + (high - low) / 2;
-            if (nums[low] <= nums[mid]) {
-                // nums[low] can be the candidate
-                result = Math.min(result, nums[low]);
+            int prev = (mid - 1 + n) % n;
+            int next = (mid + 1) % n;
+            if (nums[mid] <= nums[prev] && nums[mid] <= nums[next]) {
+                return nums[mid];
+            } else if (nums[low] <= nums[mid]) {
                 // left portion is sorted, so answer lies in right portion
                 low = mid + 1;
-            } else {
-                // nums[mid] can be the candidate
-                result = Math.min(result, nums[mid]);
+            } else if (nums[mid] <= nums[high]) {
                 // right portion is sorted, so answer lies in left portion
                 high = mid;
             }
         }
-        return result;
+        return nums[0];
     }
 }
