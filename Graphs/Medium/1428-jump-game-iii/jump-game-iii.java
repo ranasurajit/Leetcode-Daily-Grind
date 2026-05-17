@@ -1,12 +1,48 @@
 class Solution {
     /**
-     * Approach : Using Recursion (DFS + Visited) Approach
+     * Approach II : Using Graph (DFS) Approach
+     *
+     * TC : O(n)
+     * SC : O(n) + O(n)
+     * - O(n) - visited array and DFS recursion stack
+     */
+    public boolean canReach(int[] arr, int start) {
+        int n = arr.length;
+        boolean[] visited = new boolean[n]; // SC : O(n)
+        return dfsGraph(start, n, arr, visited);
+    }
+
+    /**
+     * Using Graph (DFS) Approach
+     *
+     * TC : O(n)
+     * SC : O(n)
+     */
+    private boolean dfsGraph(int u, int n, int[] arr, boolean[] visited) {
+        // Base Case
+        if (u < 0 || u >= n || visited[u]) {
+            // out of bounds check or if already visited
+            return false;
+        }
+        if (arr[u] == 0) {
+            return true;
+        }
+        visited[u] = true;
+        if (dfsGraph(u + arr[u], n, arr, visited) || 
+            dfsGraph(u - arr[u], n, arr, visited)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Approach I : Using Recursion (DFS + Visited) Approach
      *
      * TC : O(n)
      * SC : O(n) + O(n)
      * - O(n) - visited array and recursion stack
      */
-    public boolean canReach(int[] arr, int start) {
+    public boolean canReachRecursiveDFS(int[] arr, int start) {
         int n = arr.length;
         boolean[] visited = new boolean[n]; // SC : O(n)
         return solveRecursion(start, n, arr, visited);
