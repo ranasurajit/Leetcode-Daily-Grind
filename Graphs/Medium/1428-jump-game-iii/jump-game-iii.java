@@ -1,44 +1,12 @@
 class Solution {
     /**
-     * Approach III : Using Graph (BFS) Approach
-     *
-     * TC : O(n)
-     * SC : O(n) + O(n)
-     * - O(n) - 'visited' and 'queue' memory
-     */
-    public boolean canReach(int[] arr, int start) {
-        int n = arr.length;
-        boolean[] visited = new boolean[n]; // SC : O(n)
-        Queue<Integer> queue = new LinkedList<>(); // SC : O(n)
-        queue.offer(start);
-        visited[start] = true;
-        while (!queue.isEmpty()) { // TC : O(n)
-            Integer u = queue.poll();
-            if (arr[u] == 0) {
-                return true;
-            }
-            int fwdIdx = u + arr[u];
-            int revIdx = u - arr[u];
-            if (fwdIdx < n && !visited[fwdIdx]) {
-                visited[fwdIdx] = true;
-                queue.offer(fwdIdx);
-            }
-            if (revIdx >= 0 && !visited[revIdx]) {
-                visited[revIdx] = true;
-                queue.offer(revIdx);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Approach II : Using Graph (DFS) Approach
+     * Approach III : Using Graph (DFS) Approach
      *
      * TC : O(n)
      * SC : O(n) + O(n)
      * - O(n) - 'visited' array and DFS recursion stack
      */
-    public boolean canReachDFS(int[] arr, int start) {
+    public boolean canReach(int[] arr, int start) {
         int n = arr.length;
         boolean[] visited = new boolean[n]; // SC : O(n)
         return dfsGraph(start, n, arr, visited);
@@ -63,6 +31,38 @@ class Solution {
         if (dfsGraph(u + arr[u], n, arr, visited) || 
             dfsGraph(u - arr[u], n, arr, visited)) {
             return true;
+        }
+        return false;
+    }
+
+    /**
+     * Approach II : Using Graph (BFS) Approach
+     *
+     * TC : O(n)
+     * SC : O(n) + O(n)
+     * - O(n) - 'visited' and 'queue' memory
+     */
+    public boolean canReachBFS(int[] arr, int start) {
+        int n = arr.length;
+        boolean[] visited = new boolean[n]; // SC : O(n)
+        Queue<Integer> queue = new LinkedList<>(); // SC : O(n)
+        queue.offer(start);
+        visited[start] = true;
+        while (!queue.isEmpty()) { // TC : O(n)
+            Integer u = queue.poll();
+            if (arr[u] == 0) {
+                return true;
+            }
+            int fwdIdx = u + arr[u];
+            int revIdx = u - arr[u];
+            if (fwdIdx < n && !visited[fwdIdx]) {
+                visited[fwdIdx] = true;
+                queue.offer(fwdIdx);
+            }
+            if (revIdx >= 0 && !visited[revIdx]) {
+                visited[revIdx] = true;
+                queue.offer(revIdx);
+            }
         }
         return false;
     }
