@@ -12,19 +12,16 @@ class Solution {
         Queue<Integer> queue = new LinkedList<>(); // SC : O(n)
         queue.offer(start);
         while (!queue.isEmpty()) { // TC : O(n)
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                Integer u = queue.poll();
-                if (u < 0 || u >= n || visited[u]) {
-                    continue;   
-                }
-                if (arr[u] == 0) {
-                    return true;
-                }
-                visited[u] = true;
-                queue.offer(u + arr[u]);
-                queue.offer(u - arr[u]);
+            Integer u = queue.poll();
+            if (u < 0 || u >= n || visited[u]) {
+                continue;   
             }
+            if (arr[u] == 0) {
+                return true;
+            }
+            visited[u] = true;
+            queue.offer(u + arr[u]);
+            queue.offer(u - arr[u]);
         }
         return false;
     }
