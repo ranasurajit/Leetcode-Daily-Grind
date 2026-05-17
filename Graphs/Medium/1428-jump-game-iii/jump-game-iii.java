@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach : Using Recursion (DFS + Visited) Approach
      *
-     * TC : O(2ⁿ)
+     * TC : O(n)
      * SC : O(n) + O(n)
      * - O(n) - visited array and recursion stack
      */
@@ -15,7 +15,7 @@ class Solution {
     /**
      * Using Recursion (DFS + Visited) Approach
      *
-     * TC : O(2ⁿ)
+     * TC : O(n)
      * SC : O(n)
      */
     private boolean solveRecursion(int idx, int n, int[] arr, boolean[] visited) {
