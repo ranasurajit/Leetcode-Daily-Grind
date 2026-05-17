@@ -11,17 +11,22 @@ class Solution {
         boolean[] visited = new boolean[n]; // SC : O(n)
         Queue<Integer> queue = new LinkedList<>(); // SC : O(n)
         queue.offer(start);
+        visited[start] = true;
         while (!queue.isEmpty()) { // TC : O(n)
             Integer u = queue.poll();
-            if (u < 0 || u >= n || visited[u]) {
-                continue;   
-            }
             if (arr[u] == 0) {
                 return true;
             }
-            visited[u] = true;
-            queue.offer(u + arr[u]);
-            queue.offer(u - arr[u]);
+            int fwdIdx = u + arr[u];
+            int revIdx = u - arr[u];
+            if (fwdIdx < n && !visited[fwdIdx]) {
+                visited[fwdIdx] = true;
+                queue.offer(fwdIdx);
+            }
+            if (revIdx >= 0 && !visited[revIdx]) {
+                visited[revIdx] = true;
+                queue.offer(revIdx);
+            }
         }
         return false;
     }
