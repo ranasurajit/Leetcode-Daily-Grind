@@ -23,34 +23,37 @@ class Solution {
          */
         boolean[] visited = new boolean[n];      // SC : O(n)
         // we will push { index, value, steps } in the Queue
-        Queue<int[]> queue = new LinkedList<>(); // SC : O(n)
-        queue.offer(new int[] { 0, 0 });
+        Queue<Integer> queue = new LinkedList<>(); // SC : O(n)
+        queue.offer(0);
+        int steps = 0;
         while (!queue.isEmpty()) { // TC : O(n) - we visit each nodes exactly once
-            int[] current = queue.poll();
-            int idx = current[0];
-            int steps = current[1];
-            if (visited[idx]) {
-                continue;
-            }
-            visited[idx] = true;
-            if (idx == n - 1) {
-                return steps;
-            }
-            if (idx + 1 < n && !visited[idx + 1]) {
-                queue.offer(new int[] { idx + 1, steps + 1 });
-            }
-            if (idx - 1 >= 0 && !visited[idx - 1]) {
-                queue.offer(new int[] { idx - 1, steps + 1 });
-            }
-            ArrayList<Integer> indices =
-                map.getOrDefault(arr[idx], new ArrayList<>());
-            for (Integer index : indices) {
-                if (index != idx && !visited[index]) {
-                    queue.offer(new int[] { index, steps + 1 });
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int node = queue.poll();
+                if (visited[node]) {
+                    continue;
                 }
+                visited[node] = true;
+                if (node == n - 1) {
+                    return steps;
+                }
+                if (node + 1 < n && !visited[node + 1]) {
+                    queue.offer(node + 1);
+                }
+                if (node - 1 >= 0 && !visited[node - 1]) {
+                    queue.offer(node - 1);
+                }
+                ArrayList<Integer> indices =
+                    map.getOrDefault(arr[node], new ArrayList<>());
+                for (Integer index : indices) {
+                    if (index != node && !visited[index]) {
+                        queue.offer(index);
+                    }
+                }
+                indices.clear();
             }
-            indices.clear();
+            steps++;
         }
-        return 0;
+        return steps;
     }
 }
