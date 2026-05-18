@@ -26,27 +26,27 @@ class Solution {
         Queue<Integer> queue = new LinkedList<>(); // SC : O(n)
         queue.offer(0);
         int steps = 0;
+        visited[0] = true;
         while (!queue.isEmpty()) { // TC : O(n) - we visit each nodes exactly once
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 int node = queue.poll();
-                if (visited[node]) {
-                    continue;
-                }
-                visited[node] = true;
                 if (node == n - 1) {
                     return steps;
                 }
                 if (node + 1 < n && !visited[node + 1]) {
+                    visited[node + 1] = true;
                     queue.offer(node + 1);
                 }
                 if (node - 1 >= 0 && !visited[node - 1]) {
+                    visited[node - 1] = true;
                     queue.offer(node - 1);
                 }
                 ArrayList<Integer> indices =
                     map.getOrDefault(arr[node], new ArrayList<>());
                 for (Integer index : indices) {
                     if (index != node && !visited[index]) {
+                        visited[index] = true;
                         queue.offer(index);
                     }
                 }
