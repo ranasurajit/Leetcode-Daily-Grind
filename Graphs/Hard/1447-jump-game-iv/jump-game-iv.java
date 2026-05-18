@@ -42,15 +42,16 @@ class Solution {
                     visited[node - 1] = true;
                     queue.offer(node - 1);
                 }
-                ArrayList<Integer> indices =
-                    map.getOrDefault(arr[node], new ArrayList<>());
-                for (Integer index : indices) {
-                    if (index != node && !visited[index]) {
-                        visited[index] = true;
-                        queue.offer(index);
+                ArrayList<Integer> indices = map.get(arr[node]);
+                if (indices != null) {
+                    for (Integer index : indices) {
+                        if (index != node && !visited[index]) {
+                            visited[index] = true;
+                            queue.offer(index);
+                        }
                     }
+                    indices.clear();
                 }
-                indices.clear();
             }
             steps++;
         }
