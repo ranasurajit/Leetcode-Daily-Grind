@@ -2,12 +2,16 @@ class Solution {
     /**
      * Approach II : Using Two Pointers Approach
      *
-     * TC : O(Min(m, n))
+     * TC : O(Min(m, n)), In worst case TC : O(m + n)
      * SC : O(1)
      */
     public int getCommon(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
+        if (nums1[m - 1] < nums2[0] || nums2[n - 1] < nums1[0]) {
+            // no common values possible
+            return -1;
+        }
         int i = 0; // pointer at the start of array 'nums1'
         int j = 0; // pointer at the start of array 'nums2'
         /**
@@ -42,7 +46,7 @@ class Solution {
          * 'nums1' array param always of greater size
          */
         if (m < n) {
-            return getCommon(nums2, nums1);
+            return getCommonUsingHashing(nums2, nums1);
         }
         for (int i = 0; i < n; i++) { // TC : O(n)
             set.add(nums2[i]);
