@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach II : Using Two Pointers Approach
      *
-     * TC : O(Min(m, n)), In worst case TC : O(m + n)
+     * TC : O(m + n)
      * SC : O(1)
      */
     public int getCommon(int[] nums1, int[] nums2) {
@@ -18,7 +18,7 @@ class Solution {
          * Since both the arrays are sorted so we can
          * use Two pointers approach to compare elements
          */
-        while (i < m && j < n) { // TC : O(Min(m, n))
+        while (i < m && j < n) { // TC : O(m + n)
             if (nums1[i] < nums2[j]) {
                 i++;
             } else if (nums1[i] > nums2[j]) {
