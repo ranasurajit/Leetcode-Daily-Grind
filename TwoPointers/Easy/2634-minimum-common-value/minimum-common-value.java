@@ -13,9 +13,9 @@ class Solution {
          * to minimize the storage, let's keep the 
          * 'nums1' array param always of greater size
          */
-        // if (m < n) {
-        //     return getCommon(nums2, nums1);
-        // }
+        if (m < n) {
+            return getCommon(nums2, nums1);
+        }
         for (int i = 0; i < n; i++) { // TC : O(n)
             set.add(nums2[i]);
         }
