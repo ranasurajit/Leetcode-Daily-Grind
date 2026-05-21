@@ -1,9 +1,9 @@
 class Solution {
     /**
-     * Approach I : Using Brute-Force (Comparing All Pairs + Two Pointers) Approach
+     * Approach II : Using Optimal (Trie) Approach
      *
      * TC : O(m x l + n x l) ~ O(m + n)
-     * SC : O(l) ~ O(1)
+     * SC : O(m x l) ~ O(m)
      * where l is the maximum digits of numbers in arr1 or arr2 = 9
      * as per constraint 1 <= arr1[i], arr2[i] <= 10⁸
      *
@@ -42,7 +42,6 @@ class Solution {
                 break;
             }
             prefixLength++;
-            current.length = prefixLength;
             current = current.children[idx];
         }
         return prefixLength;
@@ -68,11 +67,9 @@ class Solution {
 
 class TrieNode {
     TrieNode[] children;
-    int length;
 
     public TrieNode() {
         this.children = new TrieNode[10];
-        this.length = 0;
     }
 }
 
@@ -81,7 +78,7 @@ class SolutionBruteForce {
      * Approach I : Using Brute-Force (Comparing All Pairs + Two Pointers) Approach
      *
      * TC : O(m x n x l) ~ O(m x n)
-     * SC : O(l) ~ O(1)
+     * SC : O(m x l) ~ O(m)
      * where l is the maximum digits of numbers in arr1 or arr2 = 9
      * as per constraint 1 <= arr1[i], arr2[i] <= 10⁸
      *
