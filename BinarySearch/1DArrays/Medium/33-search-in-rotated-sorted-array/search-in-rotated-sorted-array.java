@@ -13,7 +13,7 @@ class Solution {
             int mid = low + (high - low) / 2;
             if (nums[mid] == target) {
                 return mid;
-            } else if (nums[mid] >= nums[high]) {
+            } else if (nums[low] <= nums[mid]) {
                 // left portion is sorted
                 if (target >= nums[low] && target < nums[mid]) {
                     high = mid - 1;
