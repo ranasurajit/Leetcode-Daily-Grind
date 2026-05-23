@@ -7,14 +7,9 @@ class Solution {
      */
     public boolean check(int[] nums) {
         int n = nums.length;
-        if (n <= 2) {
-            return true;
-        }
         int countFalls = 0;
-        int offset = 0;
-        for (int i = 1; i < n; i++) { // TC : O(n)
-            if (nums[i] < nums[i - 1]) {
-                offset = i;
+        for (int i = 0; i < n; i++) { // TC : O(n)
+            if (nums[i] > nums[(i + 1) % n]) {
                 countFalls++;
             }
         }
@@ -24,14 +19,6 @@ class Solution {
          * non-rotated, while if count is 1, then array
          * is sorted and rotated
          */
-        if (countFalls > 1) {
-            return false;
-        }
-        for (int i = offset + 1; i < n + offset; i++) { // TC : O(n)
-            if (nums[i % n] < nums[(i - 1 + n) % n]) {
-                return false;
-            }
-        }
-        return true;
+        return countFalls <= 1;
     }
 }
