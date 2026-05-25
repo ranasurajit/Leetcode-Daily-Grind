@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach IV : Using Tabulation Approach
      *
-     * TC : O(n), where r = Max Range(maxJump - minJump)
+     * TC : O(n)
      * SC : O(n)
      * - O(n) - dp memory
      *
