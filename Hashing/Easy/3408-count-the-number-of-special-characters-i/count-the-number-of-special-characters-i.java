@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach II : Using Bitmasking Approach
      *
-     * TC : O(n) + O(26) ~ O(n)
+     * TC : O(n)
      * SC : O(1)
      */
     public int numberOfSpecialChars(String word) {
@@ -17,14 +17,7 @@ class Solution {
                 upper = upper | (1 << (ch - 'A'));
             }
         }
-        int count = 0;
-        // count the set bits in both lower and upper
-        for (int i = 0; i < 26; i++) { // TC : O(26)
-            if (((lower >> i) & 1) > 0 && ((upper >> i) & 1) > 0){
-                count++;
-            }
-        }
-        return count;
+        return Integer.bitCount(lower & upper);
     }
 
     /**
