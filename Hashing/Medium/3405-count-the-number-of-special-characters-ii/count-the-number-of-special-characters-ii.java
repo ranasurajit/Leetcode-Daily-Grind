@@ -20,15 +20,12 @@ class Solution {
             char ch = word.charAt(i);
             int offset = -1;
             if (Character.isLowerCase(ch)) {
-                offset = ch - 'a';
-                int lastUpperIndex = upper[offset];
-                if (lastUpperIndex != -1 && lastUpperIndex < i) {
-                    lower[offset] = -1;
-                } else {
-                    lower[offset] = i;
-                }
+                lower[ch - 'a'] = i;
             } else {
-                upper[ch - 'A'] = i;
+                if (upper[ch - 'A'] == -1) {
+                    // capture 1st index of upper-case character
+                    upper[ch - 'A'] = i;
+                }
             }
         }
         /**
