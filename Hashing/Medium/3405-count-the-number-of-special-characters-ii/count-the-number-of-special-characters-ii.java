@@ -21,10 +21,11 @@ class Solution {
             int offset = -1;
             if (Character.isLowerCase(ch)) {
                 offset = ch - 'a';
-                lower[offset] = i;
                 int lastUpperIndex = upper[offset];
                 if (lastUpperIndex != -1 && lastUpperIndex < i) {
                     lower[offset] = -1;
+                } else {
+                    lower[offset] = i;
                 }
             } else {
                 upper[ch - 'A'] = i;
