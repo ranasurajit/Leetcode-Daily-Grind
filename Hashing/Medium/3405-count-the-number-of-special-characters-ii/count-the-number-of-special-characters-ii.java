@@ -18,12 +18,12 @@ class Solution {
         Arrays.fill(upper, -1);
         for (int i = 0; i < n; i++) { // TC : O(n)
             char ch = word.charAt(i);
-            int offset = -1;
             if (Character.isLowerCase(ch)) {
+                // capture last occurence index of lower-case character
                 lower[ch - 'a'] = i;
             } else {
                 if (upper[ch - 'A'] == -1) {
-                    // capture 1st index of upper-case character
+                    // capture first occurence index of upper-case character
                     upper[ch - 'A'] = i;
                 }
             }
