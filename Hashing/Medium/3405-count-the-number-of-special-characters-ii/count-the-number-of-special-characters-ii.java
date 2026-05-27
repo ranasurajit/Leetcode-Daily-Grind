@@ -15,9 +15,9 @@ class Solution {
          * -1 → invalid
          */
         int[] state = new int[26]; // SC : O(26)
+        int offset = -1;
         for (int i = 0; i < n; i++) { // TC : O(n)
             char ch = word.charAt(i);
-            int offset = -1;
             if (Character.isLowerCase(ch)) {
                 offset = ch - 'a';
                 if (state[offset] == 0) {
