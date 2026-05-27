@@ -18,7 +18,7 @@ class Solution {
         int offset = -1;
         for (int i = 0; i < n; i++) { // TC : O(n)
             char ch = word.charAt(i);
-            if (Character.isLowerCase(ch)) {
+            if (ch >= 'a' && ch <= 'z') {
                 offset = ch - 'a';
                 if (state[offset] == 0) {
                     state[offset] = 1;
