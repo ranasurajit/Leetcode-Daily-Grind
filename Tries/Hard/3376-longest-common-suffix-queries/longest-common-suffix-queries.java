@@ -1,4 +1,6 @@
 class Solution {
+    private int minLength;
+    private int minIdx = -1;
     /**
      * Approach : Using Trie Node Search Approach
      *
@@ -14,8 +16,8 @@ class Solution {
          * into Trie such that we start from the last 
          * index of every word
          */
-        int minLength = Integer.MAX_VALUE;
-        int minIdx = -1;
+        minLength = Integer.MAX_VALUE;
+        minIdx = -1;
         for (int i = 0; i < m; i++) { // TC : O(m)
             String word = wordsContainer[i];
             insertWord(root, word, i); // TC : O(l), SC : O(l)
@@ -69,8 +71,8 @@ class Solution {
     private void insertWord(TrieNode root, String word, int index) {
         int n = word.length();
         TrieNode current = root;
-        current.length = n;
-        current.index = index;
+        current.length = minLength;
+        current.index = minIdx;
         for (int i = n - 1; i >= 0; i--) { // TC : O(l)
             int idx = word.charAt(i) - 'a';
             if (current.children[idx] == null) {
@@ -87,8 +89,6 @@ class Solution {
             current = current.children[idx];
         }
     }
-
-
 }
 
 class TrieNode {
