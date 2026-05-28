@@ -20,11 +20,11 @@ class Solution {
         minIdx = -1;
         for (int i = 0; i < m; i++) { // TC : O(m)
             String word = wordsContainer[i];
-            insertWord(root, word, i); // TC : O(l), SC : O(l)
             if (word.length() < minLength) {
                 minLength = word.length();
                 minIdx = i;
             }
+            insertWord(root, word, i); // TC : O(l), SC : O(l)
         }
         /**
          * we will to search words from wordsQuery
@@ -71,8 +71,8 @@ class Solution {
     private void insertWord(TrieNode root, String word, int index) {
         int n = word.length();
         TrieNode current = root;
-        current.length = 0;
-        current.index = -1;
+        current.length = minLength;
+        current.index = minIdx;
         for (int i = n - 1; i >= 0; i--) { // TC : O(l)
             int idx = word.charAt(i) - 'a';
             if (current.children[idx] == null) {
