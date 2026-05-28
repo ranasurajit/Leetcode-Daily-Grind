@@ -81,7 +81,8 @@ class Solution {
                 current.children[idx].index = index;
             } else {
                 int prevLen = current.children[idx].length;
-                if (n < prevLen) {
+                if (n < prevLen || 
+                    (n == prevLen && index < current.children[idx].index)) {
                     current.children[idx].length = n;
                     current.children[idx].index = index;
                 }
