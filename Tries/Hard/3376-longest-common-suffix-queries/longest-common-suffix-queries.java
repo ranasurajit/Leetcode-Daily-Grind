@@ -1,6 +1,7 @@
 class Solution {
     private int minLength;
     private int minIdx = -1;
+
     /**
      * Approach : Using Trie Node Search Approach
      *
@@ -20,11 +21,14 @@ class Solution {
         minIdx = -1;
         for (int i = 0; i < m; i++) { // TC : O(m)
             String word = wordsContainer[i];
-            insertWord(root, word, i); // TC : O(l), SC : O(l)
             if (word.length() < minLength) {
                 minLength = word.length();
                 minIdx = i;
             }
+        }
+        for (int i = 0; i < m; i++) { // TC : O(m)
+            String word = wordsContainer[i];
+            insertWord(root, word, i); // TC : O(l), SC : O(l)
         }
         /**
          * we will to search words from wordsQuery
