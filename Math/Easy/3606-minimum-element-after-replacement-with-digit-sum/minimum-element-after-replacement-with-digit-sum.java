@@ -2,15 +2,14 @@ class Solution {
     /**
      * Approach : Using Math + Array Simulation Approach
      *
-     * TC : O(n x log10(Max(nums)))
+     * TC : O(n x d) ~ O(n x 5) ~ O(n) as 1 <= nums[i] <= 10⁴
      * SC : O(1)
      */
     public int minElement(int[] nums) {
         int n = nums.length;
         int min = Integer.MAX_VALUE;
         for (int num : nums) { // TC : O(n)
-            int len = (int) Math.log10(num) + 1;
-            int replacedNum = len > 1 ? getDigitSum(num) : num; // TC : O(log10(num))
+            int replacedNum = getDigitSum(num); // TC : O(d)
             min = Math.min(min, replacedNum);
         }
         return min;
@@ -19,7 +18,7 @@ class Solution {
     /**
      * Using Math Approach
      *
-     * TC : O(log10(num))
+     * TC : O(d)
      * SC : O(1)
      */
     private int getDigitSum(int num) {
