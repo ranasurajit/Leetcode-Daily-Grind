@@ -1,13 +1,44 @@
 class Solution {
     /**
-     * Approach II : Using Optimal (Binary Search) Approach
+     * Approach III : Using Optimal (Array Prefix-Suffix) Approach
+     *
+     * TC : O(n) + O(m) + O(n) ~ O(m + n)
+     * SC : O(1) 
+     */
+    public int earliestFinishTime(int[] landStartTime, int[] landDuration,
+        int[] waterStartTime, int[] waterDuration) {
+        int n = landStartTime.length;
+        int m = waterStartTime.length;
+        int minEndLand = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) { // TC : O(n)
+            minEndLand = Math.min(minEndLand, landStartTime[i] + landDuration[i]);
+        }
+        int minEndWater = Integer.MAX_VALUE;
+        // land to water
+        int minFinish = Integer.MAX_VALUE;
+        for (int i = 0; i < m; i++) { // TC : O(m)
+            minEndWater = Math.min(minEndWater, 
+                waterStartTime[i] + waterDuration[i]);
+            minFinish = Math.min(minFinish,
+                Math.max(minEndLand, waterStartTime[i]) + waterDuration[i]);
+        }
+        // water to land
+        for (int i = 0; i < n; i++) { // TC : O(n)
+            minFinish = Math.min(minFinish,
+                Math.max(minEndWater, landStartTime[i]) + landDuration[i]);
+        }
+        return minFinish;
+    }
+
+    /**
+     * Approach II : Using Better (Binary Search) Approach
      *
      * TC : O(n) + O(m) + O(n x log(n)) +
      *      O(m x log(m)) + O(m x log(n)) + O(n x log(m)) 
      *      ~ O((m + n) x (log(m) + log(n)))
      * SC : O(m + n) 
      */
-    public int earliestFinishTime(int[] landStartTime, int[] landDuration,
+    public int earliestFinishTimeBetter(int[] landStartTime, int[] landDuration,
         int[] waterStartTime, int[] waterDuration) {
         int n = landStartTime.length;
         int m = waterStartTime.length;
