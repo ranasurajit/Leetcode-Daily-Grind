@@ -1,5 +1,29 @@
 class Solution {
     /**
+     * Approach III : Using Dynamic Programming Approach
+     *
+     * TC : O(num2) ~ O(r)
+     * SC : O(num2)
+     */
+    public int totalWaviness(int num1, int num2) {
+        int max = num2 + 1;
+        int[] waviArr = new int[max]; // SC : O(num2)
+        int[] dp = new int[max];      // SC : O(num2)
+        for (int i = 100; i < max; i++) { // TC : O(num2)
+            int d1 = i % 10; // unit
+            int d2 = (i / 10) % 10; // tens
+            int d3 = (i / 100) % 10; // hundreds
+            int waviness = 0;
+            if ((d2 > d1 && d2 > d3) || (d2 < d1 && d2 < d3)) {
+                waviness++;
+            }
+            dp[i] = dp[i / 10] + waviness;
+            waviArr[i] = waviArr[i - 1] + dp[i];
+        }
+        return waviArr[num2] - waviArr[num1 - 1];
+    }
+
+    /**
      * Approach II : Using Math + Simulation (No Extra Space) Approach
      *
      * TC : O(r x d) ~ O(r)
@@ -9,7 +33,7 @@ class Solution {
      * d = Max(1 + log10(num1), 1 + log10(num2)) ~ 5
      * as 1 <= num1 <= num2 <= 105
      */
-    public int totalWaviness(int num1, int num2) {
+    public int totalWavinessBetter(int num1, int num2) {
         int totalWaviness = 0;
         for (int i = num1; i <= num2; i++) { // TC : O(r)
             totalWaviness += countWaviness(i); // TC : O(d), SC : O(1)
