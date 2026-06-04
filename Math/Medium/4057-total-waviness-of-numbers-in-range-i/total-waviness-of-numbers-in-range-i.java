@@ -1,6 +1,51 @@
 class Solution {
     /**
-     * Approach : Using Math + Simulation Approach
+     * Approach II : Using Math + Simulation (No Extra Space) Approach
+     *
+     * TC : O(r x d) ~ O(r)
+     * SC : O(1)
+     *
+     * where r = num2 - num1 + 1,
+     * d = Max(1 + log10(num1), 1 + log10(num2)) ~ 5
+     * as 1 <= num1 <= num2 <= 105
+     */
+    public int totalWaviness(int num1, int num2) {
+        int totalWaviness = 0;
+        for (int i = num1; i <= num2; i++) { // TC : O(r)
+            totalWaviness += countWaviness(i); // TC : O(d), SC : O(1)
+        }
+        return totalWaviness;
+    }
+
+    /**
+     * Using Math Approach
+     *
+     * TC : O(d)
+     * SC : O(1)
+     */
+    private int countWaviness(int num) {
+        int digits = 0;
+        int prev = -1;
+        int current = -1;
+        int next = -1;
+        int waviness = 0;
+        while (num > 0) { // TC : O(d)
+            digits++;
+            next = num % 10;
+            num = num / 10;
+            if (digits >= 3 && 
+                ((current > prev && current > next) ||
+                (current < prev && current < next))) {
+                waviness++;
+            }
+            prev = current;
+            current = next;
+        }
+        return waviness;
+    }
+
+    /**
+     * Approach I : Using Math + Simulation (Extra Space) Approach
      *
      * TC : O(r x d) ~ O(r)
      * SC : O(r x d) ~ O(r)
@@ -9,7 +54,7 @@ class Solution {
      * d = Max(1 + log10(num1), 1 + log10(num2)) ~ 5
      * as 1 <= num1 <= num2 <= 105
      */
-    public int totalWaviness(int num1, int num2) {
+    public int totalWavinessBruteForce(int num1, int num2) {
         int len1 = 1 + (int) Math.log10(num1);
         int len2 = 1 + (int) Math.log10(num2);
         if (len1 < 3 && len2 < 3) {
