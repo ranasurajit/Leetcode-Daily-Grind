@@ -1,11 +1,33 @@
 class Solution {
     /**
-     * Approach II : Using Optimal (Running Prefix-Suffix Array) Approach
+     * Approach III : Using Optimal (Prefix Array Clean) Approach
      *
      * TC : O(n) + O(n) ~ O(n)
      * SC : O(1)
      */
     public int[] leftRightDifference(int[] nums) {
+        int n = nums.length;
+        int totalSum = 0;
+        for (int i = 0; i < n; i++) { // TC : O(n)
+            totalSum += nums[i];
+        }
+        int[] diff = new int[n];
+        int leftSum = 0;
+        for (int i = 0; i < n; i++) { // TC : O(n)
+            diff[i] = Math.abs(totalSum - leftSum - nums[i]);
+            leftSum += nums[i];
+            totalSum -= nums[i];
+        }
+        return diff;
+    }
+
+    /**
+     * Approach II : Using Better (Running Prefix-Suffix Array) Approach
+     *
+     * TC : O(n) + O(n) ~ O(n)
+     * SC : O(1)
+     */
+    public int[] leftRightDifferenceBetter(int[] nums) {
         int n = nums.length;
         int[] diff = new int[n];
         int leftSum = 0;
