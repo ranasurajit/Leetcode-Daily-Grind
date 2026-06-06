@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach II : Using Running Prefix-Suffix Array Approach
+     * Approach II : Using Optimal (Running Prefix-Suffix Array) Approach
      *
      * TC : O(n) + O(n) ~ O(n)
      * SC : O(1)
