@@ -14,9 +14,9 @@ class Solution {
         int[] diff = new int[n];
         int leftSum = 0;
         for (int i = 0; i < n; i++) { // TC : O(n)
-            diff[i] = Math.abs(totalSum - leftSum - nums[i]);
+            int rightSum = totalSum - leftSum - nums[i];
+            diff[i] = Math.abs(leftSum - rightSum);
             leftSum += nums[i];
-            totalSum -= nums[i];
         }
         return diff;
     }
