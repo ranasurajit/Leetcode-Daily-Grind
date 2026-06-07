@@ -15,12 +15,46 @@
  */
 class Solution {
     /**
-     * Approach : Using Hashing + DFS Approach
+     * Approach II : Using Hashing Approach
+     *
+     * TC : O(n) + O(n) ~ O(n)
+     * SC : O(n) + O(n) ~ O(n)
+     */
+    public TreeNode createBinaryTree(int[][] descriptions) {
+        /**
+         * We will store { parent/child, TreeNode } in the HashMap
+         */
+        Map<Integer, TreeNode> map = new HashMap<>(); // SC : O(n)
+        Set<Integer> children = new HashSet<>(); // SC: O(n)
+        for (int[] edge : descriptions) { // TC : O(n)
+            int parent = edge[0];
+            int child = edge[1];
+            int isLeft = edge[2];
+            map.putIfAbsent(parent, new TreeNode(parent));
+            map.putIfAbsent(child, new TreeNode(child));
+            if (isLeft == 1) {
+                map.get(parent).left = map.get(child);
+            } else {
+                map.get(parent).right = map.get(child);
+            }
+            children.add(child);
+        }
+        for (Integer key : map.keySet()) { // TC : O(n)
+            if (!children.contains(key)) {
+                // this is our root node
+                return map.get(key);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Approach I : Using Brute-Force (Hashing + DFS) Approach
      *
      * TC : O(n) + O(n) + O(n) ~ O(n)
      * SC : O(n) + O(n) ~ O(n)
      */
-    public TreeNode createBinaryTree(int[][] descriptions) {
+    public TreeNode createBinaryTreeBruteForce(int[][] descriptions) {
         /**
          * We will store { parent, ArrayList<[child, isLeft]> } in the HashMap
          */
