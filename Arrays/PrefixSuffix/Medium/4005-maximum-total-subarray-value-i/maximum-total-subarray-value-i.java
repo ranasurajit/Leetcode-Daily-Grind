@@ -1,11 +1,30 @@
 class Solution {
     /**
-     * Approach : Using Prefix-Array Approach
+     * Approach II : Using Prefix-Array (Without Extra Space) Approach
+     *
+     * TC : O(n)
+     * SC : O(1)
+     */
+    public long maxTotalValue(int[] nums, int k) {
+        int n = nums.length;
+        long min = Long.MAX_VALUE;
+        long max = Long.MIN_VALUE;
+        long maxDiff = Long.MIN_VALUE;
+        for (int i = 0; i < n; i++) { // TC : O(n)
+            min = Math.min(min, nums[i]);
+            max = Math.max(max, nums[i]);
+            maxDiff = Math.max(maxDiff, max - min);
+        }
+        return k * maxDiff;
+    }
+
+    /**
+     * Approach I : Using Prefix-Array (With Extra Space) Approach
      *
      * TC : O(n) + O(n) ~ O(n)
      * SC : O(n) + O(n) ~ O(n)
      */
-    public long maxTotalValue(int[] nums, int k) {
+    public long maxTotalValueBruteForce(int[] nums, int k) {
         int n = nums.length;
         long[] min = new long[n]; // SC : O(n)
         long[] max = new long[n]; // SC : O(n)
