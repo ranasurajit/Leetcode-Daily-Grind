@@ -8,22 +8,24 @@ class Solution {
      * SC : O(n) + O(n) + O(n) + O(log(n)) ~ O(n)
      */
     public int assignEdgeWeights(int[][] edges) {
-        Map<Integer, ArrayList<Integer>> adj = 
-            createGraph(edges); // TC : O(n), SC : O(n)
+        int n = edges.length + 1;
+        ArrayList<Integer>[] adj = createGraph(edges, n); // TC : O(n), SC : O(n)
         /**
          * we need to perform BFS to find the deepest node
          */
-        Set<Integer> visited = new HashSet<>(); // SC : O(n)
+        boolean[] visited = new boolean[n + 1]; // SC : O(n)
         ArrayDeque<Integer> queue = new ArrayDeque<>(); // SC : O(n)
         queue.offer(1);
-        visited.add(1);
+        visited[0] = true;
+        visited[1] = true; // marking start node visited
         long level = 0L;
         while (!queue.isEmpty()) { // TC : O(n)
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 Integer u = queue.poll();
-                for (Integer v : adj.get(u)) { // TC : O(n)
-                    if (visited.add(v)) {
+                for (Integer v : adj[u]) { // TC : O(n)
+                    if (!visited[v]) {
+                        visited[v] = true;
                         queue.offer(v);
                     }
                 }
@@ -63,19 +65,17 @@ class Solution {
     /**
      * Using Hashing Approach
      *
-     * TC : O(2 x e) ~ O(n)
-     * SC : O(v + e) ~ O(n)
-     *
-     * as v = n and e = (n - 1)
+     * TC : O(n) + O(n - 1) ~ O(n)
+     * SC : O(n)
      */
-    private Map<Integer, ArrayList<Integer>> createGraph(int[][] edges) {
-        Map<Integer, ArrayList<Integer>> adj = new HashMap<>();
-        for (int[] edge : edges) {
-            int u = edge[0];
-            int v = edge[1];
-            // undirected edges
-            adj.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
-            adj.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+    private ArrayList<Integer>[] createGraph(int[][] edges, int n) {
+        ArrayList<Integer>[] adj = new ArrayList[n + 1]; // SC : O(n)
+        for (int i = 1; i <= n; i++) { // TC : O(n)
+            adj[i] = new ArrayList<>();
+        }
+        for (int[] edge : edges) { // TC : O(n - 1)
+            adj[edge[0]].add(edge[1]);
+            adj[edge[1]].add(edge[0]);
         }
         return adj;
     }
