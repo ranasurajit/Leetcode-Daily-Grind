@@ -14,7 +14,7 @@ class Solution {
          * we need to perform BFS to find the deepest node
          */
         Set<Integer> visited = new HashSet<>(); // SC : O(n)
-        Queue<Integer> queue = new LinkedList<>(); // SC : O(n)
+        ArrayDeque<Integer> queue = new ArrayDeque<>(); // SC : O(n)
         queue.offer(1);
         visited.add(1);
         long level = 0L;
