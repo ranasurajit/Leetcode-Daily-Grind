@@ -18,7 +18,7 @@ class Solution {
         queue.offer(1);
         visited[0] = true;
         visited[1] = true; // marking start node visited
-        long level = 0L;
+        int level = 0;
         while (!queue.isEmpty()) { // TC : O(n)
             int size = queue.size();
             for (int i = 0; i < size; i++) {
@@ -36,7 +36,7 @@ class Solution {
          * weight of 1 contributes to odd sum if its occurence is odd times
          * weight of 2 contributes to even sum always
          */
-        long depth = level - 1;
+        int depth = level - 1;
         return (int) modPower(2, depth - 1); // TC : O(log(n)), SC : O(log(n))
     }
 
@@ -46,7 +46,7 @@ class Solution {
      * TC : O(log(n))
      * SC : O(log(n))
      */
-    private long modPower(long x, long n) {
+    private long modPower(long x, int n) {
         if (n == 0) {
             return 1;
         }
