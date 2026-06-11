@@ -22,13 +22,8 @@ class Solution {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 Integer u = queue.poll();
-                ArrayList<Integer> ngbr = adj.get(u);
-                if (ngbr == null) {
-                    continue;
-                }
-                for (Integer v : ngbr) { // TC : O(n)
-                    if (!visited.contains(v)) {
-                        visited.add(v);
+                for (Integer v : adj.get(u)) { // TC : O(n)
+                    if (visited.add(v)) {
                         queue.offer(v);
                     }
                 }
@@ -40,7 +35,7 @@ class Solution {
          * weight of 2 contributes to even sum always
          */
         long depth = level - 1;
-        return (int) modPower(2, depth - 1) % mod; // TC : O(log(n)), SC : O(log(n))
+        return (int) modPower(2, depth - 1); // TC : O(log(n)), SC : O(log(n))
     }
 
     /**
