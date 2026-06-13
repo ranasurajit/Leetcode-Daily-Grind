@@ -15,8 +15,7 @@ class Solution {
             for (int i = 0; i < len; i++) { // TC : O(l)
                 sum += weights[word.charAt(i) - 'a'];
             }
-            int charIndex = 25 - (sum % 26);
-            sb.append((char) (charIndex + 'a'));
+            sb.append((char) ('z' - (sum % 26)));
         }
         return sb.toString();
     }
