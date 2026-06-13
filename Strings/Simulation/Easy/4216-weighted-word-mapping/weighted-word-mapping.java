@@ -10,10 +10,9 @@ class Solution {
     public String mapWordWeights(String[] words, int[] weights) {
         StringBuilder sb = new StringBuilder(); // SC : O(n)
         for (String word : words) { // TC : O(n)
-            int len = word.length();
             int sum = 0;
-            for (int i = 0; i < len; i++) { // TC : O(l)
-                sum += weights[word.charAt(i) - 'a'];
+            for (char ch : word.toCharArray()) { // TC : O(l)
+                sum += weights[ch - 'a'];
             }
             sb.append((char) ('z' - (sum % 26)));
         }
