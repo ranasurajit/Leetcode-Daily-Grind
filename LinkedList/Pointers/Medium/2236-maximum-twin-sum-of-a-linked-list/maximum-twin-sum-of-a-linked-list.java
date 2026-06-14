@@ -10,12 +10,47 @@
  */
 class Solution {
     /**
-     * Approach : Using Two Pointers Approach
+     * Approach II : Using Two Pointers (Without Partitioning) Approach
      *
      * TC : O(3 x (n / 2)) ~ O(n)
      * SC : O(1) 
      */
     public int pairSum(ListNode head) {
+        /**
+         * we are going to find the mid-point of
+         * the LinkedList to compute pair node sum
+         */
+        ListNode prevMidNode = getPrevMidLL(head); // TC : O(n / 2), SC : O(1)
+        /**
+         * we will reverse the LinkedList at the mid
+         * of the LinkedList without partitioning it
+         */
+        ListNode midNode =
+            reverseLL(prevMidNode.next); // TC : O(n / 2), SC : O(1)
+        /**
+         * now we can traverse from both LinkedLists to find
+         * maximum twin sum of nodes from both pointers
+         */
+        ListNode current1 = head;
+        ListNode current2 = midNode;
+        int currentSum = 0;
+        int maxSum = 0; // as 1 <= Node.val <= 10⁵
+        while (current2 != null) { // TC : O(n / 2)
+            currentSum = current1.val + current2.val;
+            maxSum = Math.max(maxSum, currentSum);
+            current1 = current1.next;
+            current2 = current2.next;
+        }
+        return maxSum;
+    }
+
+    /**
+     * Approach I : Using Two Pointers (With Partitioning) Approach
+     *
+     * TC : O(3 x (n / 2)) ~ O(n)
+     * SC : O(1) 
+     */
+    public int pairSumPartitionApproach(ListNode head) {
         if (head == null) {
             return 0;
         }
@@ -26,6 +61,10 @@ class Solution {
          * above edge cases is not required as per constraints
          * which says "The number of nodes in the list is an 
          * even integer in the range [2, 105]"
+         */
+         /**
+         * we are going to find the mid-point of
+         * the LinkedList to compute pair node sum
          */
         ListNode prevMidNode = getPrevMidLL(head); // TC : O(n / 2), SC : O(1)
         ListNode midNode = prevMidNode.next;
