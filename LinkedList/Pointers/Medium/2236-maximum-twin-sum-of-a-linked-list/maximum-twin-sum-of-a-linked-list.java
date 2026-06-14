@@ -40,8 +40,7 @@ class Solution {
         int currentSum = 0;
         int maxSum = 0; // as 1 <= Node.val <= 10⁵
         while (second != null) { // TC : O(n / 2)
-            currentSum = first.val + second.val;
-            maxSum = Math.max(maxSum, currentSum);
+            maxSum = Math.max(maxSum, first.val + second.val);
             first = first.next;
             second = second.next;
         }
