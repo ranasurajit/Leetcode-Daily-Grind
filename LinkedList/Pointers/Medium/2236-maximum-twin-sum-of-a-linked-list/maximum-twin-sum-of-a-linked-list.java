@@ -20,26 +20,30 @@ class Solution {
          * we are going to find the mid-point of
          * the LinkedList to compute pair node sum
          */
-        ListNode prevMidNode = getPrevMidLL(head); // TC : O(n / 2), SC : O(1)
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) { // TC : O(n / 2)
+            slow = slow.next;
+            fast = fast.next.next;
+        }
         /**
          * we will reverse the LinkedList at the mid
          * of the LinkedList without partitioning it
+         * mid node is the slow pointer
          */
-        ListNode midNode =
-            reverseLL(prevMidNode.next); // TC : O(n / 2), SC : O(1)
+        ListNode second = reverseLL(slow); // TC : O(n / 2), SC : O(1)
         /**
          * now we can traverse from both LinkedLists to find
          * maximum twin sum of nodes from both pointers
          */
-        ListNode current1 = head;
-        ListNode current2 = midNode;
+        ListNode first = head;
         int currentSum = 0;
         int maxSum = 0; // as 1 <= Node.val <= 10⁵
-        while (current2 != null) { // TC : O(n / 2)
-            currentSum = current1.val + current2.val;
+        while (second != null) { // TC : O(n / 2)
+            currentSum = first.val + second.val;
             maxSum = Math.max(maxSum, currentSum);
-            current1 = current1.next;
-            current2 = current2.next;
+            first = first.next;
+            second = second.next;
         }
         return maxSum;
     }
