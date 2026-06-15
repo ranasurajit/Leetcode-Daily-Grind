@@ -28,8 +28,8 @@ class Solution {
             fast = fast.next.next;
         }
         /**
-         * here 'slow' pointer is the mid of LinkedList and
-         * 'prev' pointer points to next of mid of LinkedList
+         * here 'slow' pointer is the middle node of LinkedList and
+         * 'prev' pointer is the node prior to middle node of LinkedList
          */
         prev.next = slow.next;
         return head;
