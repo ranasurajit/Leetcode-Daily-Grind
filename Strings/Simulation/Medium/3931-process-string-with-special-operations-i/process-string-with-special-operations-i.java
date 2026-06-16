@@ -2,8 +2,8 @@ class Solution {
     /**
      * Approach : Using String Simulation Approach
      *
-     * TC : O(n²)
-     * SC : O(n²)
+     * TC : O(2ⁿ)
+     * SC : O(2ⁿ)
      */
     public String processStr(String s) {
         int n = s.length();
@@ -12,15 +12,15 @@ class Solution {
             char ch = s.charAt(i);
             if (ch == '*') {
                 if (sb.length() > 0) {
-                    sb.setLength(sb.length() - 1);
+                    sb.setLength(sb.length() - 1); // TC : O(1)
                 }
             } else if (ch == '#') {
-                sb.append(sb.toString());
+                sb.append(sb.toString()); // TC : O(k)
             } else if (ch == '%') {
-                sb = sb.reverse(); // TC : O(n)
+                sb.reverse(); // TC : O(k)
             } else {
-                // ch is lowercase letter
-                sb.append(ch);
+                // ch is lowercase letter 
+                sb.append(ch); // TC : O(1)
             }
         }
         return sb.toString();
