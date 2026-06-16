@@ -1,5 +1,4 @@
 class Solution {
-    private static final int LIMIT = (int) 1e8;
     /**
      * Approach II : Using Optimal (Lazy Deque and Reverse Flag) Approach
      *
@@ -8,6 +7,7 @@ class Solution {
      */
     public String processStr(String s) {
         int n = s.length();
+        int LIMIT = (int) 1e8;
         Deque<Character> deque = new ArrayDeque<>();
         boolean isReversed = false;
         for (char ch : s.toCharArray()) { // TC : O(n)
