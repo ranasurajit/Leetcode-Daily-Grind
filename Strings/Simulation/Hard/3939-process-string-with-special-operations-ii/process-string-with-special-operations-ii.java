@@ -1,4 +1,10 @@
 class Solution {
+    /**
+     * Approach : Using String Simulation (Reverse Tracking) Approach
+     *
+     * TC : O(n) + O(n) ~ O(n)
+     * SC : O(1)
+     */
     public char processStr(String s, long k) {
         int n = s.length();
         /**
