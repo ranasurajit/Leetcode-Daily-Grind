@@ -15,7 +15,9 @@ class Solution {
                 continue;
             }
             if (ch == '*') {
-                L = Math.max(0, L - 1);
+                if (L > 0) {
+                    L--;
+                }
             } else if (ch == '#') {
                 L = 2 * L;
             } else {
@@ -23,7 +25,7 @@ class Solution {
                 L++;
             }
         }
-        if (L == 0L || k >= L) {
+        if (k >= L) {
             return '.';
         }
         /**
@@ -46,10 +48,10 @@ class Solution {
                 k = L - k - 1;
             } else {
                 // lowercase English letters, so k is decremented and no change in k
-                if (k == L - 1) {
-                    return ch;
-                }
                 L--;
+            }
+            if (k == L) {
+                return ch;
             }
         }
         return '.';
