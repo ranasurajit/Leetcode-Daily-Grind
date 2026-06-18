@@ -21,6 +21,7 @@ class Solution {
          * 360 degrees = 12 x 60 mintes so, per minutes,
          * degree increases by 0.5 degrees
          */
+        hour = hour % 12; // offsetting with 12
         double minuteDegrees = minutes * 6;
         double hourDegrees = 30 * hour + minutes * 0.5;
         double diff = Math.abs(hourDegrees - minuteDegrees);
