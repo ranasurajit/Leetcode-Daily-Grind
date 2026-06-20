@@ -7,32 +7,60 @@ class Solution {
      */
     public int maxBuilding(int n, int[][] restrictions) {
         int m = restrictions.length;
-        int[][] arr = new int[m + 2][2]; // SC : O(m)
-        arr[0] = new int[]{1, 0};
+        int[][] resList = new int[m + 2][2]; // SC : O(m)
+        // added index '1' building
+        resList[0][0] = 1;
+        resList[0][1] = 0;
         for (int i = 0; i < m; i++) { // TC : O(m)
-            arr[i + 1] = restrictions[i];
+            int[] res = restrictions[i];
+            resList[i + 1][0] = res[0];
+            resList[i + 1][1] = res[1];
         }
-        arr[m + 1] = new int[]{n, n - 1};
-        Arrays.sort(arr, (a, b) -> a[0] - b[0]); // TC : O(m x log(m))
+        // maximum possible height of index 'n' building is (n - 1)
+        resList[m + 1][0] = n;
+        resList[m + 1][1] = n - 1;
+        /**
+         * sort the 'resList' in ascending order of index
+         */
+        Arrays.sort(resList, (a, b) -> a[0] - b[0]); // TC : O(m x log(m))
+        /**
+         * scanning from left to right to keep setting the 
+         * probable heights in restrictions from left to right
+         */
         int size = m + 2;
-        
-        // forward
         for (int i = 1; i < size; i++) { // TC : O(m)
-            int dist = arr[i][0] - arr[i - 1][0];
-            arr[i][1] = Math.min(arr[i][1], arr[i - 1][1] + dist);
+            int dist = resList[i][0] - resList[i - 1][0];
+            resList[i][1] = Math.min(resList[i][1], resList[i - 1][1] + dist);
         }
-        
-        // backward
+        /**
+         * we will now scan from right to left to validate and
+         * solidify the heights restrictions assigned in previous scan
+         */
         for (int i = size - 2; i >= 0; i--) { // TC : O(m)
-            int dist = arr[i + 1][0] - arr[i][0];
-            arr[i][1] = Math.min(arr[i][1], arr[i + 1][1] + dist);
+            int dist = resList[i + 1][0] - resList[i][0];
+            resList[i][1] = Math.min(resList[i][1], resList[i + 1][1] + dist);
         }
+        // compute peaks between two restricting indices
         int maxHeight = 0;
         for (int i = 1; i < size; i++) { // TC : O(m)
-            int dist = arr[i][0] - arr[i - 1][0];
-            int h1 = arr[i - 1][1];
-            int h2 = arr[i][1];
-            int peak = (h1 + h2 + dist) / 2;
+            int idx1 = resList[i - 1][0];
+            int h1 = resList[i - 1][1];
+            int idx2 = resList[i][0];
+            int h2 = resList[i][1];
+            /**
+             * current peak computation:
+             * left (idx1, h1), right (idx2, h2)
+             * for same peak towards right x is travelled
+             * at peak, height = (h1 + x) for left
+             * for same peak towards right distance = dist - x
+             * at peak, height = (h2 + dist - x) for left
+             * so, h1 + x = h2 + dist - x, so, 2x = (h2 - h1) + dist
+             * so, x = ((h2 - h1) + dist) / 2,
+             * so, peak = h1 + x = h1 + ((h2 - h1) + dist) / 2
+             * so, peak = (h1 + h2 + dist) / 2
+             * where dist = (idx2 - idx1)
+             */
+            int peak = (h1 + h2 + (idx2 - idx1)) / 2;
             maxHeight = Math.max(maxHeight, peak);
         }
         return maxHeight;
@@ -89,8 +117,8 @@ class Solution {
             int h1 = resList.get(i - 1)[1];
             int idx2 = resList.get(i)[0];
             int h2 = resList.get(i)[1];
-            // current peak
             /**
+             * current peak computation:
              * left (idx1, h1), right (idx2, h2)
              * for same peak towards right x is travelled
              * at peak, height = (h1 + x) for left
