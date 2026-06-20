@@ -1,11 +1,50 @@
 class Solution {
     /**
-     * Approach : Using Greedy + Math + Sorting Approach
+     * Approach II : Using Greedy + Math + Sorting Approach
      *
      * TC : O(4 x m) + O(m x log(m)) ~ O(m x log(m))
      * SC : O(m)
      */
     public int maxBuilding(int n, int[][] restrictions) {
+        int m = restrictions.length;
+        int[][] arr = new int[m + 2][2]; // SC : O(m)
+        arr[0] = new int[]{1, 0};
+        for (int i = 0; i < m; i++) { // TC : O(m)
+            arr[i + 1] = restrictions[i];
+        }
+        arr[m + 1] = new int[]{n, n - 1};
+        Arrays.sort(arr, (a, b) -> a[0] - b[0]); // TC : O(m x log(m))
+        int size = m + 2;
+        
+        // forward
+        for (int i = 1; i < size; i++) { // TC : O(m)
+            int dist = arr[i][0] - arr[i - 1][0];
+            arr[i][1] = Math.min(arr[i][1], arr[i - 1][1] + dist);
+        }
+        
+        // backward
+        for (int i = size - 2; i >= 0; i--) { // TC : O(m)
+            int dist = arr[i + 1][0] - arr[i][0];
+            arr[i][1] = Math.min(arr[i][1], arr[i + 1][1] + dist);
+        }
+        int maxHeight = 0;
+        for (int i = 1; i < size; i++) { // TC : O(m)
+            int dist = arr[i][0] - arr[i - 1][0];
+            int h1 = arr[i - 1][1];
+            int h2 = arr[i][1];
+            int peak = (h1 + h2 + dist) / 2;
+            maxHeight = Math.max(maxHeight, peak);
+        }
+        return maxHeight;
+    }
+
+    /**
+     * Approach I : Using Greedy + Math + Sorting Approach
+     *
+     * TC : O(4 x m) + O(m x log(m)) ~ O(m x log(m))
+     * SC : O(m)
+     */
+    public int maxBuildingBetter(int n, int[][] restrictions) {
         /**
          * we will add all restrictions in ArrayList 
          * and sort it based upon id so that we can
