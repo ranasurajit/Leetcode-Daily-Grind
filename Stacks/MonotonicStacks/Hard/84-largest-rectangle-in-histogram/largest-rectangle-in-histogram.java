@@ -1,23 +1,31 @@
 class Solution {
     /**
-     * Approach II : Using Monotonic Deque Approach
-     * 
-     * TC: O(N) + O(N) + O(N) ~ O(N)
-     * SC: O(N) + O(N) + O(N) ~ O(N)
+     * Approach : Using Monotonic Stack Approach
+     *
+     * TC : O(n) + O(n) + O(n) ~ O(n)
+     * SC : O(n) + O(n) + O(n) ~ O(n)
      */
     public int largestRectangleArea(int[] heights) {
         int n = heights.length;
-        int[] pse = new int[n]; // SC: O(N)
-        int[] nse = new int[n]; // SC: O(N)
-        Deque<Integer> st = new ArrayDeque<Integer>(); // SC: O(N)
-        previousSmallerElement(heights, pse, n, st); // TC: O(N), SC: O(1)
+        /**
+         * we need to expand the current height heights[i]
+         * towards left and right so see how much it can
+         * expand with the same height
+         */
+        Stack<Integer> st = new Stack<>(); // SC : O(n)
+        int[] pse =
+            getPreviousSmallerElement(heights, n, st); // TC : O(n), SC : O(n)
         st.clear();
-        nextSmallerElement(heights, nse, n, st); // TC: O(N), SC: O(1)
+        int[] nse =
+            getNextSmallerElement(heights, n, st); // TC : O(n), SC : O(n)
         int maxArea = 0;
-        for (int i = 0; i < n; i++) { // TC: O(N)
-            int leftIdx = pse[i] + 1;
-            int rightIdx = nse[i] - 1;
-            int currentArea = (rightIdx - leftIdx + 1) * heights[i];
+        for (int i = 0; i < n; i++) { // TC : O(n)
+            /**
+             * heights[i] can be expanded till index 
+             * pse[i] + 1 in the left and
+             * nse[i] - 1 in the right
+             */
+            int currentArea = heights[i] * ((nse[i] - 1) - (pse[i] + 1) + 1);
             maxArea = Math.max(maxArea, currentArea);
         }
         return maxArea;
@@ -25,89 +33,39 @@ class Solution {
 
     /**
      * Using Monotonic Stack Approach
-     * 
-     * TC: O(N)
-     * SC: O(1)
+     *
+     * TC : O(n)
+     * SC : O(n)
      */
-    private void previousSmallerElement(int[] heights, int[] pse, int n, Deque<Integer> st) {
-        for (int i = 0; i < n; i++) { // TC: O(N)
+    private int[] getPreviousSmallerElement(int[] heights, int n,
+        Stack<Integer> st) {
+        int[] pse = new int[n]; // SC : O(n)
+        for (int i = 0; i < n; i++) { // TC : O(n)
             while (!st.isEmpty() && heights[i] <= heights[st.peek()]) {
                 st.pop();
             }
             pse[i] = st.isEmpty() ? -1 : st.peek();
             st.push(i);
         }
+        return pse;
     }
 
     /**
      * Using Monotonic Stack Approach
-     * 
-     * TC: O(N)
-     * SC: O(1)
+     *
+     * TC : O(n)
+     * SC : O(n)
      */
-    private void nextSmallerElement(int[] heights, int[] nse, int n, Deque<Integer> st) {
-        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
+    private int[] getNextSmallerElement(int[] heights, int n,
+        Stack<Integer> st) {
+        int[] nse = new int[n]; // SC : O(n)
+        for (int i = n - 1; i >= 0; i--) { // TC : O(n)
             while (!st.isEmpty() && heights[i] <= heights[st.peek()]) {
                 st.pop();
             }
             nse[i] = st.isEmpty() ? n : st.peek();
             st.push(i);
         }
-    }
-
-    /**
-     * Approach I : Using Monotonic Stack Approach
-     * 
-     * TC: O(N) + O(N) + O(N) ~ O(N)
-     * SC: O(N) + O(N) + O(N) ~ O(N)
-     */
-    public int largestRectangleAreaUsingStack(int[] heights) {
-        int n = heights.length;
-        int[] pse = new int[n]; // SC: O(N)
-        int[] nse = new int[n]; // SC: O(N)
-        Stack<Integer> st = new Stack<Integer>(); // SC: O(N)
-        previousSmallerElementStack(heights, pse, n, st); // TC: O(N), SC: O(1)
-        st.clear();
-        nextSmallerElementStack(heights, nse, n, st); // TC: O(N), SC: O(1)
-        int maxArea = 0;
-        for (int i = 0; i < n; i++) { // TC: O(N)
-            int leftIdx = pse[i] + 1;
-            int rightIdx = nse[i] - 1;
-            int currentArea = (rightIdx - leftIdx + 1) * heights[i];
-            maxArea = Math.max(maxArea, currentArea);
-        }
-        return maxArea;
-    }
-
-    /**
-     * Using Monotonic Stack Approach
-     * 
-     * TC: O(N)
-     * SC: O(1)
-     */
-    private void previousSmallerElementStack(int[] heights, int[] pse, int n, Stack<Integer> st) {
-        for (int i = 0; i < n; i++) { // TC: O(N)
-            while (!st.isEmpty() && heights[i] <= heights[st.peek()]) {
-                st.pop();
-            }
-            pse[i] = st.isEmpty() ? -1 : st.peek();
-            st.push(i);
-        }
-    }
-
-    /**
-     * Using Monotonic Stack Approach
-     * 
-     * TC: O(N)
-     * SC: O(1)
-     */
-    private void nextSmallerElementStack(int[] heights, int[] nse, int n, Stack<Integer> st) {
-        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
-            while (!st.isEmpty() && heights[i] <= heights[st.peek()]) {
-                st.pop();
-            }
-            nse[i] = st.isEmpty() ? n : st.peek();
-            st.push(i);
-        }
+        return nse;
     }
 }
