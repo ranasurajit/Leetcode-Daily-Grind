@@ -31,6 +31,10 @@ class Solution {
             int countBuyAtCost = Math.min(freq[cost], coins / cost);
             count += countBuyAtCost;
             coins -= countBuyAtCost * cost;
+            if (coins < cost) {
+                // early pruning
+                break;
+            }
         }
         return count;
     }
