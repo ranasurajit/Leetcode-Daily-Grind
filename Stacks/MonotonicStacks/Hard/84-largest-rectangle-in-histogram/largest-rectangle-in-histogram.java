@@ -12,7 +12,7 @@ class Solution {
          * towards left and right so see how much it can
          * expand with the same height
          */
-        Stack<Integer> st = new Stack<>(); // SC : O(n)
+        Deque<Integer> st = new ArrayDeque<>(); // SC : O(n)
         int[] pse =
             getPreviousSmallerElement(heights, n, st); // TC : O(n), SC : O(n)
         st.clear();
@@ -38,7 +38,7 @@ class Solution {
      * SC : O(n)
      */
     private int[] getPreviousSmallerElement(int[] heights, int n,
-        Stack<Integer> st) {
+        Deque<Integer> st) {
         int[] pse = new int[n]; // SC : O(n)
         for (int i = 0; i < n; i++) { // TC : O(n)
             while (!st.isEmpty() && heights[i] <= heights[st.peek()]) {
@@ -57,7 +57,7 @@ class Solution {
      * SC : O(n)
      */
     private int[] getNextSmallerElement(int[] heights, int n,
-        Stack<Integer> st) {
+        Deque<Integer> st) {
         int[] nse = new int[n]; // SC : O(n)
         for (int i = n - 1; i >= 0; i--) { // TC : O(n)
             while (!st.isEmpty() && heights[i] <= heights[st.peek()]) {
