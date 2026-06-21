@@ -24,7 +24,7 @@ class Solution {
             freq[costs[i]]++;
         }
         int count = 0;
-        for (int cost = 0; cost <= max; cost++) { // TC : O(Max(costs))
+        for (int cost = 1; cost <= max; cost++) { // TC : O(Max(costs))
             if (freq[cost] == 0) {
                 continue;
             }
