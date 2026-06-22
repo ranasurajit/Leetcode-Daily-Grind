@@ -1,11 +1,33 @@
 class Solution {
     /**
-     * Approach : Using Hashing + Simulation Approach
+     * Approach II : Using Optimal (Hashing + Simulation) Approach
+     *
+     * TC : O(n)
+     * SC : O(26)
+     */
+    public int maxNumberOfBalloons(String text) {
+        int n = text.length();
+        int[] freq = new int[26];      // SC : O(26)
+        for (int i = 0; i < n; i++) {  // TC : O(n)
+            char ch = text.charAt(i);
+            freq[ch - 'a']++;
+        }
+        return Math.min(
+            Math.min(freq['b' - 'a'], freq['a' - 'a']),
+            Math.min(
+                Math.min(freq['l' - 'a'] / 2, freq['o' - 'a'] / 2),
+                freq['n' - 'a']
+            )
+        );
+    }
+
+    /**
+     * Approach I : Using Hashing + Simulation Approach
      *
      * TC : O(n) + O(n) + O(26) ~ O(n)
      * SC : O(26) + O(26) ~ O(1)
      */
-    public int maxNumberOfBalloons(String text) {
+    public int maxNumberOfBalloonsBruteForce(String text) {
         int n = text.length();
         int[] freq = new int[26];      // SC : O(26)
         for (int i = 0; i < n; i++) {  // TC : O(n)
