@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach : Using Prefix-Count Approach
+     * Approach : Using Prefix-Array Approach
      *
      * TC : O(n) + O(n) + O(n²) ~ O(n²)
      * SC : O(n) + O(n) ~ O(n)
