@@ -1,5 +1,10 @@
 class Solution {
-    
+    /**
+     * Approach : Using Prefix-Count Approach
+     *
+     * TC : O(n) + O(n) + O(n²) ~ O(n²)
+     * SC : O(n) + O(n) ~ O(n)
+     */
     public int countMajoritySubarrays(int[] nums, int target) {
         int n = nums.length;
         /**
@@ -8,7 +13,7 @@ class Solution {
          * prefix[i] = number of target occurrences in nums[0..i-1]
          */
         int[] prefix = new int[n + 1];    // SC : O(n)
-        for (int i = 0; i < n; i++) { // TC : O(n)
+        for (int i = 0; i < n; i++) {     // TC : O(n)
             prefix[i + 1] = prefix[i] + (nums[i] == target ? 1 : 0);
         }
         /**
@@ -24,7 +29,7 @@ class Solution {
          * so now, let's pre-compute score[i] for each index 'i'
          */
         int[] score = new int[n + 1];     // SC : O(n)
-        for (int i = 0; i <= n; i++) { // TC : O(n)
+        for (int i = 0; i <= n; i++) {    // TC : O(n)
             score[i] = (2 * prefix[i]) - i;
         }
         /**
