@@ -7,7 +7,6 @@ class Solution {
      */
     public int maximumLength(int[] nums) {
         int n = nums.length;
-        Arrays.sort(nums);
         Map<Long, Integer> freq = new HashMap<>(); // SC : O(k)
         long max = 0L;
         for (int num : nums) { // TC : O(n)
