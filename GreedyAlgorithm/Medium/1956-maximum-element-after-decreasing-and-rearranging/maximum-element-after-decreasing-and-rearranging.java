@@ -16,14 +16,9 @@ class Solution {
          * also we need to make arr[0] as 1
          */
         arr[0] = 1;
-        int max = arr[0];
         for (int i = 1; i < n; i++) { // TC : O(n)
-            if (arr[i] - arr[i - 1] > 1) {
-                arr[i] = arr[i - 1] + 1;
-            }
-            // compare and store the maximum value in array 'arr'
-            max = Math.max(max, arr[i]);
+            arr[i] = Math.min(arr[i], arr[i - 1] + 1);
         }
-        return max;
+        return arr[n - 1]; // this will have the maximum value
     }
 }
