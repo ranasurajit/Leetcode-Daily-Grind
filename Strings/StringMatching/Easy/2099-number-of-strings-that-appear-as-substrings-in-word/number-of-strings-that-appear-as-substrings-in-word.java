@@ -1,29 +1,12 @@
 class Solution {
     /**
-     * Approach II : Using String InBuilt Methods Approach
-     *
-     * TC : O(n x (m + l))
-     * SC : O(1)
-     * where m = length(word), l = max(length(patterns)), n = length(patterns)
-     */
-    public int numOfStrings(String[] patterns, String word) {
-        int count = 0;
-        for (String s : patterns) { // TC : O(n)
-            if (word.indexOf(s) > -1) { // TC : O(l + m)
-                count++;
-            }
-        }
-        return count;
-    }
-
-    /**
      * Approach I : Using Brute-Force (Two Pointers) Approach
      *
      * TC : O(m x n x l)
      * SC : O(1)
      * where m = length(word), l = max(length(patterns)), n = length(patterns)
      */
-    public int numOfStringsBruteForce(String[] patterns, String word) {
+    public int numOfStrings(String[] patterns, String word) {
         int count = 0;
         for (String s : patterns) { // TC : O(n)
             if (isSubstring(word, s)) { // TC : O(l x m)
@@ -45,7 +28,7 @@ class Solution {
         int p = 0; // pointer at the start of String 'word'
         int q = 0; // pointer at the start of String 's'
         int start = 0;
-        while (p < m && q < n) { // TC : O(m x l)
+        while (start <= m - n) { // TC : O(m x l)
             if (word.charAt(p) == s.charAt(q)) {
                 p++;
                 q++;
