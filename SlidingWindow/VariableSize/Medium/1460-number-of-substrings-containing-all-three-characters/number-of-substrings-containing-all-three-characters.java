@@ -25,14 +25,12 @@ class Solution {
          */
         int count = 0;
         while (j < n) { // TC : O(n)
-            int charIdx = s.charAt(j) - 'a';
-            map[charIdx]++;
+            map[s.charAt(j) - 'a']++;
             while (map[0] > 0 && map[1] > 0 && map[2] > 0) {
                 // all characters 'a', 'b' and 'c' are present in sub-array [i...j]
                 count += (n - j);
                 // now we need to shrink 'i'
-                int charI = s.charAt(i) - 'a';
-                map[charI]--;
+                map[s.charAt(i) - 'a']--;
                 i++;
             }
             j++;
