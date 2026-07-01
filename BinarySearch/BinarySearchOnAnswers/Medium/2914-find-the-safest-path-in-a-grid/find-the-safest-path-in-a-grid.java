@@ -44,7 +44,7 @@ class Solution {
              * safeness factor that can be possible to 
              * reach any paths from (0, 0) to (n - 1, n - 1)
              */
-            if (isPathPossible(grid, n, mid, minDist)) { // TC : O(n²)
+            if (isPathPossible(n, mid, minDist)) { // TC : O(n²)
                 maxSF = mid;
                 low = mid + 1;
             } else {
@@ -60,8 +60,7 @@ class Solution {
      * TC : O(n²)
      * SC : O(n²)
      */
-    private boolean isPathPossible(List<List<Integer>> grid, int n,
-        int minSF, int[][] minDist) {
+    private boolean isPathPossible(int n, int minSF, int[][] minDist) {
         if (minDist[0][0] < minSF) {
             // safeness factor minimum of 'minSF' cannot be reached
             return false;
