@@ -6,8 +6,10 @@ class Solution {
     /**
      * Approach : Using Binary Search on Answers + Graph Multi-source BFS Approach
      *
-     * TC : O(n x n) + O(n x n x log(n)) ~ O(n x n x log(n))
-     * SC : O(n x n)
+     * TC : O(n²) + O(n² x log(k)) ~ O(n² x log(k))
+     * SC : O(n²)
+     *
+     * where k = Min (minDist[0][0], minDist[n - 1][n - 1])
      */
     public int maximumSafenessFactor(List<List<Integer>> grid) {
         int n = grid.size();
@@ -17,7 +19,7 @@ class Solution {
          * that cell from the nearest thief cell
          */
         int[][] minDist =
-            runMultiSourceBFSGrid(grid, n); // TC : O(n x n), SC : O(n x n)
+            runMultiSourceBFSGrid(grid, n); // TC : O(n²), SC : O(n²)
         /**
          * no need to check if thieves are even there 
          * as per constraints, it is mentioned that
@@ -26,13 +28,15 @@ class Solution {
          * minimum safeness factor which gives a hint towards
          * usage of Binary Search on Answers
          *
-         * we have a range [0, 2 * n] as maximum value
-         * of safeness factor can be 2 * n
+         * lower bound of Binary search = 0 i.e. low = 0
+         * upper bound of Binary search i.e. high =
+         * Min(minDist[0][0], minDist[n - 1][n - 1]) as 
+         * it cannot exceed that
          */
         int low = 0;
-        int high = 2 * n;
+        int high = Math.min(minDist[0][0], minDist[n - 1][n - 1]);
         int maxSF = 0;
-        while (low <= high) { // TC : O(log(n))
+        while (low <= high) { // TC : O(log(k))
             int mid = low + (high - low) / 2;
             /**
              * now we need to maximize the mid value
@@ -40,7 +44,7 @@ class Solution {
              * safeness factor that can be possible to 
              * reach any paths from (0, 0) to (n - 1, n - 1)
              */
-            if (isPathPossible(grid, n, mid, minDist)) { // TC : O(n x n)
+            if (isPathPossible(grid, n, mid, minDist)) { // TC : O(n²)
                 maxSF = mid;
                 low = mid + 1;
             } else {
@@ -53,8 +57,8 @@ class Solution {
     /**
      * Using Graph BFS Approach
      *
-     * TC : O(n x n)
-     * SC : O(n x n)
+     * TC : O(n²)
+     * SC : O(n²)
      */
     private boolean isPathPossible(List<List<Integer>> grid, int n,
         int minSF, int[][] minDist) {
@@ -62,18 +66,14 @@ class Solution {
             // safeness factor minimum of 'minSF' cannot be reached
             return false;
         }
-        boolean[][] visited = new boolean[n][n]; // SC : O(n x n)
-        Queue<int[]> queue = new LinkedList<>(); // SC : O(n x n)
+        boolean[][] visited = new boolean[n][n]; // SC : O(n²)
+        Queue<int[]> queue = new LinkedList<>(); // SC : O(n²)
         queue.offer(new int[] { 0, 0 });
         visited[0][0] = true;
-        while (!queue.isEmpty()) { // TC : O(n x n)
+        while (!queue.isEmpty()) { // TC : O(n²)
             int[] current = queue.poll();
             int i = current[0];
             int j = current[1];
-            if (minDist[i][j] < minSF) {
-                // invalid cells to step in for path
-                continue;
-            }
             if (i == n - 1 && j == n - 1) {
                 return true;
             }
@@ -96,13 +96,13 @@ class Solution {
     /**
      * Using Graph Multi-source BFS Approach
      *
-     * TC : O(n x n)
-     * SC : O(n x n)
+     * TC : O(n²)
+     * SC : O(n²)
      */
     private int[][] runMultiSourceBFSGrid(List<List<Integer>> grid,
         int n) {
-        int[][] minDist = new int[n][n]; // SC : O(n x n)
-        Queue<int[]> queue = new LinkedList<>(); // SC : O(n x n)
+        int[][] minDist = new int[n][n]; // SC : O(n²)
+        Queue<int[]> queue = new LinkedList<>(); // SC : O(n²)
         boolean[][] visited = new boolean[n][n];
         for (int i = 0; i < n; i++) { // TC : O(n)
             for (int j = 0; j < n; j++) { // TC : O(n)
@@ -113,7 +113,7 @@ class Solution {
                 }
             }
         }
-        while (!queue.isEmpty()) { // TC : O(n x n)
+        while (!queue.isEmpty()) { // TC : O(n²)
             int[] current = queue.poll();
             int i = current[0];
             int j = current[1];
@@ -126,7 +126,7 @@ class Solution {
                 int reach = minDist[i][j] + 1;
                 visited[i_][j_] = true;
                 minDist[i_][j_] = reach;
-                queue.offer(new int[] { i_, j_, reach });
+                queue.offer(new int[] { i_, j_ });
             }
         }
         return minDist;
