@@ -3,6 +3,12 @@ class Solution {
         { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }
     };
 
+    /**
+     * Approach : Using Binary Search on Answers + Graph Multi-source BFS Approach
+     *
+     * TC : O(n x n) + O(n x n x log(n)) ~ O(n x n x log(n))
+     * SC : O(n x n)
+     */
     public int maximumSafenessFactor(List<List<Integer>> grid) {
         int n = grid.size();
         /**
@@ -10,7 +16,8 @@ class Solution {
          * cells to compute the minimum manhattan distance of
          * that cell from the nearest thief cell
          */
-        int[][] minDist = runMultiSourceBFSGrid(grid, n);
+        int[][] minDist =
+            runMultiSourceBFSGrid(grid, n); // TC : O(n x n), SC : O(n x n)
         /**
          * no need to check if thieves are even there 
          * as per constraints, it is mentioned that
@@ -25,7 +32,7 @@ class Solution {
         int low = 0;
         int high = 2 * n;
         int maxSF = 0;
-        while (low <= high) {
+        while (low <= high) { // TC : O(log(n))
             int mid = low + (high - low) / 2;
             /**
              * now we need to maximize the mid value
@@ -33,7 +40,7 @@ class Solution {
              * safeness factor that can be possible to 
              * reach any paths from (0, 0) to (n - 1, n - 1)
              */
-            if (isPathPossible(grid, n, mid, minDist)) {
+            if (isPathPossible(grid, n, mid, minDist)) { // TC : O(n x n)
                 maxSF = mid;
                 low = mid + 1;
             } else {
@@ -43,17 +50,23 @@ class Solution {
         return maxSF;
     }
 
+    /**
+     * Using Graph BFS Approach
+     *
+     * TC : O(n x n)
+     * SC : O(n x n)
+     */
     private boolean isPathPossible(List<List<Integer>> grid, int n,
         int minSF, int[][] minDist) {
         if (minDist[0][0] < minSF) {
             // safeness factor minimum of 'minSF' cannot be reached
             return false;
         }
-        boolean[][] visited = new boolean[n][n];
-        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[n][n]; // SC : O(n x n)
+        Queue<int[]> queue = new LinkedList<>(); // SC : O(n x n)
         queue.offer(new int[] { 0, 0 });
         visited[0][0] = true;
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty()) { // TC : O(n x n)
             int[] current = queue.poll();
             int i = current[0];
             int j = current[1];
@@ -64,7 +77,7 @@ class Solution {
             if (i == n - 1 && j == n - 1) {
                 return true;
             }
-            for (int[] dir : directions) {
+            for (int[] dir : directions) { // TC : O(4)
                 int i_ = i + dir[0];
                 int j_ = j + dir[1];
                 if (i_ < 0 || i_ >= n ||
@@ -80,6 +93,12 @@ class Solution {
         return false;
     }
 
+    /**
+     * Using Graph Multi-source BFS Approach
+     *
+     * TC : O(n x n)
+     * SC : O(n x n)
+     */
     private int[][] runMultiSourceBFSGrid(List<List<Integer>> grid,
         int n) {
         int[][] minDist = new int[n][n]; // SC : O(n x n)
@@ -94,22 +113,20 @@ class Solution {
                 }
             }
         }
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty()) { // TC : O(n x n)
             int[] current = queue.poll();
             int i = current[0];
             int j = current[1];
-            for (int[] dir : directions) {
+            for (int[] dir : directions) { // TC : O(4)
                 int i_ = i + dir[0];
                 int j_ = j + dir[1];
-                if (i_ < 0 || i_ >= n || j_ < 0 || j_ >= n) {
+                if (i_ < 0 || i_ >= n || j_ < 0 || j_ >= n || visited[i_][j_]) {
                     continue;
                 }
-                if (!visited[i_][j_]) {
-                    int reach = minDist[i][j] + 1;
-                    visited[i_][j_] = true;
-                    minDist[i_][j_] = reach;
-                    queue.offer(new int[] { i_, j_, reach });
-                }
+                int reach = minDist[i][j] + 1;
+                visited[i_][j_] = true;
+                minDist[i_][j_] = reach;
+                queue.offer(new int[] { i_, j_, reach });
             }
         }
         return minDist;
