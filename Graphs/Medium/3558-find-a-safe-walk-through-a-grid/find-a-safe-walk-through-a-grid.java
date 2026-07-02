@@ -1,8 +1,4 @@
 class Solution {
-    private static final int[][] directions = {
-        { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }
-    };
-
     /**
      * Approach : Using Graph BFS Approach
      *
@@ -12,6 +8,7 @@ class Solution {
     public boolean findSafeWalk(List<List<Integer>> grid, int health) {
         int m = grid.size();
         int n = grid.get(0).size();
+        int[][] directions = {{ -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }};
         /**
          * from cell (0, 0) we can always start the journey as it can have
          * value 0 or 1 and 1 <= health <= m + n
