@@ -17,6 +17,9 @@ class Solution {
          * value 0 or 1 and 1 <= health <= m + n
          */
         int startHealth = health - grid.get(0).get(0);
+        if (startHealth <= 0) {
+            return false;
+        }
         int[][] bestHealth = new int[m][n]; // SC : O(m x n)
         for (int[] h : bestHealth) {
             Arrays.fill(h, -1);
