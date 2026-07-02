@@ -29,7 +29,8 @@ class Solution {
             int i = current[0];
             int j = current[1];
             int h = current[2];
-            if (i == m - 1 && j == n - 1 && bestHealth[i][j] >= 1) {
+            if (i == m - 1 && j == n - 1) {
+                // we will always have an health >= 1
                 return true;
             }
             for (int[] dir : directions) { // TC : O(4)
@@ -40,6 +41,9 @@ class Solution {
                     continue;
                 }
                 int newHealth = h - grid.get(i_).get(j_);
+                if (newHealth <= 0) {
+                    continue;
+                }
                 if (bestHealth[i_][j_] >= newHealth) {
                     /**
                      * already we have reached cell (i_, j_)
