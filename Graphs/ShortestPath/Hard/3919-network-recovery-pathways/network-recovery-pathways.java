@@ -70,7 +70,7 @@ class Solution {
             long cost = current[0];
             int u = (int) current[1];
             if (cost > k) {
-                return false;
+                continue;
             }
             if (u == n - 1) {
                 return true;
