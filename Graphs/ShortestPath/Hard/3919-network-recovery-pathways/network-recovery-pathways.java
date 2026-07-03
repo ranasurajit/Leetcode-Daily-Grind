@@ -78,8 +78,11 @@ class Solution {
             if (cost > minPathCost[u]) {
                 continue;
             }
-            for (int[] ngbr : 
-                adj.getOrDefault(u, new ArrayList<>())) { // TC : O(v)
+            ArrayList<int[]> list = adj.get(u);
+            if (list == null) {
+                continue;
+            }
+            for (int[] ngbr : list) { // TC : O(v)
                 int v = ngbr[0];
                 int edgeCost = ngbr[1];
                 if (edgeCost < mid) {
