@@ -13,23 +13,23 @@ class Solution {
             }
             return b[1] - a[1];
         }); // TC : O(n x log(n))
-        Deque<int[]> deque = new ArrayDeque<>(); // SC : O(n)
+        ArrayList<int[]> list = new ArrayList<>(); // SC : O(n)
         for (int i = 0; i < n; i++) { // TC : O(n)
             int start = intervals[i][0];
             int end = intervals[i][1];
-            if (!deque.isEmpty()) {
-                int[] prev = deque.peek();
+            if (!list.isEmpty()) {
+                int[] prev = list.get(list.size() - 1);
                 if (start >= prev[0] && end <= prev[1]) {
                     // current interval is covered
                     continue;
                 } else {
-                    deque.push(intervals[i]);
+                    list.add(intervals[i]);
                 }
             } else {
-                deque.push(intervals[i]);
+                list.add(intervals[i]);
             }
         }
-        return deque.size();
+        return list.size();
     }
 
     /**
