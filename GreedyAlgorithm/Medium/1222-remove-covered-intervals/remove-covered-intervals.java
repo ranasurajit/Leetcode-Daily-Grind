@@ -3,7 +3,7 @@ class Solution {
      * Approach II : Using Greedy + Sorting Approach
      *
      * TC : O(n x log(n)) + O(n) ~ O(n x log(n))
-     * SC : O(n)
+     * SC : O(1)
      */
     public int removeCoveredIntervals(int[][] intervals) {
         int n = intervals.length;
@@ -13,23 +13,18 @@ class Solution {
             }
             return b[1] - a[1];
         }); // TC : O(n x log(n))
-        ArrayList<int[]> list = new ArrayList<>(); // SC : O(n)
+        int count = 0;
+        int lastEnd = -1;
         for (int i = 0; i < n; i++) { // TC : O(n)
             int start = intervals[i][0];
             int end = intervals[i][1];
-            if (!list.isEmpty()) {
-                int[] prev = list.get(list.size() - 1);
-                if (start >= prev[0] && end <= prev[1]) {
-                    // current interval is covered
-                    continue;
-                } else {
-                    list.add(intervals[i]);
-                }
-            } else {
-                list.add(intervals[i]);
+            if (end <= lastEnd) {
+                continue;
             }
+            count++;
+            lastEnd = end;
         }
-        return list.size();
+        return count;
     }
 
     /**
