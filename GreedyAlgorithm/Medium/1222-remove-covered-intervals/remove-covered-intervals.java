@@ -23,12 +23,11 @@ class Solution {
         int count = 0;
         int lastEnd = -1;
         for (int i = 0; i < n; i++) { // TC : O(n)
-            int end = intervals[i][1];
-            if (end <= lastEnd) {
+            if (intervals[i][1] <= lastEnd) {
                 continue;
             }
             count++;
-            lastEnd = end;
+            lastEnd = intervals[i][1];
         }
         return count;
     }
