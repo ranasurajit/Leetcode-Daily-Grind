@@ -7,6 +7,13 @@ class Solution {
      */
     public int removeCoveredIntervals(int[][] intervals) {
         int n = intervals.length;
+        /**
+         * In order to take the intervals with maximum coverage
+         * first, we can greedily sort the intervals such that
+         * sorting is done based on start time. If the start time
+         * is found same between intervals thay can be sorted 
+         * based upon larger value of end time 
+         */
         Arrays.sort(intervals, (a, b) -> {
             if (a[0] != b[0]) {
                 return a[0] - b[0];
@@ -16,7 +23,6 @@ class Solution {
         int count = 0;
         int lastEnd = -1;
         for (int i = 0; i < n; i++) { // TC : O(n)
-            int start = intervals[i][0];
             int end = intervals[i][1];
             if (end <= lastEnd) {
                 continue;
@@ -35,6 +41,13 @@ class Solution {
      */
     public int removeCoveredIntervalsUsingStack(int[][] intervals) {
         int n = intervals.length;
+        /**
+         * In order to take the intervals with maximum coverage
+         * first, we can greedily sort the intervals such that
+         * sorting is done based on start time. If the start time
+         * is found same between intervals thay can be sorted 
+         * based upon larger value of end time 
+         */
         Arrays.sort(intervals, (a, b) -> {
             if (a[0] != b[0]) {
                 return a[0] - b[0];
