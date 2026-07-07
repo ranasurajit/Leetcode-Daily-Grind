@@ -3,7 +3,7 @@ class Solution {
      * Approach II : Using Math + String Simulation Approach
      *
      * TC : O(d) ~ O(log10(n))
-     * TC : O(1)
+     * SC : O(1)
      */
     public long sumAndMultiply(int n) {
         long x = 0L;
@@ -25,7 +25,7 @@ class Solution {
      * Approach I : Using Math + String Simulation Approach
      *
      * TC : O(d) + O(d) ~ O(d) ~ O(log10(n))
-     * TC : O(d) ~ O(log10(n))
+     * SC : O(d) ~ O(log10(n))
      */
     public long sumAndMultiplyBruteForce(int n) {
         long x = 0L;
