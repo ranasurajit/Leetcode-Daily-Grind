@@ -13,7 +13,7 @@ class Solution {
         int n = s.length();
         long[] prefixSum = new long[n];    // SC : O(n)
         long[] prefixDigits = new long[n]; // SC : O(n)
-        long[] countNonZeroes = new long[n];  // SC : O(n)
+        int[] countNonZeroes = new int[n];  // SC : O(n)
         long[] pow = new long[n];          // SC : O(n)
 
         prefixSum[0] = (long) (s.charAt(0) - '0');
@@ -42,8 +42,8 @@ class Solution {
                 (start > 0 ? prefixSum[start - 1] : 0);
             long startNum = 0L;
             if (start > 0) {
-                long powIdx = countNonZeroes[end] - countNonZeroes[start - 1];
-                startNum = (prefixDigits[start - 1] * pow[(int) powIdx]) % MOD;
+                int powIdx = countNonZeroes[end] - countNonZeroes[start - 1];
+                startNum = (prefixDigits[start - 1] * pow[powIdx]) % MOD;
             }
             long currentNum = (prefixDigits[end] - startNum + MOD) % MOD;
             result[i] = (int) ((currentSum * currentNum) % MOD);
