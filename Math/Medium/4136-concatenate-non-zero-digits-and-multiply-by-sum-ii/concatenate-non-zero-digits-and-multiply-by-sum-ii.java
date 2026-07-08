@@ -5,17 +5,16 @@ class Solution {
      * Approach II : Using Optimal (Prefix-Sum + Math + Simulation) Approach
      *
      * TC : O(n) + O(q) ~ O(n + q)
-     * SC : O(n) + O(n) ~ O(n)
+     * SC : O(n) + O(n) + O(n) + O(n) ~ O(n)
      *
      * Accepted (523 / 523 testcases passed)
      */
     public int[] sumAndMultiply(String s, int[][] queries) {
         int n = s.length();
-        long[] prefixSum = new long[n];    // SC : O(n)
-        long[] prefixDigits = new long[n]; // SC : O(n)
+        long[] prefixSum = new long[n];     // SC : O(n)
+        long[] prefixDigits = new long[n];  // SC : O(n)
         int[] countNonZeroes = new int[n];  // SC : O(n)
-        long[] pow = new long[n];          // SC : O(n)
-
+        long[] pow = new long[n];           // SC : O(n)
         prefixSum[0] = (long) (s.charAt(0) - '0');
         prefixDigits[0] = (long) (s.charAt(0) - '0');
         countNonZeroes[0] = s.charAt(0) != '0' ? 1 : 0;
@@ -32,7 +31,6 @@ class Solution {
             }
             pow[i] = (10 * pow[i - 1]) % MOD;
         }
-
         int q = queries.length;
         int[] result = new int[q];
         for (int i = 0; i < q; i++) { // TC : O(q)
