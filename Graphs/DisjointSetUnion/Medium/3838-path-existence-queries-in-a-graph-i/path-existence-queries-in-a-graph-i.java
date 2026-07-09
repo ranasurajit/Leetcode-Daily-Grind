@@ -11,19 +11,17 @@ class Solution {
         int[][] queries) {
         DSU dsu = new DSU(n); // TC : O(n), SC : O(n)
         /**
-         * 'nums' array is in non-decreasing order and we can form an undirected
-         * egde between i and j if absolute difference between nums[i] and nums[j] * is at most 'maxDiff', so we can check if adjacent vertices are within 
-         * limits of 'maxDiff'
+         * Since 'nums' is sorted, every connected component forms a contiguous
+         * segment of indices. A gap greater than 'maxDiff' between two adjacent
+         * elements can never be crossed by any edge.
+         *
+         * Therefore, it is sufficient to union only adjacent indices whose
+         * difference is at most maxDiff.
          */
         for (int i = 1; i < n; i++) { // TC : O(n)
             if (nums[i] - nums[i - 1] <= maxDiff) {
                 // then (i, i - 1) forms a pair of edges
-                int parentI = dsu.find(i); // TC : O(α(n)), SC : O(α(n))
-                int parentJ = dsu.find(i - 1); // TC : O(α(n)), SC : O(α(n))
-                if (parentI == parentJ) {
-                    continue;
-                }
-                dsu.unionByRank(parentI, parentJ); // TC : O(1), SC : O(1)
+                dsu.unionByRank(i, i - 1); // TC : O(α(n)), SC : O(α(n))
             }
         }
         int q = queries.length;
@@ -73,17 +71,19 @@ class DSU {
     /**
      * Using DSU Union by Rank Approach
      *
-     * TC : O(1)
-     * SC : O(1)
+     * TC : O(α(n))
+     * SC : O(α(n))
      */
-    public void unionByRank(int xParent, int yParent) {
+    public void unionByRank(int x, int y) {
+        int xParent = find(x); // TC : O(α(n)), SC : O(α(n))
+        int yParent = find(y); // TC : O(α(n)), SC : O(α(n))
         if (xParent == yParent) {
             return;
         }
         if (rank[xParent] > rank[yParent]) {
             // make xParent as parent of yParent
             parent[yParent] = xParent;
-        } else if (rank[xParent] > rank[yParent]) {
+        } else if (rank[xParent] < rank[yParent]) {
             // make yParent as parent of xParent
             parent[xParent] = yParent;
         } else {
