@@ -2,8 +2,8 @@ class Solution {
     /**
      * Approach : Using Disjoint Set Union Approach
      *
-     * TC : O(n) + O(e x α(n)) + O(n) + O(n) ~ O(n + e x α(n))
-     * SC : O(4 x n) + O(e x α(n)) ~ O(n + e x α(n))
+     * TC : O(n) + O(e x α(n)) + O(n) + O(n) ~ O(n + e x α(n)) ~ O(n + e)
+     * SC : O(4 x n) ~ O(n)
      */
     public int countCompleteComponents(int n, int[][] edges) {
         int[] parent = new int[n];    // SC : O(n)
@@ -12,7 +12,6 @@ class Solution {
         }
         int[] rank = new int[n];    // SC : O(n)
         int[] degrees = new int[n]; // SC : O(n)
-
         for (int[] edge : edges) {  // TC : O(e)
             int u = edge[0];
             int v = edge[1];
