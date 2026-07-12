@@ -15,7 +15,8 @@ class Solution {
             nums[i][0] = arr[i];
             nums[i][1] = i;
         }
-        Arrays.sort(nums, (a, b) -> a[0] - b[0]); // TC : O(n x log(n))
+        Arrays.sort(nums,
+            (a, b) -> Integer.compare(a[0],b[0])); // TC : O(n x log(n))
         int last = nums[0][0];
         nums[0][0] = 1;
         for (int i = 1; i < n; i++) { // TC : O(n)
