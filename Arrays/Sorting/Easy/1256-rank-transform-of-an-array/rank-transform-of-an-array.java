@@ -17,18 +17,18 @@ class Solution {
         }
         Arrays.sort(nums,
             (a, b) -> Integer.compare(a[0],b[0])); // TC : O(n x log(n))
-        int last = nums[0][0];
-        nums[0][0] = 1;
+        int rank = 1;
+        int prev = nums[0][0];
+        nums[0][0] = rank;
         for (int i = 1; i < n; i++) { // TC : O(n)
-            int temp = nums[i][0];
-            nums[i][0] =
-                (nums[i][0] == last) ? nums[i - 1][0] : 1 + nums[i - 1][0];
-            last = temp;
+            if (nums[i][0] != prev) {
+                rank++;
+                prev = nums[i][0];
+            }
+            nums[i][0] = rank;
         }
         for (int i = 0; i < n; i++) { // TC : O(n)
-            int rank = nums[i][0];
-            int index = nums[i][1];
-            arr[index] = rank;
+            arr[nums[i][1]] = nums[i][0];
         }
         return arr;
     }
