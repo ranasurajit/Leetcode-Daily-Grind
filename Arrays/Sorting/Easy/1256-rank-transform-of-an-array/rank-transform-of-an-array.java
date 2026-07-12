@@ -1,11 +1,38 @@
 class Solution {
     /**
-     * Approach : Using Sorting Approach
+     * Approach II : Using Sorting + Hashing Approach
+     *
+     * TC : O(n x log(n)) + O(n) + O(n) ~ O(n x log(n))
+     * SC : O(n) + O(n) ~ O(n)
+     */
+    public int[] arrayRankTransform(int[] arr) {
+        int n = arr.length;
+        if (n == 0) {
+            return arr;
+        }
+        int[] sorted = arr.clone(); // SC : O(n)
+        Arrays.sort(sorted); // TC : O(n x log(n))
+        int rank = 1;
+        // Creating HashMap of num and rank
+        Map<Integer, Integer> numsRankMap = new HashMap<>(); // SC : O(n)
+        for (int x : sorted) { // TC : O(n)
+            if (!numsRankMap.containsKey(x)) {
+                numsRankMap.put(x, rank++);
+            }
+        }
+        for (int i = 0; i < n; i++) { // TC : O(n)
+            arr[i] = numsRankMap.get(arr[i]);
+        }
+        return arr;
+    }
+
+    /**
+     * Approach I : Using Brute-Force (Sorting) Approach
      *
      * TC : O(n) + O(n x log(n)) + O(n) + O(n) ~ O(n x log(n))
      * SC : O(n)
      */
-    public int[] arrayRankTransform(int[] arr) {
+    public int[] arrayRankTransformBruteForce(int[] arr) {
         int n = arr.length;
         if (n == 0) {
             return arr;
