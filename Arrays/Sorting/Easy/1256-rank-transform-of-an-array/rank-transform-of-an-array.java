@@ -27,7 +27,7 @@ class Solution {
     }
 
     /**
-     * Approach I : Using Brute-Force (Sorting) Approach
+     * Approach I : Using Sorting + Original Index Tracking Approach
      *
      * TC : O(n) + O(n x log(n)) + O(n) + O(n) ~ O(n x log(n))
      * SC : O(n)
