@@ -1,5 +1,23 @@
 class Solution {
     /**
+     * Approach III : Using Pure Math Approach
+     *
+     * TC : O(1)
+     * SC : O(1)
+     */
+    public int gcdOfOddEvenSums(int n) {
+        /**
+         * Odd and Even n numbers will form an AP series
+         *
+         * Sum = (n * (2 * a + (n - 1) * d)) / 2
+         * sumOdd = (n * (2 * 1 + (n - 1) * 2)) / 2 = n * n
+         * sumEven = (n * (2 * 2 + (n - 1) * 2)) / 2 = n * (n + 1)
+         * so GCD (n², n * (n + 1) is n always)
+         */
+        return n;
+    }
+
+    /**
      * Approach II : Using Math Approach
      *
      * TC : O(log(k))
@@ -7,7 +25,7 @@ class Solution {
      *
      * where k = Sum(n odd numbers)
      */
-    public int gcdOfOddEvenSums(int n) {
+    public int gcdOfOddEvenSumsMath(int n) {
         /**
          * Odd and Even n numbers will form an AP series
          *
