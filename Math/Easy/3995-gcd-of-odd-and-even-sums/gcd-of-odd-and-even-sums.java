@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach II : Using Math Approach
      *
-     * TC : O(k)
+     * TC : O(log(k))
      * SC : O(1)
      *
      * where k = Sum(n odd numbers)
@@ -11,17 +11,19 @@ class Solution {
         /**
          * Odd and Even n numbers will form an AP series
          *
-         * Sum = (n / 2) * (2 * a + (n - 1) * d)
+         * Sum = (n * (2 * a + (n - 1) * d)) / 2
+         * sumOdd = (n * (2 * 1 + (n - 1) * 2)) / 2 = n * n
+         * sumEven = (n * (2 * 2 + (n - 1) * 2)) / 2 = n * (n + 1)
          */
-        int sumOdd = (n * (2 * 1 + (n - 1) * 2)) / 2;
-        int sumEven = (n * (2 * 2 + (n - 1) * 2)) / 2;
-        return gcd(sumEven, sumOdd); // TC : O(sumOdd)
+        int sumOdd = n * n;
+        int sumEven = n * (n + 1);
+        return gcd(sumEven, sumOdd); // TC : O(log(k))
     }
 
     /**
      * Approach I : Using Math + Simulation Approach
      *
-     * TC : O(n) + O(k)
+     * TC : O(n) + O(log(k))
      * SC : O(1)
      *
      * where k = Sum(n odd numbers)
@@ -37,7 +39,7 @@ class Solution {
             oddNum += 2;
             evenNum += 2;
         }
-        return gcd(sumEven, sumOdd); // TC : O(sumOdd)
+        return gcd(sumEven, sumOdd); // TC : O(log(k))
     }
 
     /**
