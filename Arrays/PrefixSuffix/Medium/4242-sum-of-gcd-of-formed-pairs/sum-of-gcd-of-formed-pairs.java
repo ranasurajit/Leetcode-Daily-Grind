@@ -1,19 +1,19 @@
 class Solution {
     /**
-     * Approach : Using Array Prefix + Math Approach
+     * Approach : Using Array Prefix + Two Pointers + Math Approach
      *
      * TC : O(3 x (n / 2) x log(k)) + O(n x log(n)) ~ O(n x log(n))
-     * SC : O(n) + O(n) ~ O(n)
+     * SC : O(n)
      */
     public long gcdSum(int[] nums) {
         int n = nums.length;
-        long[] prefixMax = new long[n]; // SC : O(n)
-        prefixMax[0] = nums[0];
+        long lastMax = nums[0];
         long[] prefixGCD = new long[n]; // SC : O(n)
         prefixGCD[0] = nums[0];
         for (int i = 1; i < n; i++) { // TC : O(n)
-            prefixMax[i] = Math.max(nums[i], prefixMax[i - 1]);
-            prefixGCD[i] = gcd(nums[i], prefixMax[i]); // TC : O(log(k))
+            long currentMax = Math.max(nums[i], lastMax);
+            prefixGCD[i] = gcd(nums[i], currentMax); // TC : O(log(k))
+            lastMax = currentMax;
         }
         Arrays.sort(prefixGCD); // TC : O(n x log(n))
         int p = 0;
