@@ -7,11 +7,11 @@ class Solution {
      */
     public long gcdSum(int[] nums) {
         int n = nums.length;
-        long lastMax = nums[0];
-        long[] prefixGCD = new long[n]; // SC : O(n)
+        int lastMax = nums[0];
+        int[] prefixGCD = new int[n]; // SC : O(n)
         prefixGCD[0] = nums[0];
         for (int i = 1; i < n; i++) { // TC : O(n)
-            long currentMax = Math.max(nums[i], lastMax);
+            int currentMax = Math.max(nums[i], lastMax);
             prefixGCD[i] = gcd(nums[i], currentMax); // TC : O(log(k))
             lastMax = currentMax;
         }
@@ -33,12 +33,9 @@ class Solution {
      * TC : O(log(b))
      * SC : O(1)
      */
-    private long gcd(long a, long b) {
-        if (a < b) {
-            return gcd(b, a);
-        }
+    private int gcd(int a, int b) {
         while (b != 0) {
-            long rem = a % b;
+            int rem = a % b;
             a = b;
             b = rem;
         }
