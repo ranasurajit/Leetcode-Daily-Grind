@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach II : Using Monotonic Stack Approach
+     * Approach III : Using Monotonic Deque Approach
      *
      * TC : O(n) + O(n) + O(k) ~ O(n)
      * SC : O(k) + O(26) ~ O(n)
@@ -8,6 +8,55 @@ class Solution {
      * Accepted (68 / 68 testcases passed)
      */
     public String smallestSubsequence(String s) {
+        int n = s.length();
+        int[] lastIndex = new int[26]; // SC : O(26)
+        for (int i = 0; i < n; i++) {  // TC : O(n)
+            int charIdx = s.charAt(i) - 'a';
+            lastIndex[charIdx] = i;
+        }
+        /**
+         * now we need a Set to check if a character is used already
+         * and a Stacl to store the best smallest subsequence of 
+         * distinct characters till any index 'i'
+         */
+        boolean[] visited = new boolean[26]; // SC : O(26)
+        Deque<Character> deque = new ArrayDeque<>(); // SC : O(k)
+        for (int i = 0; i < n; i++) { // TC : O(n)
+            char ch = s.charAt(i);
+            int chIdx = ch - 'a';
+            if (visited[chIdx]) {
+                // already the character has been used
+                continue;
+            }
+            while (!deque.isEmpty() && deque.peekLast() > ch && 
+                lastIndex[deque.peekLast() - 'a'] > i) {
+                /**
+                 * we can remove a Character from stack if current
+                 * character at index 'i' is smaller than Stack's top
+                 * and is occuring in String 's' at a further index
+                 */
+                visited[deque.peekLast() - 'a'] = false;
+                deque.pollLast();
+            }
+            deque.addLast(ch);
+            visited[chIdx] = true;
+        }
+        StringBuilder sb = new StringBuilder(); // SC : O(k)
+        while (!deque.isEmpty()) {     // TC : O(k)
+            sb.append(deque.pollFirst());
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Approach II : Using Monotonic Stack Approach
+     *
+     * TC : O(n) + O(n) + O(k) ~ O(n)
+     * SC : O(k) + O(26) ~ O(n)
+     *
+     * Accepted (68 / 68 testcases passed)
+     */
+    public String smallestSubsequenceMonotonicStack(String s) {
         int n = s.length();
         int[] lastIndex = new int[26]; // SC : O(26)
         for (int i = 0; i < n; i++) {  // TC : O(n)
@@ -42,7 +91,6 @@ class Solution {
             visited[chIdx] = true;
         }
         int k = st.size();
-        StringBuilder sb = new StringBuilder(); // SC : O(k)
         char[] chars = new char[k]; // SC : O(k)
         int idx = k - 1;
         while (!st.isEmpty()) {     // TC : O(k)
