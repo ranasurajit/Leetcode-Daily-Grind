@@ -35,8 +35,8 @@ class Solution {
                  * character at index 'i' is smaller than Stack's top
                  * and is occuring in String 's' at a further index
                  */
-                visited[deque.peekLast() - 'a'] = false;
-                deque.pollLast();
+                int removedIdx = deque.pollLast() - 'a'; 
+                visited[removedIdx] = false;
             }
             deque.addLast(ch);
             visited[chIdx] = true;
