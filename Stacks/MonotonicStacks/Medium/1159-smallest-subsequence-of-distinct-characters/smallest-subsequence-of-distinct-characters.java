@@ -84,8 +84,8 @@ class Solution {
                  * character at index 'i' is smaller than Stack's top
                  * and is occuring in String 's' at a further index
                  */
-                visited[st.peek() - 'a'] = false;
-                st.pop();
+                int removedIdx = st.pop() - 'a'; 
+                visited[removedIdx] = false;
             }
             st.push(ch);
             visited[chIdx] = true;
