@@ -16,7 +16,7 @@ class Solution {
         }
         /**
          * now we need a Set to check if a character is used already
-         * and a Stacl to store the best smallest subsequence of 
+         * and a Stack to store the best smallest subsequence of 
          * distinct characters till any index 'i'
          */
         boolean[] visited = new boolean[26]; // SC : O(26)
@@ -65,7 +65,7 @@ class Solution {
         }
         /**
          * now we need a Set to check if a character is used already
-         * and a Stacl to store the best smallest subsequence of 
+         * and a Stack to store the best smallest subsequence of 
          * distinct characters till any index 'i'
          */
         boolean[] visited = new boolean[26]; // SC : O(26)
