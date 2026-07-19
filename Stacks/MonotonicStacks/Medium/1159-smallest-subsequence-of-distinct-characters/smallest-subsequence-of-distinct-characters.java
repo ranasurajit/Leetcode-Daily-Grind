@@ -3,7 +3,7 @@ class Solution {
      * Approach III : Using Monotonic Deque Approach
      *
      * TC : O(n) + O(n) + O(k) ~ O(n)
-     * SC : O(k) + O(26) ~ O(n)
+     * SC : O(k) + O(26) ~ O(1) as k <= 26
      *
      * Accepted (68 / 68 testcases passed)
      */
@@ -52,7 +52,7 @@ class Solution {
      * Approach II : Using Monotonic Stack Approach
      *
      * TC : O(n) + O(n) + O(k) ~ O(n)
-     * SC : O(k) + O(26) ~ O(n)
+     * SC : O(k) + O(26) ~ O(1) as k <= 26
      *
      * Accepted (68 / 68 testcases passed)
      */
