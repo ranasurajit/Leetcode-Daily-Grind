@@ -12,8 +12,8 @@ class Solution {
          * the result of rotation will repeat after every (m x n) shifts
          */
         k = k % (m * n);
-        int firstCell = 0;
         for (int shift = 0; shift < k; shift++) {  // TC : O(k)
+            int firstCell = grid[m - 1][n - 1];
             for (int i = m - 1; i >= 0; i--) {     // TC : O(m)
                 int temp = grid[i][n - 1];
                 for (int j = n - 2; j >= 0; j--) { // TC : O(n)
