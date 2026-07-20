@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach II : Using Array Simulation without Shifts Approach
+     * Approach II : Using Direct Index Mapping Approach
      *
      * TC : O(m x n) + O(m x n) ~ O(m x n)
      * SC : O(m x n)
@@ -12,7 +12,7 @@ class Solution {
          * the result of rotation will repeat after every (m x n) shifts
          */
         int total = m * n;
-        k = k % total;
+        // k = k % total;
         int[][] shifted = new int[m][n];  // SC : O(m x n)
         for (int i = 0; i < m; i++) {     // TC : O(m)
             for (int j = 0; j < n; j++) { // TC : O(n)
