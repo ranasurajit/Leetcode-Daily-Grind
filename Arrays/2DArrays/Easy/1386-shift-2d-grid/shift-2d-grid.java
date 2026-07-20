@@ -1,11 +1,44 @@
 class Solution {
     /**
-     * Approach : Using Array Simulation Approach
+     * Approach II : Using Array Simulation without Shifts Approach
+     *
+     * TC : O(m x n) + O(m x n) ~ O(m x n)
+     * SC : O(m x n)
+     */
+    public List<List<Integer>> shiftGrid(int[][] grid, int k) {
+        int m = grid.length;
+        int n = grid[0].length;
+        /**
+         * the result of rotation will repeat after every (m x n) shifts
+         */
+        int total = m * n;
+        k = k % total;
+        int[][] shifted = new int[m][n];  // SC : O(m x n)
+        for (int i = 0; i < m; i++) {     // TC : O(m)
+            for (int j = 0; j < n; j++) { // TC : O(n)
+                int oldIndex = i * n + j;
+                int newIndex = (oldIndex + k) % total;
+                shifted[newIndex / n][newIndex % n] = grid[i][j];
+            }
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = 0; i < m; i++) {     // TC : O(m)
+            List<Integer> row = new ArrayList<>();
+            for (int j = 0; j < n; j++) { // TC : O(n)
+                row.add(shifted[i][j]);
+            }
+            result.add(row);
+        }
+        return result;
+    }
+
+    /**
+     * Approach I : Using Array Simulation with Shifts Approach
      *
      * TC : O(m x n x k) + O(m x n) ~ O(m x n x k)
      * SC : O(1)
      */
-    public List<List<Integer>> shiftGrid(int[][] grid, int k) {
+    public List<List<Integer>> shiftGridWithRealShifts(int[][] grid, int k) {
         int m = grid.length;
         int n = grid[0].length;
         /**
