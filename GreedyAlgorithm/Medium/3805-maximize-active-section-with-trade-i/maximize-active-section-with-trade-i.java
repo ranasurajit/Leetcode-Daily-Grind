@@ -1,11 +1,55 @@
 class Solution {
     /**
-     * Approach : Using Greedy (Running Length Encoding) Approach
+     * Approach II : Using Greedy (Running Length Encoding - Cleaner) Approach
+     *
+     * TC : O(n) + O(k) ~ O(n)
+     * SC : O(k) ~ O(n)
+     */
+    public int maxActiveSectionsAfterTrade(String s) {
+        s = "1" + s + "1";
+        int n = s.length();
+        /**
+         * we will greedily try to find the block of 1's surrounded
+         * by the maximum length of blocks of 0's to maximize
+         * our result, so we compute the store count of zeroes
+         */
+        List<Integer> rle = new ArrayList<>(); // SC : O(k)
+        int countInit1s = 1;
+        int count = 1; // counts the initial prefixed 1 during augmentation
+        int last = 1;
+        for (int i = 1; i < n; i++) { // TC : O(n)
+            int digit = s.charAt(i) - '0';
+            countInit1s += digit == 1 ? 1 : 0;
+            if (digit == last) {
+                count++;
+            } else {
+                if (last == 0) {
+                    rle.add(count);
+                }
+                // reset count to 0
+                count = 1;
+                last = digit;
+            }
+        }
+        countInit1s -= 2; // removed 2 x 1s added during augmentation
+        /**
+         * now we need to find the maximum pair sum of count of zeroes
+         * around 1s which can eventually become 1's which is the gain
+         */
+        int bestGain = 0;
+        for (int i = 1; i < rle.size(); i++) { // TC : O(k)
+            bestGain = Math.max(bestGain, rle.get(i - 1) + rle.get(i));
+        }
+        return countInit1s + bestGain; 
+    }
+
+    /**
+     * Approach I : Using Greedy (Running Length Encoding) Approach
      *
      * TC : O(n) + O(n) ~ O(n)
      * SC : O(n)
      */
-    public int maxActiveSectionsAfterTrade(String s) {
+    public int maxActiveSectionsAfterTradeUsingRLE(String s) {
         s = "1" + s + "1";
         int n = s.length();
         int last = s.charAt(0) - '0';
