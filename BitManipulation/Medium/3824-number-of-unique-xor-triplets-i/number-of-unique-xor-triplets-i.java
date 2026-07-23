@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach II : Using Brute-Force Approach
+     * Approach II : Using Math + Bit Manipulation Approach
      *
      * TC : O(32) ~ O(1)
      * SC : O(1)
