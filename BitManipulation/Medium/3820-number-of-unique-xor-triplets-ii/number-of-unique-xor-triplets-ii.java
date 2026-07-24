@@ -5,6 +5,8 @@ class Solution {
      * TC : O(n²) + O(m x n) ~ O(n²)
      * SC : O(2048) ~ O(1)
      *
+     * where m = max XOR(nums)
+     *
      * Accepted (825 / 825 testcases passed)
      */
     public int uniqueXorTriplets(int[] nums) {
