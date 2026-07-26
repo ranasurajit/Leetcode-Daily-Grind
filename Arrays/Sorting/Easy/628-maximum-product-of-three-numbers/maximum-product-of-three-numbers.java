@@ -33,7 +33,6 @@ class Solution {
             }
             start--;
         }
-        System.out.println(Arrays.toString(ranges));
         return Math.max(
             ranges[0] * ranges[1] * ranges[5],
             Math.max(
