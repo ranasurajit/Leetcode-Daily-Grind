@@ -34,10 +34,7 @@ class Solution {
         }
         return Math.max(
             firstMax * secondMax * thirdMax,
-            Math.max(
-                firstMin * secondMin * firstMax,
-                firstMin * secondMax * firstMax
-            )
+            firstMin * secondMin * firstMax
         );
     }
 
