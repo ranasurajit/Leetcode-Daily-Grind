@@ -1,11 +1,53 @@
 class Solution {
     /**
+     * Approach III : Using Array Simulation Approach
+     *
+     * TC : O(n)
+     * SC : O(1)
+     */
+    public int maximumProduct(int[] nums) {
+        int n = nums.length;
+        int firstMax = Integer.MIN_VALUE;
+        int secondMax = Integer.MIN_VALUE;
+        int thirdMax = Integer.MIN_VALUE;
+        int firstMin = Integer.MAX_VALUE;
+        int secondMin = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) { // TC : O(n)
+            // compare and store the 3 max values
+            if (nums[i] > firstMax) {
+                thirdMax = secondMax;
+                secondMax = firstMax;
+                firstMax = nums[i];
+            } else if (nums[i] > secondMax) {
+                thirdMax = secondMax;
+                secondMax = nums[i];
+            } else if (nums[i] > thirdMax) {
+                thirdMax = nums[i];
+            }
+            // compare and store the 3 max values
+            if (nums[i] < firstMin) {
+                secondMin = firstMin;
+                firstMin = nums[i];
+            } else if (nums[i] < secondMin) {
+                secondMin = nums[i];
+            }
+        }
+        return Math.max(
+            firstMax * secondMax * thirdMax,
+            Math.max(
+                firstMin * secondMin * firstMax,
+                firstMin * secondMax * firstMax
+            )
+        );
+    }
+
+    /**
      * Approach II : Using HashMap Approach
      *
      * TC : O(n) + O(2000) + O(2000) ~ O(n)
      * SC : O(2001) + O(2001) + O(6) ~ O(1)
      */
-    public int maximumProduct(int[] nums) {
+    public int maximumProductHashMap(int[] nums) {
         int[] numsFirstMap = new int[2001]; // SC : O(2001)
         int[] numsLastMap = new int[2001];  // SC : O(2001)
         for (int x : nums) { // TC : O(n)
