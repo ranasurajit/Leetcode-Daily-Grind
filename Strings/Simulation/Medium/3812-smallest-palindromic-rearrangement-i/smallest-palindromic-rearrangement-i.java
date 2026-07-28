@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach II : Using String Simulation + Hashing Approach
+     * Approach II : Using Greedy + String Simulation + Hashing Approach
      *
      * TC : O(n)  + O(n) + O(n / 2) ~ O(n)
      * SC : O(26) + O(n) + O(n) ~ O(n) 
@@ -50,7 +50,7 @@ class Solution {
     }
 
     /**
-     * Approach I : Using String Simulation + Hashing + Stack Approach
+     * Approach I : Using Greedy + String Simulation + Hashing + Stack Approach
      *
      * TC : O(n)  + O(n) + O(n / 2) ~ O(n)
      * SC : O(26) + O(n) + O(n / 2) ~ O(n) 
