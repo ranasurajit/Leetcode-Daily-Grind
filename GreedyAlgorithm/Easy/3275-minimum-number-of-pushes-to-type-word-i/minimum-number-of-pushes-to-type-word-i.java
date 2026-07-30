@@ -30,6 +30,7 @@ class Solution {
                 distinctKeyMapUsed++;
             }
             if (distinctKeyMapUsed == 8) {
+                // we can place mappings in keys (2-9) i.e. 8 keys
                 // all distinct key has been used
                 distinctKeyMapUsed = 0;
                 keyPushFactor++;
