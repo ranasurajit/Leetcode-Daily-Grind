@@ -1,12 +1,65 @@
 class Solution {
     /**
+     * Approach IV : Using Memoization-II (Top-Down) Approach
+     *
+     * TC : O(n²) + O(n²) ~ O(n²)
+     * SC : O(n) + O(n²) ~ O(n²)
+     * - O(n) - recursion stack
+     * - O(n²) - memoization memory
+     */
+    public boolean predictTheWinner(int[] nums) {
+        int n = nums.length;
+        /**
+         * we will try to maximize the difference of
+         * score(Player 1) - score(Player 2)
+         * return true : 
+         * if score(Player 1) - score(Player 2) > = 0
+         */
+        int[][] memo = new int[n][n]; // SC : O(n²)
+        for (int[] mem : memo) { // TC : O(n²)
+            Arrays.fill(mem, -1);
+        }
+        return solveMem(0, n - 1, nums, memo) >= 0; // TC : O(n²), SC : O(n)
+    }
+
+    /**
+     * Using Memoization Approach
+     *
+     * TC : O(2ⁿ)
+     * SC : O(n)
+     */
+    private int solveMem(int i, int j, int[] nums, int[][] memo) {
+        // Base Case
+        if (i > j) {
+            return 0;
+        }
+        if (i == j) {
+            return nums[i];
+        }
+        // Memoization Check
+        if (memo[i][j] != -1) {
+            return memo[i][j];
+        }
+        // Recursion Calls
+        /**
+         * if Player 1 takes score at index 'i' then,
+         * Player 2 can take the score either at [i + 1, j]
+         * if Player 1 takes score at index 'j' then,
+         * Player 2 can take the score either at [i, j - 1]
+         */
+        int take_diff_i = nums[i] - solveMem(i + 1, j, nums, memo);
+        int take_diff_j = nums[j] - solveMem(i, j - 1, nums, memo);
+        return memo[i][j] = Math.max(take_diff_i, take_diff_j);
+    }
+
+    /**
      * Approach III : Using Recursion-II Approach
      *
      * TC : O(2ⁿ)
      * SC : O(n)
      * - O(n) - recursion stack
      */
-    public boolean predictTheWinner(int[] nums) {
+    public boolean predictTheWinnerRecursionII(int[] nums) {
         int n = nums.length;
         /**
          * we will try to maximize the difference of
@@ -44,9 +97,9 @@ class Solution {
     }
 
     /**
-     * Approach II : Using Memoization (Top-Down) Approach
+     * Approach II : Using Memoization-I (Top-Down) Approach
      *
-     * TC : O(n) + O(n²) ~ O(n²)
+     * TC : O(n) + O(n²) + O(n²) ~ O(n²)
      * SC : O(n) + O(n²) ~ O(n²)
      * - O(n) - recursion stack
      * - O(n²) - memoization memory
@@ -63,7 +116,7 @@ class Solution {
          * element from array 'nums'
          */
         int[][] memo = new int[n][n]; // SC : O(n²)
-        for (int[] mem : memo) {
+        for (int[] mem : memo) { // TC : O(n²)
             Arrays.fill(mem, -1);
         }
         int scoreA = 
@@ -127,7 +180,7 @@ class Solution {
      * SC : O(n)
      * - O(n) - recursion stack
      */
-    public boolean predictTheWinnerRecursion(int[] nums) {
+    public boolean predictTheWinnerRecursionI(int[] nums) {
         int n = nums.length;
         int totalScores = 0;
         for (int i = 0; i < n; i++) { // TC : O(n)
