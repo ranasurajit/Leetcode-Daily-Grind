@@ -2,7 +2,7 @@ class Solution {
     /**
      * Approach IV : Using Memoization-II (Top-Down) Approach
      *
-     * TC : O(n²) + O(n²) ~ O(n²)
+     * TC : O(n²)
      * SC : O(n) + O(n²) ~ O(n²)
      * - O(n) - recursion stack
      * - O(n²) - memoization memory
@@ -14,21 +14,20 @@ class Solution {
          * score(Player 1) - score(Player 2)
          * return true : 
          * if score(Player 1) - score(Player 2) > = 0
+         * solveMem(i, j) returns the maximum score difference
+         * (Current Player - Opponent)obtainable from nums[i...j].
          */
-        int[][] memo = new int[n][n]; // SC : O(n²)
-        for (int[] mem : memo) { // TC : O(n²)
-            Arrays.fill(mem, -1);
-        }
+        Integer[][] memo = new Integer[n][n]; // SC : O(n²)
         return solveMem(0, n - 1, nums, memo) >= 0; // TC : O(n²), SC : O(n)
     }
 
     /**
      * Using Memoization Approach
      *
-     * TC : O(2ⁿ)
+     * TC : O(n²)
      * SC : O(n)
      */
-    private int solveMem(int i, int j, int[] nums, int[][] memo) {
+    private int solveMem(int i, int j, int[] nums, Integer[][] memo) {
         // Base Case
         if (i > j) {
             return 0;
@@ -37,7 +36,7 @@ class Solution {
             return nums[i];
         }
         // Memoization Check
-        if (memo[i][j] != -1) {
+        if (memo[i][j] != null) {
             return memo[i][j];
         }
         // Recursion Calls
@@ -66,6 +65,8 @@ class Solution {
          * score(Player 1) - score(Player 2)
          * return true : 
          * if score(Player 1) - score(Player 2) > = 0
+         * solve(i, j) returns the maximum score difference
+         * (Current Player - Opponent)obtainable from nums[i...j].
          */
         return solve(0, n - 1, nums) >= 0; // TC : O(2ⁿ), SC : O(n)
     }
