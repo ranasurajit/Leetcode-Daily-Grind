@@ -33,6 +33,9 @@ class Solution {
         if (i > j) {
             return 0;
         }
+        if (i == j) {
+            return nums[i];
+        }
         // Recursion Calls
         /**
          * If Player 1 selects index 'i', then Player 2 can choose
