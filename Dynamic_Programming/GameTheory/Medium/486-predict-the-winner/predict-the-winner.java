@@ -1,13 +1,57 @@
 class Solution {
     /**
-     * Approach II : Using Memoization Approach
+     * Approach III : Using Recursion-II Approach
+     *
+     * TC : O(2ⁿ)
+     * SC : O(n)
+     * - O(n) - recursion stack
+     */
+    public boolean predictTheWinner(int[] nums) {
+        int n = nums.length;
+        /**
+         * we will try to maximize the difference of
+         * score(Player 1) - score(Player 2)
+         * return true : 
+         * if score(Player 1) - score(Player 2) > = 0
+         */
+        return solve(0, n - 1, nums) >= 0; // TC : O(2ⁿ), SC : O(n)
+    }
+
+    /**
+     * Using Recursion Approach
+     *
+     * TC : O(2ⁿ)
+     * SC : O(n)
+     */
+    private int solve(int i, int j, int[] nums) {
+        // Base Case
+        if (i > j) {
+            return 0;
+        }
+        if (i == j) {
+            return nums[i];
+        }
+        // Recursion Calls
+        /**
+         * if Player 1 takes score at index 'i' then,
+         * Player 2 can take the score either at [i + 1, j]
+         * if Player 1 takes score at index 'j' then,
+         * Player 2 can take the score either at [i, j - 1]
+         */
+        int take_diff_i = nums[i] - solve(i + 1, j, nums);
+        int take_diff_j = nums[j] - solve(i, j - 1, nums);
+        return Math.max(take_diff_i, take_diff_j);
+    }
+
+    /**
+     * Approach II : Using Memoization (Top-Down) Approach
      *
      * TC : O(n) + O(n²) ~ O(n²)
      * SC : O(n) + O(n²) ~ O(n²)
      * - O(n) - recursion stack
      * - O(n²) - memoization memory
      */
-    public boolean predictTheWinner(int[] nums) {
+    public boolean predictTheWinnerMemoization(int[] nums) {
         int n = nums.length;
         int totalScores = 0;
         for (int i = 0; i < n; i++) { // TC : O(n)
@@ -18,7 +62,7 @@ class Solution {
          * Player 1 can choose either 0th or (n - 1)th 
          * element from array 'nums'
          */
-        int[][] memo = new int[n + 1][n + 1]; // SC : O(n²)
+        int[][] memo = new int[n][n]; // SC : O(n²)
         for (int[] mem : memo) {
             Arrays.fill(mem, -1);
         }
@@ -77,7 +121,7 @@ class Solution {
     }
 
     /**
-     * Approach I : Using Recursion Approach
+     * Approach I : Using Recursion-I Approach
      *
      * TC : O(n) + O(2ⁿ)
      * SC : O(n)
