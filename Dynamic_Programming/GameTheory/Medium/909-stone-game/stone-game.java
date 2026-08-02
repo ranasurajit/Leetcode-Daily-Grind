@@ -9,8 +9,29 @@ class Solution {
      */
     public boolean stoneGame(int[] piles) {
         /**
-         * since there are even elements in piles so 
-         * mathematically Alice can win always
+         * Let the piles be indexed from 0 to n - 1.
+         *
+         * Since the number of piles is even, there are an equal number of
+         * even-indexed and odd-indexed piles.
+         *
+         * Before the game starts, Alice compares:
+         * 1. Sum of stones at even indices.
+         * 2. Sum of stones at odd indices.
+         *
+         * Alice commits to collecting whichever parity (even or odd)
+         * has the larger total sum.
+         *
+         * Initially, the two available piles are always of opposite parity.
+         * By choosing the appropriate end on her first move, Alice fixes
+         * the parity she wants to collect. After every move by Bob,
+         * the remaining two ends are again of opposite parity, allowing
+         * Alice to continue taking piles of the chosen parity.
+         *
+         * Since the total number of stones is odd, the sums of the even
+         * and odd indexed piles cannot be equal. Therefore, one parity
+         * has a strictly larger total sum, which Alice can always secure.
+         *
+         * Hence, Alice always wins.
          */
         return true;
     }
