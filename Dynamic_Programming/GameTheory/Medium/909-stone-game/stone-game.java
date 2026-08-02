@@ -1,5 +1,21 @@
 class Solution {
     /**
+     * Approach V : Using Mathematical Approach
+     *
+     * TC : O(1)
+     * SC : O(1)
+     *
+     * Accepted (46 / 46 testcases passed)
+     */
+    public boolean stoneGame(int[] piles) {
+        /**
+         * since there are even elements in piles so 
+         * mathematically Alice can win always
+         */
+        return true;
+    }
+
+    /**
      * Approach IV : Using Memoization (Top-Down) - II Approach
      *
      * TC : O(n²)
@@ -9,7 +25,7 @@ class Solution {
      *
      * Accepted (46 / 46 testcases passed)
      */
-    public boolean stoneGame(int[] piles) {
+    public boolean stoneGameMemoizationII(int[] piles) {
         int n = piles.length;
         /**
          * we need to maximize the difference of aliceScore - bobScore
@@ -115,7 +131,7 @@ class Solution {
      *
      * Accepted (46 / 46 testcases passed)
      */
-    public boolean stoneGameMemoization(int[] piles) {
+    public boolean stoneGameMemoizationI(int[] piles) {
         int n = piles.length;
         int totalScore = 0;
         for (int i = 0; i < n; i++) { // TC : O(n)
