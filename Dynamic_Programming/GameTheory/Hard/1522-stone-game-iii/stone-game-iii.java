@@ -46,20 +46,11 @@ class Solution {
         }
         // Recursion Calls
         int diff = Integer.MIN_VALUE;
-        int take_1 = stoneValue[i];
-        int take_2 = 0;
-        int take_3 = 0;
-        diff = Math.max(diff,
-            take_1 - solveMemoization(i + 1, stoneValue, memo));
-        if (i + 1 < n) {
-            take_2 = take_1 + stoneValue[i + 1];
-            diff = Math.max(diff, 
-                take_2 - solveMemoization(i + 2, stoneValue, memo));
-        }
-        if (i + 2 < n) {
-            take_3 = take_2 + stoneValue[i + 2];
+        int sum = 0;
+        for (int k = 0 ; k < 3 && i + k < n; k++) { // TC : O(3)
+            sum += stoneValue[i + k];
             diff = Math.max(diff,
-                take_3 - solveMemoization(i + 3, stoneValue, memo));
+                sum - solveMemoization(i + k + 1, stoneValue, memo));
         }
         return memo[i] = diff;
     }
@@ -102,17 +93,11 @@ class Solution {
         }
         // Recursion Calls
         int diff = Integer.MIN_VALUE;
-        int take_1 = stoneValue[i];
-        int take_2 = 0;
-        int take_3 = 0;
-        diff = Math.max(diff, take_1 - solveRecursion(i + 1, stoneValue));
-        if (i + 1 < n) {
-            take_2 = take_1 + stoneValue[i + 1];
-            diff = Math.max(diff, take_2 - solveRecursion(i + 2, stoneValue));
-        }
-        if (i + 2 < n) {
-            take_3 = take_2 + stoneValue[i + 2];
-            diff = Math.max(diff, take_3 - solveRecursion(i + 3, stoneValue));
+        int sum = 0;
+        for (int k = 0 ; k < 3 && i + k < n; k++) { // TC : O(3)
+            sum += stoneValue[i + k];
+            diff = Math.max(diff,
+                sum - solveRecursion(i + k + 1, stoneValue));
         }
         return diff;
     }
