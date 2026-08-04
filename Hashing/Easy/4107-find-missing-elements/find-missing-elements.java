@@ -2,8 +2,9 @@ class Solution {
     /**
      * Approach : Using Hashing Approach
      *
-     * TC : O(n) + O(r) ~ O(n)
+     * TC : O(n) + O(r)
      * SC : O(n)
+     * where r = max - min + 1
      */
     public List<Integer> findMissingElements(int[] nums) {
         List<Integer> missingList = new ArrayList<>();
