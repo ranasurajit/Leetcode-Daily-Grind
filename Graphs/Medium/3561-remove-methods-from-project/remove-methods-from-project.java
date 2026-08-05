@@ -21,18 +21,15 @@ class Solution {
         queue.offer(k);
         suspicious[k] = true;
         while (!queue.isEmpty()) { // TC : O(n)
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                int u = queue.poll();
-                ArrayList<Integer> ngbr = adj.get(u);
-                if (ngbr == null) {
-                    continue;
-                }
-                for (Integer v : ngbr) { // TC : O(m)
-                    if (!suspicious[v]) {
-                        suspicious[v] = true;
-                        queue.offer(v);
-                    }
+            int u = queue.poll();
+            ArrayList<Integer> ngbr = adj.get(u);
+            if (ngbr == null) {
+                continue;
+            }
+            for (Integer v : ngbr) { // TC : O(m)
+                if (!suspicious[v]) {
+                    suspicious[v] = true;
+                    queue.offer(v);
                 }
             }
         }
