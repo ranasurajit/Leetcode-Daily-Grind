@@ -1,9 +1,9 @@
 class Solution {
     /**
-     * Approach : Using Hashing + DP Approach
+     * Approach : Using Hashing Approach
      *
-     * TC : O(n) + O(n) + O(n) + O(r) ~ O(n + r)
-     * SC : O(n)
+     * TC : O(n) + O(n) + O(r) ~ O(n + r)
+     * SC : O(1)
      *
      * where r = (totalSum - longestPrefixSum)
      */
@@ -16,7 +16,7 @@ class Solution {
             totalSum += nums[i];
         }
         int sum = nums[0];
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i < n; i++) { // TC : O(n)
             if (nums[i] == nums[i - 1] + 1) {
                 sum += nums[i];
             } else {
