@@ -28,7 +28,7 @@ class Solution {
                 if (freq == 1) {
                     freqMap.remove(nums[i]);
                 } else {
-                    freqMap.put(nums[i], freqMap.get(nums[i]) - 1);
+                    freqMap.put(nums[i], freq - 1);
                 }
                 i++;
             }
@@ -61,7 +61,7 @@ class Solution {
                 if (freq == 1) {
                     freqMap.remove(nums[i]);
                 } else {
-                    freqMap.put(nums[i], freqMap.get(nums[i]) - 1);
+                    freqMap.put(nums[i], freq - 1);
                 }
                 i++;
             }
