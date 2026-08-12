@@ -22,7 +22,7 @@ class Solution {
              * nums[j] so we need to check only it's frequency if it 
              * exceeded k
              */
-            while (i < n && freqMap.get(nums[j]) > k) { // TC : O(1)
+            while (freqMap.get(nums[j]) > k) { // TC : O(1)
                 // we need to remove the computation from index 'i'
                 int freq = freqMap.get(nums[i]);
                 if (freq == 1) {
@@ -55,7 +55,7 @@ class Solution {
         int maxLength = 0;
         while (j < n) { // TC : O(n)
             freqMap.put(nums[j], freqMap.getOrDefault(nums[j], 0) + 1);
-            while (i < n && hasGreaterFrequency(freqMap, k)) { // TC : O(k)
+            while (hasGreaterFrequency(freqMap, k)) { // TC : O(k)
                 // we need to remove the computation from index 'i'
                 int freq = freqMap.get(nums[i]);
                 if (freq == 1) {
