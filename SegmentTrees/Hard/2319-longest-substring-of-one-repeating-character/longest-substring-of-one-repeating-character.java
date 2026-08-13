@@ -1,6 +1,6 @@
 class Solution {
     /**
-     * Approach II : Using Optimal (String Simulation + Hashing) Approach
+     * Approach II : Using Optimal (Segment Tree) Approach
      *
      * TC : O(n) + O(k x log(n)) ~ O(n + k x log(n))
      * SC : O(n) + O(4 x n) + O(log(n)) ~ O(n)
