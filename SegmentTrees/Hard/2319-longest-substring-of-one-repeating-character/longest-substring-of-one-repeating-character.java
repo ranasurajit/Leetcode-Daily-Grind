@@ -3,7 +3,7 @@ class Solution {
      * Approach II : Using Optimal (String Simulation + Hashing) Approach
      *
      * TC : O(n) + O(k x log(n)) ~ O(n + k x log(n))
-     * SC : O(n) + O(4 x n) + O(k x log(n)) ~ O(n + k x log(n))
+     * SC : O(n) + O(4 x n) + O(log(n)) ~ O(n)
      *
      * Accepted (57 / 57 testcases passed)
      */
