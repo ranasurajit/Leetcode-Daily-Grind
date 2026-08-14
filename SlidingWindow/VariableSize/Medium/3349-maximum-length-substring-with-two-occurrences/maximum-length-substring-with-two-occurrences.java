@@ -3,7 +3,7 @@ class Solution {
      * Approach II : Using Sliding Window (Variable Size) Approach
      *
      * TC : O(n)
-     * SC : O(n)
+     * SC : O(26) ~ O(1)
      */
     public int maximumLengthSubstring(String s) {
         int n = s.length();
