@@ -1,15 +1,62 @@
 class Solution {
     /**
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC : O(n³)
+     * SC : O(n²)
+     * - O(n²) - dp array memory
+     *
+     * Accepted (132 / 132 testcases passed)
+     */
+    public int stoneGameV(int[] stoneValue) {
+        int n = stoneValue.length;
+        long[] prefixSum = new long[n]; // SC : O(n)
+        prefixSum[0] = stoneValue[0];
+        for (int i = 1; i < n; i++) {   // TC : O(n)
+            prefixSum[i] = prefixSum[i - 1] + stoneValue[i];
+        }
+        long[][] dp = new long[n + 1][n + 1]; // SC : O(n²)
+        for (int l = n - 1; l >= 0; l--) {    // TC : O(n) 
+            for (int r = l + 1; r < n; r++) { // TC : O(n)
+                for (int k = l; k < r; k++) { // TC : O(n)
+                    long leftSum = prefixSum[k] - 
+                        (l > 0 ? prefixSum[l - 1] : 0);  // sum of [l...k]
+                    long rightSum = prefixSum[r] - 
+                        prefixSum[k];                    // sum of [r... (k + 1)]
+                    if (leftSum < rightSum) {
+                        // Bob will throw away right partition sub-array
+                        dp[l][r] = Math.max(dp[l][r], leftSum + dp[l][k]);
+                    } else if (leftSum > rightSum) {
+                        // Bob will throw away left partition sub-array
+                        dp[l][r] = Math.max(dp[l][r], rightSum + dp[k + 1][r]);
+                    } else {
+                        /**
+                        * leftSum == rightSum
+                        * Bob lets Alice decide which row will be thrown away
+                        * so, Alice with try to maximize from both sub-arrays
+                        */
+                        dp[l][r] = Math.max(dp[l][r], Math.max(
+                            leftSum + dp[l][k],
+                            rightSum + dp[k + 1][r])
+                        );
+                    }
+                }
+            }
+        }
+        return (int) dp[0][n - 1];
+    }
+
+    /**
      * Approach II : Using Memoization (Top-Down) Approach
      *
-     * TC : O(n²)
+     * TC : O(n³)
      * SC : O(n) + O(n²)
      * - O(n) - recursion stack
      * - O(n²) - memoization memory
      *
      * Accepted (132 / 132 testcases passed)
      */
-    public int stoneGameV(int[] stoneValue) {
+    public int stoneGameVMemoization(int[] stoneValue) {
         int n = stoneValue.length;
         long[] prefixSum = new long[n]; // SC : O(n)
         prefixSum[0] = stoneValue[0];
@@ -26,7 +73,7 @@ class Solution {
     /**
      * Using Recursion Approach
      *
-     * TC : Exponential
+     * TC : O(n³)
      * SC : O(n)
      */
     private long solveMemoization(int l, int r, long[] prefixSum, long[][] memo) {
