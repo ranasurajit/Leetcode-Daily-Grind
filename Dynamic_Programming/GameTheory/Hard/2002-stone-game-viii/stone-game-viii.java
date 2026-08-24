@@ -1,16 +1,46 @@
 class Solution {
     private int n;
+    /**
+     * Approach IV : Using Space-Optimization (Optimized DP) Approach
+     *
+     * TC : O(n) + O(n) ~ O(n)
+     * SC : O(n)
+     * - O(n) - prefix array memory
+     *
+     * Accepted (80 / 80 testcases passed)
+     */
+    public int stoneGameVIII(int[] stones) {
+        this.n = stones.length;
+        int[] prefixSum = new int[n]; // SC : O(n)
+        prefixSum[0] = stones[0];
+        for (int i = 1; i < n; i++) { // TC : O(n)
+            prefixSum[i] = prefixSum[i - 1] + stones[i];
+        }
+        /**
+         * the below recursion will return the
+         * difference of score(Alice - Bob)
+         */
+        int next = prefixSum[n - 1];
+        for (int i = n - 2; i >= 1; i--) { // TC : O(n)
+            int skip = next;
+            int pick = prefixSum[i] - next;
+            // as both players are playing optimally
+            int current = Math.max(skip, pick);
+            next = current;
+        }
+        return next;
+    }
 
     /**
      * Approach III : Using Tabulation (Bottom-Up) Approach
      *
      * TC : O(n) + O(n) ~ O(n)
-     * SC : O(n)
-     * - O(n) - dp array memory
+     * SC : O(n) + O(n) ~ O(n)
+     * - O(n) - prefix, dp array memory
      *
      * Accepted (80 / 80 testcases passed)
      */
-    public int stoneGameVIII(int[] stones) {
+    public int stoneGameVIIITabulation(int[] stones) {
         this.n = stones.length;
         int[] prefixSum = new int[n]; // SC : O(n)
         prefixSum[0] = stones[0];
@@ -38,7 +68,7 @@ class Solution {
      * TC : O(n) + O(n) ~ O(n)
      * SC : O(n) + O(n)
      * - O(n) - recursion stack
-     * - O(n) - memoization memory
+     * - O(n) - prefix array, memoization memory
      *
      * Time Limit Exceeded (79 / 80 testcases passed)
      */
@@ -84,8 +114,8 @@ class Solution {
      * Approach I : Using Recursion Approach
      *
      * TC : O(2ⁿ) + O(n) ~ O(2ⁿ)
-     * SC : O(n)
-     * - O(n) - recursion stack
+     * SC : O(n) + O(n)
+     * - O(n) - prefix array and recursion stack
      *
      * Time Limit Exceeded (9 / 80 testcases passed)
      */
