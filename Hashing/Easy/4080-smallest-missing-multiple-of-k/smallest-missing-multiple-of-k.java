@@ -9,7 +9,7 @@ class Solution {
         int n = nums.length;
         int max = ((100 / k) + 1) * k;
         /**
-         * we can store the frequencies of elements
+         * we can store if an element is present
          * in the map so that we can track the
          * multiples of K i.e absent in it
          */
