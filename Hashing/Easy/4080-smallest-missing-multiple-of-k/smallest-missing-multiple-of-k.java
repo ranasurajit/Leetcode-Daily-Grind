@@ -13,12 +13,12 @@ class Solution {
          * in the map so that we can track the
          * multiples of K i.e absent in it
          */
-        int[] map = new int[max + 1]; // SC : O(max)
+        boolean[] map = new boolean[max + 1]; // SC : O(max)
         for (int i = 0; i < n; i++) { // TC : O(n)
-            map[nums[i]]++;
+            map[nums[i]] = true;
         }
         for (int i = k; i <= max; i += k) { // TC : O(max / k)
-            if (map[i] == 0) {
+            if (!map[i]) {
                 return i;
             }
         }
