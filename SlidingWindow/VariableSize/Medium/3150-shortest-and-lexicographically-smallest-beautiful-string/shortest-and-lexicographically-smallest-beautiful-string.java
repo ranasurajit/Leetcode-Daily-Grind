@@ -2,8 +2,8 @@ class Solution {
     /**
      * Approach : Using Sliding Window (Variable Size) Approach
      *
-     * TC : O(n)
-     * SC : O(1)
+     * TC : O(n²)
+     * SC : O(n)
      */
     public String shortestBeautifulSubstring(String s, int k) {
         int n = s.length();
@@ -20,7 +20,8 @@ class Solution {
             while (i < n && count1s >= k) {
                 if (count1s == k) {
                     int currentLength = j - i + 1;
-                    String currentString = s.substring(i, j + 1);
+                    String currentString = 
+                        s.substring(i, j + 1); // TC : O(n), SC : O(n)
                     if (currentLength < minLength) {
                         minLength = currentLength;
                         result = currentString;
