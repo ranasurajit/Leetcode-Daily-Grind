@@ -16,9 +16,11 @@ class Solution {
      * SC : O(1)
      */
     public int[] nodesBetweenCriticalPoints(ListNode head) {
-        if (head == null) {
-            return new int[] { -1, -1 };
-        }
+        /**
+         * no need to do null check on head as per constraints 
+         * 'The number of nodes in the list is in the range 
+         * [2, 10⁵]
+         */
         ListNode prev = head;
         ListNode current = head.next;
         int lastIndex = -1;
