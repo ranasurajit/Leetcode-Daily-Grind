@@ -24,7 +24,6 @@ class Solution {
         int lastIndex = -1;
         int minDist = Integer.MAX_VALUE;
         int firstIndex = -1;
-        int maxIndex = -1;
         int countCriticalNodes = 0;
         int index = 0;
         while (current != null && current.next != null) { // TC : O(n)
@@ -41,7 +40,6 @@ class Solution {
                     firstIndex = index;
                 }
                 lastIndex = index;
-                maxIndex = Math.max(maxIndex, index);
             }
             index++;
             prev = current;
@@ -50,7 +48,7 @@ class Solution {
         if (countCriticalNodes < 2) {
             return new int[] { -1, -1 };
         }
-        return new int[] { minDist, maxIndex - firstIndex };
+        return new int[] { minDist, lastIndex - firstIndex };
     }
 
     /**
