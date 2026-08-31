@@ -10,12 +10,56 @@
  */
 class Solution {
     /**
-     * Approach : Using Two Pointers on Linked List Approach
+     * Approach II : Using Two Pointers + Linked List (Without Extra Memory) Approach
      *
-     * TC : O(n) + O(n) ~ O(n)
+     * TC : O(n)
      * SC : O(1)
      */
     public int[] nodesBetweenCriticalPoints(ListNode head) {
+        if (head == null) {
+            return new int[] { -1, -1 };
+        }
+        ListNode prev = head;
+        ListNode current = head.next;
+        int lastIndex = -1;
+        int minDist = Integer.MAX_VALUE;
+        int firstIndex = -1;
+        int maxIndex = -1;
+        int countCriticalNodes = 0;
+        int index = 0;
+        while (current != null && current.next != null) { // TC : O(n)
+            ListNode next = current.next;
+            boolean isCritical = 
+                (current.val < prev.val && current.val < next.val) || 
+                (current.val > prev.val && current.val > next.val);
+            if (isCritical) {
+                // found a critical point
+                countCriticalNodes++;
+                if (lastIndex != -1) {
+                    minDist = Math.min(minDist, index - lastIndex);
+                } else {
+                    firstIndex = index;
+                }
+                lastIndex = index;
+                maxIndex = Math.max(maxIndex, index);
+            }
+            index++;
+            prev = current;
+            current = current.next;
+        }
+        if (countCriticalNodes < 2) {
+            return new int[] { -1, -1 };
+        }
+        return new int[] { minDist, maxIndex - firstIndex };
+    }
+
+    /**
+     * Approach I : Using Two Pointers + Linked List (With Extra Memory) Approach
+     *
+     * TC : O(n) + O(k) ~ O(n)
+     * SC : O(k) ~ O(n)
+     */
+    public int[] nodesBetweenCriticalPointsWithExtraSpace(ListNode head) {
         if (head == null) {
             return new int[] { -1, -1 };
         }
