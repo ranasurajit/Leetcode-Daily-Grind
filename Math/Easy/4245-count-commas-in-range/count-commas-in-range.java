@@ -1,11 +1,21 @@
 class Solution {
     /**
+     * Approach III : Using Math Approach
+     *
+     * TC : O(1)
+     * SC : O(1)
+     */
+    public int countCommas(int n) {
+        return Math.max(0, n - 999);
+    }
+
+    /**
      * Approach II : Using Math Approach
      *
      * TC : O(n)
      * SC : O(1)
      */
-    public int countCommas(int n) {
+    public int countCommasMath(int n) {
         int count = 0;
         for (int i = n; i >= 1; i--) {    // TC : O(n)
             if (i >= 1000) {
