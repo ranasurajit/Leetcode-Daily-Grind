@@ -1,4 +1,10 @@
 class Solution {
+    /**
+     * Approach : Using Math + Geometry Approach
+     *
+     * TC : O(1)
+     * SC : O(1)
+     */
     public boolean checkOverlap(int radius, int xCenter, int yCenter, int x1,
         int y1, int x2, int y2) {
         /**
