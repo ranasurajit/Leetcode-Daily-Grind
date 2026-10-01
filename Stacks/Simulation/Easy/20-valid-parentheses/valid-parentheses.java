@@ -1,88 +1,61 @@
 class Solution {
     /**
-     * Approach II : Using Deques Approach
+     * Approach : Using Stack Simulation Approach
      *
-     * TC: O(N)
-     * SC: O(N)
+     * TC : O(n)
+     * SC : O(n)
      */
     public boolean isValid(String s) {
         int n = s.length();
-        Deque<Character> deque = new ArrayDeque<Character>(); // SC: O(N)
-        for (int i = 0; i < n; i++) { // TC: O(N)
+        Stack<Character> st = new Stack<>(); // SC : O(n)
+        for (int i = 0; i < n; i++) { // TC : O(n)
             char ch = s.charAt(i);
-            if (deque.isEmpty() && !isOpenBracket(ch)) {
-                return false;
-            }
-            if (isOpenBracket(ch)) {
-                deque.push(ch);
-            } else {
-                char open = getOpenBracket(ch);
-                if (open == deque.peek()) {
-                    deque.pop();
-                } else {
-                    return false;
-                }
-            }
-        }
-        return deque.isEmpty();
-    }
-
-    /**
-     * Approach I : Using Stacks Approach
-     *
-     * TC: O(N)
-     * SC: O(N)
-     */
-    public boolean isValidUsingStacks(String s) {
-        int n = s.length();
-        Stack<Character> st = new Stack<Character>(); // SC: O(N)
-        for (int i = 0; i < n; i++) { // TC: O(N)
-            char ch = s.charAt(i);
-            if (st.isEmpty() && !isOpenBracket(ch)) {
-                return false;
-            }
-            if (isOpenBracket(ch)) {
+            if (isOpen(ch)) {
                 st.push(ch);
             } else {
-                char open = getOpenBracket(ch);
-                if (open == st.peek()) {
-                    st.pop();
-                } else {
+                if (st.isEmpty()) {
+                    /**
+                     * if Stack is empty and we get a closed 
+                     * parentheses so we cannot balance it
+                     * so, String 's' is not valid
+                     */ 
                     return false;
+                } else {
+                    if (hasOpenBracket(ch) == st.peek()) {
+                        st.pop();
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
+        // String 's' will be valid if Stack has no open parentheses left
         return st.isEmpty();
     }
 
     /**
      * Using Enumeration Approach
      *
-     * TC: O(1)
-     * SC: O(1)
+     * TC : O(1)
+     * SC : O(1)
      */
-    private boolean isOpenBracket(char ch) {
+    private boolean isOpen(char ch) {
         return ch == '(' || ch == '{' || ch == '[';
     }
 
     /**
      * Using Enumeration Approach
      *
-     * TC: O(1)
-     * SC: O(1)
+     * TC : O(1)
+     * SC : O(1)
      */
-    private char getOpenBracket(char ch) {
-        char open = '(';
-        switch (ch) {
-            case '}':
-                open = '{';
-                break;
-            case ']':
-                open = '[';
-                break;
-            default:
-                open = '(';
+    private char hasOpenBracket(char ch) {
+        if (ch == ')') {
+            return '(';
+        } else if (ch == '}') {
+            return '{';
+        } else {
+            return '[';
         }
-        return open;
     }
 }
