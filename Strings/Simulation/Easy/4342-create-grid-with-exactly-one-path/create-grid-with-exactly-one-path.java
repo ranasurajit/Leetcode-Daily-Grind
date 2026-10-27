@@ -12,22 +12,22 @@ class Solution {
          * 0th index row has all dots (.) and 
          * (n - 1)th column has all dots (.) only
          */
-        for (int i = 0; i < m; i++) {         // TC : O(m)
-            StringBuilder sb = new StringBuilder(); // SC : O(n)
+        for (int i = 0; i < m; i++) {  // TC : O(m)
+            char[] ch = new char[n];   // SC : O(n)
             if (i == 0) {
                 for (int j = 0; j < n; j++) { // TC : O(n)
-                    sb.append(".");
+                    ch[j] = '.';
                 }
             } else {
                 for (int j = 0; j < n; j++) {
                     if (j == n - 1) {
-                        sb.append(".");
+                        ch[j] = '.';
                     } else {
-                        sb.append("#");
+                        ch[j] = '#';
                     }
                 }
             }
-            grid[i] = sb.toString();
+            grid[i] = String.valueOf(ch);
         }
         return grid;
     }
