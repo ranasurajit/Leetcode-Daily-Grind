@@ -1,5 +1,36 @@
 class Solution {
     /**
+     * Approach III : Using Tabulation (Bottom-Up) Approach
+     *
+     * TC : O(n)
+     * SC : O(n)
+     * - O(n) - dp array memory
+     * Accepted (1005 / 1005 testcases passed)
+     */
+    public int climbStairs(int n, int[] costs) {
+        int[] dp = new int[n + 1]; // SC : O(n)
+        dp[n] = 0;
+        int option1 = Integer.MAX_VALUE;
+        int option2 = Integer.MAX_VALUE;
+        int option3 = Integer.MAX_VALUE;
+        for (int i = n - 1; i >= 0; i--) { // TC : O(n)
+            if (i + 1 <= n) {
+                option1 = costs[i] + 1 + dp[i + 1];
+            }
+            // jumping (+2) step
+            if (i + 2 <= n) {
+                option2 = costs[i + 1] + 4 + dp[i + 2];
+            }
+            // jumping (+3) step
+            if (i + 3 <= n) {
+                option3 = costs[i + 2] + 9 + dp[i + 3];
+            }
+            dp[i] = Math.min(option1, Math.min(option2, option3));
+        }
+        return dp[0];
+    }
+
+    /**
      * Approach II : Using Memoization (Top-Down) Approach
      *
      * TC : O(n)
@@ -8,8 +39,8 @@ class Solution {
      * - O(n) - recursion stack
      * Accepted (1005 / 1005 testcases passed)
      */
-    public int climbStairs(int n, int[] costs) {
-        int[] memo = new int[n];
+    public int climbStairsMemoization(int n, int[] costs) {
+        int[] memo = new int[n]; // SC : O(n)
         Arrays.fill(memo, -1);
         return solveMemoization(0, n, costs, memo);
     }
