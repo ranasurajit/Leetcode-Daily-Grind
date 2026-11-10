@@ -1,5 +1,40 @@
 class Solution {
     /**
+     * Approach IV : Using Optimized DP (Space Optimization) Approach
+     *
+     * TC : O(n)
+     * SC : O(1)
+     * 
+     * Accepted (1005 / 1005 testcases passed)
+     */
+    public int climbStairs(int n, int[] costs) {
+        int option1 = Integer.MAX_VALUE;
+        int option2 = Integer.MAX_VALUE;
+        int option3 = Integer.MAX_VALUE;
+        int next3 = 0;
+        int next2 = 0;
+        int next1 = 0;
+        for (int i = n - 1; i >= 0; i--) { // TC : O(n)
+            if (i + 1 <= n) {
+                option1 = costs[i] + 1 + next1;
+            }
+            // jumping (+2) step
+            if (i + 2 <= n) {
+                option2 = costs[i + 1] + 4 + next2;
+            }
+            // jumping (+3) step
+            if (i + 3 <= n) {
+                option3 = costs[i + 2] + 9 + next3;
+            }
+            int current = Math.min(option1, Math.min(option2, option3));
+            next3 = next2;
+            next2 = next1;
+            next1 = current;
+        }
+        return next1;
+    }
+
+    /**
      * Approach III : Using Tabulation (Bottom-Up) Approach
      *
      * TC : O(n)
@@ -7,7 +42,7 @@ class Solution {
      * - O(n) - dp array memory
      * Accepted (1005 / 1005 testcases passed)
      */
-    public int climbStairs(int n, int[] costs) {
+    public int climbStairsTabulation(int n, int[] costs) {
         int[] dp = new int[n + 1]; // SC : O(n)
         dp[n] = 0;
         int option1 = Integer.MAX_VALUE;
